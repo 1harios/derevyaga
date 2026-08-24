@@ -60,7 +60,7 @@ export function WhyUsBlock() {
           data-reveal
           style={{ '--reveal-delay': '110ms' } as React.CSSProperties}
         >
-          Каркас не даёт усадки — заселиться можно сразу после сдачи.
+          Оплата привязана к этапам: следующий платёж — только после приёмки предыдущего.
         </p>
       </div>
 
