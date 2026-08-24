@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { QuizCalculator } from '@/components/home/QuizCalculator'
 import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
@@ -50,7 +51,10 @@ export default function CalculatorPage() {
         </div>
       </PageHero>
 
-      <QuizCalculator showIntro={false} />
+      {/* Suspense обязателен: внутри квиза useSearchParams (предзаполнение из героя) */}
+      <Suspense fallback={null}>
+        <QuizCalculator showIntro={false} />
+      </Suspense>
 
       <Section compact>
         <div className="grid gap-3 md:grid-cols-3">

@@ -1,5 +1,6 @@
 'use client'
 
+import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { CalcSummary } from '@/components/home/CalcSummary'
 import { Button } from '@/components/ui/Button'
@@ -14,8 +15,21 @@ import { formatNumber } from '@/lib/utils'
 const STEPS = ['Дом', 'Комплектация', 'Основание и кровля', 'Участок'] as const
 
 export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {}) {
+  const search = useSearchParams()
   const [step, setStep] = useState(0)
-  const [input, setInput] = useState<CalcInput>(defaultCalcInput)
+  // Предзаполнение из query-параметров: селекты в герое главной ведут сюда
+  // со своей комплектацией и этажностью (?completeness=turnkey&floors=2)
+  const [input, setInput] = useState<CalcInput>(() => {
+    const completeness = search.get('completeness')
+    const floors = search.get('floors')
+    return {
+      ...defaultCalcInput,
+      ...(completeness === 'frame' || completeness === 'prefinish' || completeness === 'turnkey'
+        ? { completeness }
+        : null),
+      ...(floors === '1' || floors === '1.5' || floors === '2' ? { floors } : null),
+    }
+  })
   const [showForm, setShowForm] = useState(false)
 
   const result = useMemo(() => calculate(input), [input])
