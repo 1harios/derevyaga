@@ -22,14 +22,14 @@ export function ProjectsPreview() {
         <div className="panel">
           <div className="mb-7 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
             <h2 data-reveal>
-              Каталог наших
+              Каталог домов,
               <br />
-              объектов за 2025 год
+              которые уже построены
             </h2>
             {/* Двухцветная подпись, как в референсе: первая фраза тёмная, вторая приглушённая */}
             <p className="max-w-xs text-[15px] leading-[1.5]" data-reveal style={{ '--reveal-delay': '100ms' } as React.CSSProperties}>
-              По каждому проекту есть сданный дом, смета и срок из договора.{' '}
-              <span className="muted">Планировку меняем под вас и пересчитываем до подписания.</span>
+              Это не бумажные проекты из интернета: за каждым — сданный дом и смета из договора.{' '}
+              <span className="muted">Планировку адаптируем под ваш участок бесплатно.</span>
             </p>
           </div>
 

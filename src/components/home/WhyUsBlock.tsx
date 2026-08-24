@@ -48,20 +48,11 @@ const reasons = [
 export function WhyUsBlock() {
   return (
     <Section id="why-us">
-      {/* Шапка как у каталога: заголовок слева, справа узкая двухцветная подпись */}
-      <div className="mb-7 flex flex-col gap-5 md:mb-9 md:flex-row md:items-start md:justify-between">
+      <div className="mb-7 max-w-2xl md:mb-9">
         <h2 className="text-pretty" data-reveal>
           Быстрые сроки, честная смета{' '}
-          <span className="block text-ink-soft">и качество в каждой детали</span>
+          <span className="block text-ink-soft">и высокое качество работы</span>
         </h2>
-        <p
-          className="max-w-xs text-[15px] leading-[1.5]"
-          data-reveal
-          style={{ '--reveal-delay': '110ms' } as React.CSSProperties}
-        >
-          Цену и дату сдачи фиксируем в договоре до начала работ.{' '}
-          <span className="muted">Оплата разбита на этапы — платите после приёмки каждого.</span>
-        </p>
       </div>
 
       <ul className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
@@ -94,7 +85,7 @@ export function WhyUsBlock() {
                 <span className="max-w-0 -translate-x-1 whitespace-nowrap opacity-0 transition-all duration-300 group-hover:mr-1.5 group-hover:max-w-[110px] group-hover:translate-x-0 group-hover:opacity-100">
                   Подробнее
                 </span>
-                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5 shrink-0">
+                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5 shrink-0 group-hover:rotate-45">
                   <path
                     d="M3 3h8v8M11 3 3 11"
                     fill="none"
