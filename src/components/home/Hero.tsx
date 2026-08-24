@@ -26,7 +26,7 @@ export function Hero() {
   return (
     <section className="pt-1">
       <div className="shell">
-        <div className="grid gap-3 lg:min-h-[calc(100svh-16px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
+        <div className="grid gap-3 lg:h-[calc(100svh-16px)] lg:min-h-[700px] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
           {/* Левая панель: шапка, текст, цифры и мини-карточка проекта */}
           <div className="panel panel--sheen flex flex-col gap-8 pt-6">
             <HeaderInline />
@@ -66,8 +66,10 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Цифры и мини-карточка проекта — низ панели, только десктоп */}
-            <div className="max-lg:hidden">
+            {/* Цифры и мини-карточка проекта — низ панели, только десктоп.
+                Карточка резиновая: занимает остаток высоты панели, чтобы
+                первый экран целиком помещался в вьюпорт */}
+            <div className="flex min-h-0 flex-1 flex-col max-lg:hidden">
               <div
                 className="grid grid-cols-3 gap-4 border-t border-black/[0.06] pt-5"
                 data-reveal
@@ -86,8 +88,8 @@ export function Hero() {
                 ))}
               </div>
 
-              <div className="mt-5">
-                <HeroProjectCard />
+              <div className="mt-5 min-h-[150px] flex-1">
+                <HeroProjectCard className="lg:h-full" />
               </div>
             </div>
           </div>

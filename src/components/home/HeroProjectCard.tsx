@@ -11,15 +11,15 @@ import { formatPrice } from '@/lib/utils'
  * тег с названием и площадью, бейдж и цена, справа — круглые стрелки,
  * листающие проекты каталога без перехода со страницы.
  */
-export function HeroProjectCard() {
+export function HeroProjectCard({ className }: { className?: string } = {}) {
   const [index, setIndex] = useState(0)
   const project = projects[index]
   const shift = (delta: number) =>
     setIndex((value) => (value + delta + projects.length) % projects.length)
 
   return (
-    <div className="relative overflow-hidden rounded-2xl" data-reveal>
-      <Link href={`/projects/${project.slug}`} className="group/card block">
+    <div className={`relative overflow-hidden rounded-2xl ${className ?? ''}`} data-reveal>
+      <Link href={`/projects/${project.slug}`} className="group/card block h-full">
         <Image
           key={project.slug}
           src={project.photo}
@@ -27,7 +27,7 @@ export function HeroProjectCard() {
           width={900}
           height={1350}
           sizes="(min-width: 1024px) 38vw, 92vw"
-          className="aspect-[16/8] w-full object-cover object-[50%_62%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7]"
+          className="aspect-[16/8] w-full object-cover object-[50%_62%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7] lg:aspect-auto lg:h-full"
         />
         <div
           aria-hidden
