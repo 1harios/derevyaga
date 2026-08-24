@@ -48,19 +48,19 @@ const reasons = [
 export function WhyUsBlock() {
   return (
     <Section id="why-us">
-      {/* Заголовок по референсу: первая строка тёмная, продолжение приглушённое,
-          ниже — мелкая подпись с фактом */}
-      <div className="mb-7 max-w-2xl md:mb-9">
+      {/* Шапка как у каталога: заголовок слева, справа узкая двухцветная подпись */}
+      <div className="mb-7 flex flex-col gap-5 md:mb-9 md:flex-row md:items-start md:justify-between">
         <h2 className="text-pretty" data-reveal>
           Быстрые сроки{' '}
           <span className="block text-ink-soft">и качество</span>
         </h2>
         <p
-          className="mt-3 text-[14px] muted"
+          className="max-w-xs text-[15px] leading-[1.5]"
           data-reveal
           style={{ '--reveal-delay': '110ms' } as React.CSSProperties}
         >
-          Цена и срок фиксируются в договоре, оплата — по этапам после приёмки.
+          Цена и срок фиксируются в договоре.{' '}
+          <span className="muted">Оплата — по этапам после приёмки.</span>
         </p>
       </div>
 
