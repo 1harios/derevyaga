@@ -19,7 +19,7 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
   const delayed = diff > 0
 
   const statusLabel = delayed
-    ? `+${diff} ${pluralized(diff, ['день', 'дня', 'дней'])} к сроку`
+    ? `+${pluralized(diff, ['день', 'дня', 'дней'])} к сроку`
     : diff < 0
       ? 'Раньше срока'
       : 'День в день'
