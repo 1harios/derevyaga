@@ -6,11 +6,11 @@ import type { BuiltObject } from '@/content/objects'
 import { cn, formatPrice, pluralized } from '@/lib/utils'
 
 /**
- * Карточка сданного объекта в фирменном стиле: фото во всю ширину карточки
- * с переключателем «Стройка/Сдан» (активная вкладка — фирменный зелёный),
- * статус срока цветным бейджем на фото, характеристики — белыми чипами,
- * цитата владельца — в белом скруглённом блоке. Честный план-факт сохранён:
- * задержка не прячется, а выносится в бейдж и пояснение.
+ * Карточка сданного объекта — минимальная и премиальная: фото 16:10
+ * со статус-бейджем и переключателем «Стройка/Сдан», белое тело с одной
+ * строкой меты, план-факт срока показан визуальной полоской (зелёная доля —
+ * по плану, терракотовая — превышение), цитата владельца в две строки
+ * с линией-отбивкой. Честный план-факт — фирменный приём, не прячем.
  * Используется в слайдере на главной и в сетке на странице объектов.
  */
 export function ObjectCard({ object }: { object: BuiltObject }) {
@@ -24,16 +24,15 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
       ? 'Раньше срока'
       : 'День в день'
 
-  const chips = [
-    `${object.area} м²`,
-    object.completeness,
-    formatPrice(object.price),
-    `План ${object.plannedDays} / факт ${object.actualDays} дн.`,
-  ]
+  /* Полоска срока: дорожка — большее из чисел, зелёное — в пределах плана,
+     терракотовое — превышение. При сдаче раньше срока остаток дорожки пустой. */
+  const track = Math.max(object.plannedDays, object.actualDays)
+  const greenShare = (Math.min(object.plannedDays, object.actualDays) / track) * 100
+  const overShare = delayed ? 100 - greenShare : 0
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-[#f0efed] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(30,37,33,0.10)]">
-      {/* Фото во всю ширину карточки, лёгкий зум при наведении */}
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-black/[0.05] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(30,37,33,0.12)]">
+      {/* Фото с лёгким зумом при наведении */}
       <div className="relative overflow-hidden">
         <Image
           src={showAfter ? object.photoAfter : object.photoBefore}
@@ -41,21 +40,19 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
           width={1200}
           height={900}
           sizes="(min-width: 1024px) 50vw, 90vw"
-          className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          className="aspect-[16/10] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
 
-        {/* Статус срока: честный бейдж — зелёный в срок, терракотовый при задержке */}
         <span
           className={cn(
-            'absolute top-3 right-3 rounded-full px-3 py-1.5 font-sans text-[12px] font-medium text-white',
+            'absolute top-3 left-3 rounded-full px-3 py-1.5 font-sans text-[12px] font-medium text-white',
             delayed ? 'bg-[#8a4b38]' : 'bg-[#436453]',
           )}
         >
           {statusLabel}
         </span>
 
-        {/* Переключатель «стройка/сдан»: активная вкладка — фирменный зелёный */}
-        <div className="absolute bottom-3 left-3 flex gap-1 rounded-full bg-white/95 p-1 shadow-[0_1px_4px_rgba(30,37,33,0.10)]">
+        <div className="absolute right-3 bottom-3 flex gap-1 rounded-full bg-white/95 p-1 shadow-[0_1px_4px_rgba(30,37,33,0.10)]">
           {(
             [
               ['Стройка', false],
@@ -79,34 +76,45 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5 md:p-6">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h3 className="font-sans text-[17px] font-medium text-[#1b211d]">{object.name}</h3>
-          <span className="font-sans text-[13px] text-[#6a6a6a]">
-            {object.location}, {object.year}
+        {/* Название и цена в одну строку, мета — второй строкой */}
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="font-sans text-[17px] leading-snug font-medium text-[#1b211d]">
+            {object.name}
+          </h3>
+          <span className="shrink-0 font-sans text-[17px] leading-snug font-medium tabular-nums text-[#1b211d]">
+            {formatPrice(object.price)}
           </span>
         </div>
-
-        {/* Характеристики — белыми чипами вместо таблицы */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {chips.map((chip) => (
-            <span
-              key={chip}
-              className="rounded-full bg-white px-3 py-1.5 font-sans text-[13px] text-[#1b211d] tabular-nums"
-            >
-              {chip}
-            </span>
-          ))}
-        </div>
-
-        <p className="mt-3 font-sans text-[13px] leading-[1.55] text-[#6a6a6a]">
-          {object.delayNote ??
-            `Сдан на ${pluralized(object.plannedDays - object.actualDays, ['день', 'дня', 'дней'])} раньше срока.`}
+        <p className="mt-1 font-sans text-[13px] text-[#6a6a6a]">
+          {object.location}, {object.year} · {object.area} м² · {object.completeness}
         </p>
 
-        {/* Цитата владельца — белый скруглённый блок */}
-        <blockquote className="mt-4 rounded-lg bg-white p-4 text-[14px] leading-[1.6] text-[#1b211d] md:p-5">
-          «{object.quote}»
-          <footer className="mt-2 font-sans text-[13px] text-[#6a6a6a]">{object.author}</footer>
+        {/* План-факт срока: подписи и визуальная полоска */}
+        <div className="mt-5 mb-5">
+          <div className="flex items-baseline justify-between font-sans text-[12.5px]">
+            <span className="text-[#6a6a6a]">План {object.plannedDays} дн.</span>
+            <span className={cn('font-medium', delayed ? 'text-[#8a4b38]' : 'text-[#436453]')}>
+              Факт {object.actualDays} дн.
+            </span>
+          </div>
+          <div className="mt-2 flex h-1.5 gap-px overflow-hidden rounded-full bg-[#edece9]">
+            <span className="h-full rounded-full bg-[#436453]" style={{ width: `${greenShare}%` }} />
+            {overShare > 0 && (
+              <span className="h-full rounded-full bg-[#8a4b38]" style={{ width: `${overShare}%` }} />
+            )}
+          </div>
+          <p className="mt-2 font-sans text-[12.5px] leading-[1.55] text-[#6a6a6a]">
+            {object.delayNote ??
+              `Сдан на ${pluralized(object.plannedDays - object.actualDays, ['день', 'дня', 'дней'])} раньше срока.`}
+          </p>
+        </div>
+
+        {/* Цитата владельца: компактно, максимум две строки */}
+        <blockquote className="mt-auto border-t border-black/[0.06] pt-4 font-sans text-[14px] leading-[1.55] text-[#1b211d]">
+          <span className="line-clamp-2" title={object.quote}>
+            «{object.quote}»
+          </span>
+          <footer className="mt-1.5 text-[12.5px] text-[#6a6a6a]">{object.author}</footer>
         </blockquote>
       </div>
     </article>
