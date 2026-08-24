@@ -1,49 +1,47 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Section } from '@/components/ui/Section'
-import { cn } from '@/lib/utils'
 
 /**
- * «Почему выбирают нас» — по референсу заказчика: четыре высокие фотоплитки
- * с предметной съёмкой на всю карточку, заголовком в верхней трети (первая
- * строка тёмная, продолжение приглушённое) и пилюлей «Подробнее» внизу.
- * Карточка сметы — тёмная, это акцент на главном обещании компании.
- * Каждая плитка ведёт на страницу с подробностями.
+ * «Почему выбирают нас» — четыре плитки с вырезанными изображениями без фона
+ * (холст 690×880, верхние ~180 px прозрачные — это место под заголовок).
+ * Плитка ровного цвета #f0efed, при наведении перекрашивается в зелёный
+ * #436453, текст переходит в белый, а круглая кнопка-стрелка внизу
+ * раскрывается в «Подробнее». Вырезка прижата к низу плитки и центрирована:
+ * на широких планшетных плитках по бокам остаётся ровный фон.
  *
- * ЗАМЕНИТЬ: снимки why-*.webp сгенерированы (Nano Banana Pro) как временные —
- * на боевом сайте их стоит заменить предметной съёмкой в той же манере:
- * объект в нижних двух третях квадратного кадра, светло-бежевый фон #f2f1ef
- * (у сметы — тёмный #1e2521), мягкий студийный свет, верхняя треть чистая.
+ * ЗАМЕНИТЬ: вырезки why2-*.webp собраны как временные — на боевом сайте
+ * заменить предметной съёмкой реальных объектов в той же манере
+ * (объект без фона на прозрачном холсте 690×880, верх пустой).
  */
 const reasons = [
   {
     title: 'Своя бригада',
     subtitle: 'и свой инструмент',
     href: '/about',
-    photo: '/photos/why-brigada.webp',
-    alt: 'Плотник в каске собирает конёк каркасной крыши из светлого бруса',
+    photo: '/photos/why2-brigada.webp',
+    alt: 'Монтажник в каске крепит обрешётку крыши шуруповёртом',
   },
   {
-    title: 'Фиксированная смета',
-    subtitle: 'в договоре',
-    href: '/prices',
-    photo: '/photos/why-smeta.webp',
-    alt: 'Листы сметы с карандашом и складным метром на тёмном столе',
-    dark: true,
+    title: 'Более 200',
+    subtitle: 'довольных клиентов',
+    href: '/reviews',
+    photo: '/photos/why2-otzyvy.webp',
+    alt: 'Отзывы клиентов о строительстве с оценками пять звёзд',
   },
   {
-    title: 'Брус камерной сушки',
-    subtitle: 'влажность до 18%',
-    href: '/technology',
-    photo: '/photos/why-brus.webp',
-    alt: 'Стопка строганого бруса с влагомером сверху',
+    title: 'Разработаем',
+    subtitle: 'индивидуальный проект',
+    href: '/projects',
+    photo: '/photos/why2-proekt.webp',
+    alt: 'Фасад каркасного дома с панорамными окнами и тёмной кровлей',
   },
   {
     title: 'Стройка онлайн',
     subtitle: 'в личном кабинете',
     href: '/lk',
-    photo: '/photos/why-kabinet.webp',
-    alt: 'Смартфон с фотоотчётом стройки каркасного дома в личном кабинете',
+    photo: '/photos/why2-kabinet.webp',
+    alt: 'Смартфон с фотоотчётами и этапами стройки в личном кабинете',
   },
 ]
 
@@ -71,31 +69,32 @@ export function WhyUsBlock() {
           <li key={reason.title} data-reveal style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}>
             <Link
               href={reason.href}
-              className="group relative isolate block min-h-[230px] overflow-hidden rounded-xl sm:min-h-[400px] xl:min-h-[430px]"
+              className="group relative isolate block min-h-[230px] overflow-hidden rounded-xl bg-[#f0efed] transition-colors duration-300 hover:bg-[#436453] sm:min-h-[400px] xl:min-h-[430px]"
             >
-              {/* Фото занимает всю плитку; верхняя треть кадра — чистый фон под текст */}
+              {/* Вырезка без фона: прижата к низу и центрирована, высота — по плитке */}
               <Image
                 src={reason.photo}
                 alt={reason.alt}
-                width={880}
+                width={690}
                 height={880}
-                sizes="(min-width: 1280px) 25vw, 45vw"
-                className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+                className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-full w-auto max-w-none -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02]"
               />
 
               <div className="p-4 sm:p-6">
-                <h3 className={cn('text-[15px] leading-snug sm:text-[18px]', reason.dark && 'text-white')}>
+                <h3 className="font-sans text-[15px] font-medium leading-[1.3] text-[#1b211d] transition-colors duration-300 group-hover:text-white sm:text-[18px]">
                   {reason.title}
-                  <span className={cn('block font-normal', reason.dark ? 'text-white/60' : 'text-ink-soft')}>
+                  <span className="block font-normal text-[#6a6a6a] transition-colors duration-300 group-hover:text-white/75">
                     {reason.subtitle}
                   </span>
                 </h3>
               </div>
 
-              {/* Пилюля «Подробнее» — как белые пилюли на фото первого экрана */}
-              <span className="btn btn--light btn--sm absolute bottom-3 left-3 sm:bottom-5 sm:left-5">
-                Подробнее
-                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5">
+              {/* Круглая кнопка-стрелка; при наведении раскрывается слово «Подробнее» */}
+              <span className="absolute bottom-3 left-3 inline-flex h-9 items-center overflow-hidden rounded-full bg-white px-[11px] text-[13px] font-medium text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.10)] transition-all duration-300 sm:bottom-5 sm:left-5 sm:h-10 sm:px-[13px] sm:text-[14px]">
+                <span className="max-w-0 -translate-x-1 whitespace-nowrap opacity-0 transition-all duration-300 group-hover:mr-1.5 group-hover:max-w-[110px] group-hover:translate-x-0 group-hover:opacity-100">
+                  Подробнее
+                </span>
+                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5 shrink-0">
                   <path
                     d="M3 3h8v8M11 3 3 11"
                     fill="none"
