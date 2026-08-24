@@ -33,10 +33,7 @@ function PillSelect({
   const current = options.find(([key]) => key === value)?.[1]
   return (
     <label className="relative inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-between gap-2 rounded-full bg-white px-4 font-sans text-[13.5px] text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.12)] sm:flex-none">
-      <span className="truncate">
-        <span className="text-[#6a6a6a]">{label}: </span>
-        {current}
-      </span>
+      <span className="truncate">{current}</span>
       <svg viewBox="0 0 12 12" aria-hidden className="size-3 shrink-0 text-[#1b211d]">
         <path d="m2.5 4.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
