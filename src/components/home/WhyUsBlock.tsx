@@ -77,11 +77,11 @@ export function WhyUsBlock() {
                 alt={reason.alt}
                 width={690}
                 height={880}
-                className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-full w-auto max-w-none -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+                className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-[82%] w-auto max-w-none -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02] sm:h-full"
               />
 
-              <div className="p-4 sm:p-6">
-                <h3 className="font-sans text-[15px] font-medium leading-[1.3] text-[#1b211d] transition-colors duration-300 group-hover:text-white sm:text-[18px]">
+              <div className="p-3.5 sm:p-6">
+                <h3 className="font-sans text-[13px] font-medium leading-[1.3] text-[#1b211d] transition-colors duration-300 group-hover:text-white sm:text-[18px]">
                   {reason.title}
                   <span className="block font-normal text-[#6a6a6a] transition-colors duration-300 group-hover:text-white/75">
                     {reason.subtitle}
