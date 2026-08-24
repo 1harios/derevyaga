@@ -66,12 +66,12 @@ export function WhyUsBlock() {
         </p>
       </div>
 
-      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
         {reasons.map((reason, index) => (
           <li key={reason.title} data-reveal style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}>
             <Link
               href={reason.href}
-              className="group relative isolate block min-h-[400px] overflow-hidden rounded-xl xl:min-h-[430px]"
+              className="group relative isolate block min-h-[230px] overflow-hidden rounded-xl sm:min-h-[400px] xl:min-h-[430px]"
             >
               {/* Фото занимает всю плитку; верхняя треть кадра — чистый фон под текст */}
               <Image
@@ -79,12 +79,12 @@ export function WhyUsBlock() {
                 alt={reason.alt}
                 width={880}
                 height={880}
-                sizes="(min-width: 1280px) 25vw, (min-width: 640px) 45vw, 90vw"
+                sizes="(min-width: 1280px) 25vw, 45vw"
                 className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
               />
 
-              <div className="p-6">
-                <h3 className={cn('text-[18px] leading-snug', reason.dark && 'text-white')}>
+              <div className="p-4 sm:p-6">
+                <h3 className={cn('text-[15px] leading-snug sm:text-[18px]', reason.dark && 'text-white')}>
                   {reason.title}
                   <span className={cn('block font-normal', reason.dark ? 'text-white/60' : 'text-ink-soft')}>
                     {reason.subtitle}
@@ -93,7 +93,7 @@ export function WhyUsBlock() {
               </div>
 
               {/* Пилюля «Подробнее» — как белые пилюли на фото первого экрана */}
-              <span className="btn btn--light btn--sm absolute bottom-5 left-5">
+              <span className="btn btn--light btn--sm absolute bottom-3 left-3 sm:bottom-5 sm:left-5">
                 Подробнее
                 <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5">
                   <path
