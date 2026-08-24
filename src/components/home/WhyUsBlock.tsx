@@ -53,14 +53,14 @@ export function WhyUsBlock() {
       <div className="mb-7 max-w-2xl md:mb-9">
         <h2 className="text-pretty" data-reveal>
           Быстрые сроки{' '}
-          <span className="block text-ink-soft">и качество, зафиксированное в договоре</span>
+          <span className="block text-ink-soft">и качество</span>
         </h2>
         <p
           className="mt-3 text-[14px] muted"
           data-reveal
           style={{ '--reveal-delay': '110ms' } as React.CSSProperties}
         >
-          Оплата привязана к этапам: следующий платёж — только после приёмки предыдущего.
+          Цена и срок фиксируются в договоре, оплата — по этапам после приёмки.
         </p>
       </div>
 
