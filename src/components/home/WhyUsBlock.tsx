@@ -85,7 +85,7 @@ export function WhyUsBlock() {
                 <span className="max-w-0 -translate-x-1 whitespace-nowrap opacity-0 transition-all duration-300 group-hover:mr-1.5 group-hover:max-w-[110px] group-hover:translate-x-0 group-hover:opacity-100">
                   Подробнее
                 </span>
-                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5 shrink-0 group-hover:rotate-45">
+                <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5 shrink-0 group-hover:[transform:rotate(45deg)]">
                   <path
                     d="M3 3h8v8M11 3 3 11"
                     fill="none"

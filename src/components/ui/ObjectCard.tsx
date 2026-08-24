@@ -6,26 +6,56 @@ import type { BuiltObject } from '@/content/objects'
 import { cn, formatPrice, pluralized } from '@/lib/utils'
 
 /**
- * Карточка сданного объекта: переключатель «стройка/сдан», план-факт срока
- * с честной пометкой о задержке и цитата владельца. Используется в слайдере
- * на главной и в сетке на странице объектов.
+ * Карточка сданного объекта в фирменном стиле: фото во всю ширину карточки
+ * с переключателем «Стройка/Сдан» (активная вкладка — фирменный зелёный),
+ * статус срока цветным бейджем на фото, характеристики — белыми чипами,
+ * цитата владельца — в белом скруглённом блоке. Честный план-факт сохранён:
+ * задержка не прячется, а выносится в бейдж и пояснение.
+ * Используется в слайдере на главной и в сетке на странице объектов.
  */
 export function ObjectCard({ object }: { object: BuiltObject }) {
   const [showAfter, setShowAfter] = useState(true)
-  const delayed = object.actualDays > object.plannedDays
+  const diff = object.actualDays - object.plannedDays
+  const delayed = diff > 0
+
+  const statusLabel = delayed
+    ? `+${diff} ${pluralized(diff, ['день', 'дня', 'дней'])} к сроку`
+    : diff < 0
+      ? 'Раньше срока'
+      : 'День в день'
+
+  const chips = [
+    `${object.area} м²`,
+    object.completeness,
+    formatPrice(object.price),
+    `План ${object.plannedDays} / факт ${object.actualDays} дн.`,
+  ]
 
   return (
-    <article className="card h-full overflow-hidden rounded-xl">
-      <div className="relative p-2">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-[#f0efed] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(30,37,33,0.10)]">
+      {/* Фото во всю ширину карточки, лёгкий зум при наведении */}
+      <div className="relative overflow-hidden">
         <Image
           src={showAfter ? object.photoAfter : object.photoBefore}
           alt={showAfter ? object.photoAfterAlt : object.photoBeforeAlt}
           width={1200}
           height={900}
           sizes="(min-width: 1024px) 50vw, 90vw"
-          className="aspect-[4/3] w-full rounded-lg object-cover"
+          className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
-        <div className="absolute bottom-5 left-5 flex gap-1 rounded-full bg-white/90 p-1">
+
+        {/* Статус срока: честный бейдж — зелёный в срок, терракотовый при задержке */}
+        <span
+          className={cn(
+            'absolute top-3 right-3 rounded-full px-3 py-1.5 font-sans text-[12px] font-medium text-white',
+            delayed ? 'bg-[#8a4b38]' : 'bg-[#436453]',
+          )}
+        >
+          {statusLabel}
+        </span>
+
+        {/* Переключатель «стройка/сдан»: активная вкладка — фирменный зелёный */}
+        <div className="absolute bottom-3 left-3 flex gap-1 rounded-full bg-white/95 p-1 shadow-[0_1px_4px_rgba(30,37,33,0.10)]">
           {(
             [
               ['Стройка', false],
@@ -38,8 +68,8 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
               onClick={() => setShowAfter(value)}
               aria-pressed={showAfter === value}
               className={cn(
-                'min-h-9 rounded-full px-4 text-[13px] transition-colors duration-200 ease-out',
-                showAfter === value ? 'bg-dark text-white' : 'text-ink',
+                'min-h-8 rounded-full px-3.5 font-sans text-[13px] transition-colors duration-200 ease-out',
+                showAfter === value ? 'bg-[#436453] text-white' : 'text-[#1b211d] hover:bg-black/[0.04]',
               )}
             >
               {label}
@@ -48,43 +78,35 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
         </div>
       </div>
 
-      <div className="p-5 pt-3 md:p-6 md:pt-4">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3>{object.name}</h3>
-          <span className="text-[14px] muted">
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 className="font-sans text-[17px] font-medium text-[#1b211d]">{object.name}</h3>
+          <span className="font-sans text-[13px] text-[#6a6a6a]">
             {object.location}, {object.year}
           </span>
         </div>
 
-        <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 border-y border-line py-4 text-[15px] sm:grid-cols-4">
-          <div>
-            <dt className="text-[13px] muted">Площадь</dt>
-            <dd className="tabular-nums">{object.area} м²</dd>
-          </div>
-          <div>
-            <dt className="text-[13px] muted">Комплектация</dt>
-            <dd>{object.completeness}</dd>
-          </div>
-          <div>
-            <dt className="text-[13px] muted">План / факт</dt>
-            <dd className={cn('tabular-nums', delayed ? 'text-err' : 'text-ok')}>
-              {object.plannedDays} / {object.actualDays} дн.
-            </dd>
-          </div>
-          <div>
-            <dt className="text-[13px] muted">Стоимость</dt>
-            <dd className="tabular-nums">{formatPrice(object.price)}</dd>
-          </div>
-        </dl>
+        {/* Характеристики — белыми чипами вместо таблицы */}
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {chips.map((chip) => (
+            <span
+              key={chip}
+              className="rounded-full bg-white px-3 py-1.5 font-sans text-[13px] text-[#1b211d] tabular-nums"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
 
-        <p className="mt-4 rounded-md bg-panel p-4 text-[14px] leading-[1.55] muted">
+        <p className="mt-3 font-sans text-[13px] leading-[1.55] text-[#6a6a6a]">
           {object.delayNote ??
             `Сдан на ${pluralized(object.plannedDays - object.actualDays, ['день', 'дня', 'дней'])} раньше срока.`}
         </p>
 
-        <blockquote className="mt-4 text-[15px] leading-[1.6]">
+        {/* Цитата владельца — белый скруглённый блок */}
+        <blockquote className="mt-4 rounded-lg bg-white p-4 text-[14px] leading-[1.6] text-[#1b211d] md:p-5">
           «{object.quote}»
-          <footer className="mt-2 text-[14px] muted">{object.author}</footer>
+          <footer className="mt-2 font-sans text-[13px] text-[#6a6a6a]">{object.author}</footer>
         </blockquote>
       </div>
     </article>
