@@ -51,16 +51,16 @@ export function WhyUsBlock() {
       {/* Шапка как у каталога: заголовок слева, справа узкая двухцветная подпись */}
       <div className="mb-7 flex flex-col gap-5 md:mb-9 md:flex-row md:items-start md:justify-between">
         <h2 className="text-pretty" data-reveal>
-          Быстрые сроки{' '}
-          <span className="block text-ink-soft">и качество</span>
+          Быстрые сроки, честная смета{' '}
+          <span className="block text-ink-soft">и качество в каждой детали</span>
         </h2>
         <p
           className="max-w-xs text-[15px] leading-[1.5]"
           data-reveal
           style={{ '--reveal-delay': '110ms' } as React.CSSProperties}
         >
-          Цена и срок фиксируются в договоре.{' '}
-          <span className="muted">Оплата — по этапам после приёмки.</span>
+          Цену и дату сдачи фиксируем в договоре до начала работ.{' '}
+          <span className="muted">Оплата разбита на этапы — платите после приёмки каждого.</span>
         </p>
       </div>
 
