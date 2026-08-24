@@ -69,7 +69,7 @@ export function WhyUsBlock() {
           <li key={reason.title} data-reveal style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}>
             <Link
               href={reason.href}
-              className="group relative isolate block min-h-[230px] overflow-hidden rounded-xl bg-[#f0efed] transition-colors duration-300 hover:bg-[#436453] sm:min-h-[400px] xl:min-h-[430px]"
+              className="group relative isolate block min-h-[250px] overflow-hidden rounded-xl bg-[#f0efed] transition-colors duration-300 hover:bg-[#436453] sm:min-h-[400px] xl:min-h-[430px]"
             >
               {/* Вырезка без фона: прижата к низу и центрирована, высота — по плитке */}
               <Image
@@ -77,10 +77,10 @@ export function WhyUsBlock() {
                 alt={reason.alt}
                 width={690}
                 height={880}
-                className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-[82%] w-auto max-w-none -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02] sm:h-full"
+                className="pointer-events-none absolute bottom-0 left-0 -z-10 h-auto w-full max-w-none object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02] sm:left-1/2 sm:h-full sm:w-auto sm:-translate-x-1/2"
               />
 
-              <div className="p-3.5 sm:p-6">
+              <div className="pt-[18px] pl-[18px] pr-3 sm:p-6">
                 <h3 className="font-sans text-[13px] font-medium leading-[1.3] text-[#1b211d] transition-colors duration-300 group-hover:text-white sm:text-[18px]">
                   {reason.title}
                   <span className="block font-normal text-[#6a6a6a] transition-colors duration-300 group-hover:text-white/75">
