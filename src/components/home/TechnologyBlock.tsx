@@ -37,14 +37,14 @@ export function TechnologyBlock() {
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
           <div>
             <h2 className="max-w-md" data-reveal>
-              Строим дома
-              <br />
-              по каркасной технологии
+              Строим дома{' '}
+              <span className="block text-ink-soft">по каркасной технологии</span>
             </h2>
             {/* Колонка текста шире, а перенос «pretty»: без висячих последних слов */}
             <p className="lead mt-4 max-w-xl text-pretty" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
-              Показываем конструктив <strong>без прикрас</strong>: из чего собран каркас,
-              чем утеплён и почему дом <strong>не поведёт со временем</strong>.
+              Коттеджи и бани, построенные по <strong>каркасной технологии</strong>, получили
+              широкое распространение во всём мире — некоторые служат людям{' '}
+              <strong>уже много веков</strong>.
             </p>
 
             {/* Каркас в низком ракурсе по референсу. Левый край выровнен
