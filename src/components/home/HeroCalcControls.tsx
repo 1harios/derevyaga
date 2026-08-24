@@ -30,18 +30,13 @@ function PillSelect({
   options: readonly (readonly [string, string])[]
   onChange: (value: string) => void
 }) {
-  const current = options.find(([key]) => key === value)?.[1]
   return (
-    <label className="relative inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-between gap-2 rounded-full bg-white px-4 font-sans text-[13.5px] text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.12)] sm:flex-none">
-      <span className="truncate">{current}</span>
-      <svg viewBox="0 0 12 12" aria-hidden className="size-3 shrink-0 text-[#1b211d]">
-        <path d="m2.5 4.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+    <span className="relative inline-block max-sm:flex-1">
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
         aria-label={label}
-        className="absolute inset-0 cursor-pointer opacity-0"
+        className="h-10 w-full cursor-pointer appearance-none rounded-full bg-white pr-9 pl-4 font-sans text-[13.5px] text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.12)]"
       >
         {options.map(([key, title]) => (
           <option key={key} value={key}>
@@ -49,7 +44,14 @@ function PillSelect({
           </option>
         ))}
       </select>
-    </label>
+      <svg
+        viewBox="0 0 12 12"
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 right-3.5 size-3 -translate-y-1/2 text-[#1b211d]"
+      >
+        <path d="m2.5 4.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
   )
 }
 
