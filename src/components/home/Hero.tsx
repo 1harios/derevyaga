@@ -18,8 +18,8 @@ import { telHref } from '@/lib/utils'
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
     Как в референсе: просто цифры с тонкими разделителями, без плашек */
 const heroStats = [
-  { value: 94, suffix: '~', label: 'дня средний срок стройки под ключ' },
-  { value: 5, suffix: '+', label: 'лет гарантии на конструктив по договору' },
+  { value: 94, suffix: '~', label: 'дня средний срок стройки' },
+  { value: 5, suffix: '+', label: 'лет гарантии на конструктив' },
   { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
 ]
 
@@ -72,16 +72,16 @@ export function Hero() {
             <div className="mt-auto max-lg:hidden">
               <div className="flex items-start" data-reveal style={{ '--reveal-delay': '260ms' } as React.CSSProperties}>
                 {heroStats.map((stat, index) => (
-                  <div key={stat.label} className="flex flex-1 items-start">
+                  <div key={stat.label} className="flex items-start">
                     {index > 0 ? (
-                      <span aria-hidden className="mx-5 mt-1 h-11 w-px shrink-0 bg-black/10 xl:mx-7" />
+                      <span aria-hidden className="mx-4 mt-1 h-11 w-px shrink-0 bg-black/10 xl:mx-6" />
                     ) : null}
                     <div>
-                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none tabular-nums">
+                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none">
                         <CountUp value={stat.value} duration={1400 + index * 250} />
                         <span className="text-ink-faint">{stat.suffix}</span>
                       </div>
-                      <p className="mt-2 max-w-[180px] text-[12.5px] leading-[1.35] muted">
+                      <p className="mt-2 text-[11px] leading-[1.35] whitespace-nowrap muted xl:text-[12.5px]">
                         {stat.label}
                       </p>
                     </div>
@@ -205,7 +205,7 @@ export function Hero() {
                   <span aria-hidden className="mx-3 mt-0.5 h-9 w-px shrink-0 bg-black/10" />
                 ) : null}
                 <div className="min-w-0">
-                  <div className="num text-[22px] leading-none tabular-nums">
+                  <div className="num text-[22px] leading-none">
                     <CountUp value={stat.value} duration={1200 + index * 200} />
                     <span className="text-ink-faint">{stat.suffix}</span>
                   </div>
