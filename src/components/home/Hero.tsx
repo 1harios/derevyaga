@@ -16,60 +16,11 @@ import { telHref } from '@/lib/utils'
  */
 
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
-    Как в референсе: у цифры только символ (~ или +), единицы — в подписи.
-    В кружках — простые линейные иконки в фирменном мхе */
+    Как в референсе: просто цифры с тонкими разделителями, без плашек */
 const heroStats = [
-  {
-    value: 94,
-    suffix: '~',
-    label: 'дня средний срок стройки под ключ',
-    icon: (
-      <svg viewBox="0 0 20 20" aria-hidden className="size-5">
-        <path
-          d="M10 17.3a6.6 6.6 0 1 0 0-13.2 6.6 6.6 0 0 0 0 13.2Z M10 7.2v3.5l2.4 1.5 M8.2 2h3.6 M15.6 5.2l1.1 1.1"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    value: 5,
-    suffix: '+',
-    label: 'лет гарантии на конструктив по договору',
-    icon: (
-      <svg viewBox="0 0 20 20" aria-hidden className="size-5">
-        <path
-          d="M10 2.2 16.5 4.8v4.4c0 4-2.6 6.9-6.5 8.4-3.9-1.5-6.5-4.4-6.5-8.4V4.8L10 2.2Z M7.2 9.8l2 2 3.6-3.8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    value: 218,
-    suffix: '+',
-    label: 'домов сдано с 2011 года',
-    icon: (
-      <svg viewBox="0 0 20 20" aria-hidden className="size-5">
-        <path
-          d="M3.2 9.4 10 3.4l6.8 6M5 8v7.4c0 .7.5 1.2 1.2 1.2h7.6c.7 0 1.2-.5 1.2-1.2V8M7.9 12.3l1.6 1.6 2.9-3"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
+  { value: 94, suffix: '~', label: 'дня средний срок стройки под ключ' },
+  { value: 5, suffix: '+', label: 'лет гарантии на конструктив по договору' },
+  { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
 ]
 
 export function Hero() {
@@ -116,33 +67,29 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Карточки цифр как было изначально: белые, с иконкой в кружке
-                фирменного мха, цифрой с приглушённым символом и подписью.
-                Ниже — мини-карточка проекта, блок прижат к низу панели */}
+            {/* Цифры как в референсе: без плашек, с тонкими вертикальными
+                разделителями. Ниже — мини-карточка проекта, блок прижат к низу */}
             <div className="mt-auto max-lg:hidden">
-              <ul className="grid gap-2.5 lg:grid-cols-3" data-reveal style={{ '--reveal-delay': '260ms' } as React.CSSProperties}>
+              <div className="flex items-start" data-reveal style={{ '--reveal-delay': '260ms' } as React.CSSProperties}>
                 {heroStats.map((stat, index) => (
-                  <li
-                    key={stat.label}
-                    className="card hover-lift flex min-h-[168px] flex-col rounded-xl border-transparent p-5"
-                  >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-tint text-brand-deep">
-                      {stat.icon}
-                    </span>
-                    <div className="mt-auto pt-5">
-                      <div className="num text-[clamp(1.6rem,1.2rem+1.2vw,2.2rem)] leading-none tabular-nums">
+                  <div key={stat.label} className="flex flex-1 items-start">
+                    {index > 0 ? (
+                      <span aria-hidden className="mx-5 mt-1 h-11 w-px shrink-0 bg-black/10 xl:mx-7" />
+                    ) : null}
+                    <div>
+                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none tabular-nums">
                         <CountUp value={stat.value} duration={1400 + index * 250} />
                         <span className="text-ink-faint">{stat.suffix}</span>
                       </div>
-                      <p className="mt-2 min-h-[34px] max-w-[180px] text-[12.5px] leading-[1.35] muted">
+                      <p className="mt-2 max-w-[180px] text-[12.5px] leading-[1.35] muted">
                         {stat.label}
                       </p>
                     </div>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
 
-              <div className="mt-2.5 lg:h-[clamp(160px,22svh,300px)]">
+              <div className="mt-6 lg:h-[clamp(170px,24svh,320px)]">
                 <HeroProjectCard className="lg:h-full" />
               </div>
             </div>
@@ -250,29 +197,23 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Мобильная версия цифр доверия: компактные горизонтальные карточки
-              после фото — иконка слева, цифра и подпись справа, как было */}
-          <ul className="grid gap-2 sm:grid-cols-3 lg:hidden">
+          {/* Мобильная версия цифр: тот же стиль без плашек, с разделителями */}
+          <div className="flex items-start px-1 lg:hidden" data-reveal>
             {heroStats.map((stat, index) => (
-              <li
-                key={stat.label}
-                data-reveal
-                style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}
-                className="card flex items-center gap-4 rounded-xl border-transparent p-4"
-              >
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-tint text-brand-deep">
-                  {stat.icon}
-                </span>
+              <div key={stat.label} className="flex flex-1 items-start">
+                {index > 0 ? (
+                  <span aria-hidden className="mx-3 mt-0.5 h-9 w-px shrink-0 bg-black/10" />
+                ) : null}
                 <div className="min-w-0">
                   <div className="num text-[22px] leading-none tabular-nums">
                     <CountUp value={stat.value} duration={1200 + index * 200} />
                     <span className="text-ink-faint">{stat.suffix}</span>
                   </div>
-                  <p className="mt-1 text-[12.5px] leading-[1.35] muted">{stat.label}</p>
+                  <p className="mt-1 text-[11.5px] leading-[1.35] muted">{stat.label}</p>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
 
           <div className="lg:hidden">
             <HeroProjectCard />
