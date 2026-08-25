@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
 import { HeaderInline } from '@/components/layout/HeaderInline'
-import { HeroProjectCard } from '@/components/home/HeroProjectCard'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
 import { company } from '@/content/company'
@@ -10,10 +9,9 @@ import { telHref } from '@/lib/utils'
 /**
  * Первый экран: серая панель-ячейка слева и фото справа, как в исходной
  * компоновке — дом-вырезка выходит за рамку фотоблока (двухслойный приём).
- * Внутри панели — обновлённое наполнение: крупный заголовок, теглайн
- * с линией, абзац с кнопкой «Рассчитать смету», строка цифр и мини-карточка
- * проекта со стрелками листания. На фото — пилюли «Оставить заявку»,
- * телефон и личный кабинет.
+ * Внутри панели: крупный заголовок, теглайн с линией, абзац с кнопкой
+ * «Рассчитать смету» и строка цифр с разделителями. На фото — пилюли
+ * «Оставить заявку», телефон и личный кабинет.
  */
 
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
@@ -94,12 +92,6 @@ export function Hero() {
               ))}
             </div>
 
-            {/* Мини-карточка проекта — низ панели */}
-            <div className="max-lg:hidden">
-              <div className="lg:h-[clamp(220px,30svh,360px)]">
-                <HeroProjectCard className="lg:h-full" />
-              </div>
-            </div>
           </div>
 
           {/* Фото из двух слоёв: фон обрезается скруглённым блоком, а вырезка
@@ -222,9 +214,6 @@ export function Hero() {
             ))}
           </div>
 
-          <div className="lg:hidden">
-            <HeroProjectCard />
-          </div>
         </div>
       </div>
     </section>
