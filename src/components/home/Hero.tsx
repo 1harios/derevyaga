@@ -119,8 +119,9 @@ export function Hero() {
                 width={1696}
                 height={2528}
                 priority
-                sizes="(min-width: 1024px) 52vw, 110vw"
-                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-6.5%] lg:right-auto lg:w-[110%]"
+                quality={90}
+                sizes="(min-width: 1024px) 56vw, 110vw"
+                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-11%] lg:right-auto lg:w-[114%]"
               />
               {/* Тёмный градиент сверху — белые пилюли читаются на любом небе */}
               <div
@@ -139,8 +140,9 @@ export function Hero() {
                 width={1696}
                 height={2528}
                 priority
-                sizes="(min-width: 1024px) 52vw, 110vw"
-                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-6.5%] lg:right-auto lg:w-[110%]"
+                quality={90}
+                sizes="(min-width: 1024px) 56vw, 110vw"
+                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-11%] lg:right-auto lg:w-[114%]"
               />
             </div>
 
@@ -150,14 +152,14 @@ export function Hero() {
               href="/projects"
               data-reveal
               style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
-              className="group/plate absolute bottom-4 left-4 z-[2] flex w-[176px] flex-col rounded-2xl bg-white p-5 shadow-[0_12px_32px_rgba(20,26,22,0.20)] transition-transform duration-200 ease-out hover:-translate-y-0.5 sm:bottom-6 sm:left-6"
+              className="group/plate absolute bottom-4 left-4 z-[2] flex w-[216px] flex-col rounded-2xl bg-white p-5 shadow-[0_12px_32px_rgba(20,26,22,0.20)] transition-transform duration-200 ease-out hover:-translate-y-0.5 sm:bottom-6 sm:left-6"
             >
-              <span className="font-sans text-[19px] leading-[1.25] font-medium text-[#1b211d]">
+              <span className="font-sans text-[20px] leading-[1.25] font-medium text-[#1b211d]">
                 Смотреть
                 <br />
-                проекты
+                <span className="font-normal text-[#6c736d]">проекты</span>
               </span>
-              <span className="mt-4 ml-auto grid size-9 place-items-center rounded-full bg-[#436453] text-white">
+              <span className="mt-4 ml-auto grid size-10 place-items-center rounded-full bg-[#436453] text-white">
                 <svg
                   viewBox="0 0 14 14"
                   aria-hidden
