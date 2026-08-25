@@ -33,7 +33,7 @@ export function Hero() {
           <div className="panel panel--sheen flex flex-col gap-8 pt-6">
             <HeaderInline />
 
-            <div className="lg:my-auto">
+            <div>
               <h1 className="text-pretty" data-reveal>
                 Готовый каркасный дом{' '}
                 <br className="max-md:hidden" />
@@ -66,35 +66,36 @@ export function Hero() {
                   Рассчитать смету
                 </Button>
               </div>
-
-              {/* Цифры как в референсе: крайние блоки прижаты к краям панели,
-                  промежутки между блоками и палочками строго одинаковые */}
-              <div
-                className="mt-9 hidden items-start justify-between gap-4 lg:flex"
-                data-reveal
-                style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
-              >
-                {heroStats.map((stat, index) => (
-                  <Fragment key={stat.label}>
-                    {index > 0 ? (
-                      <span aria-hidden className="h-11 w-px shrink-0 bg-black/10" />
-                    ) : null}
-                    <div>
-                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
-                        <CountUp value={stat.value} duration={1400 + index * 250} />
-                        <span className="text-ink-faint">{stat.suffix}</span>
-                      </div>
-                      <p className="mt-2 text-[11px] leading-[1.35] whitespace-nowrap muted xl:text-[12.5px]">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </Fragment>
-                ))}
-              </div>
             </div>
 
-            {/* Мини-карточка проекта — прижата к низу панели */}
-            <div className="mt-auto max-lg:hidden">
+            {/* Цифры как в референсе: отдельный ярус панели с автоцентровкой —
+                расстояние сверху и снизу одинаковое; крайние блоки по краям,
+                промежутки между блоками и палочками строго равные */}
+            <div
+              className="my-auto hidden w-full items-start justify-between gap-4 lg:flex"
+              data-reveal
+              style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
+            >
+              {heroStats.map((stat, index) => (
+                <Fragment key={stat.label}>
+                  {index > 0 ? (
+                    <span aria-hidden className="h-11 w-px shrink-0 bg-black/10" />
+                  ) : null}
+                  <div>
+                    <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
+                      <CountUp value={stat.value} duration={1400 + index * 250} />
+                      <span className="text-ink-faint">{stat.suffix}</span>
+                    </div>
+                    <p className="mt-2 text-[11px] leading-[1.35] whitespace-nowrap muted xl:text-[12.5px]">
+                      {stat.label}
+                    </p>
+                  </div>
+                </Fragment>
+              ))}
+            </div>
+
+            {/* Мини-карточка проекта — низ панели */}
+            <div className="max-lg:hidden">
               <div className="lg:h-[clamp(170px,24svh,320px)]">
                 <HeroProjectCard className="lg:h-full" />
               </div>
