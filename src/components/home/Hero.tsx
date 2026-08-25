@@ -17,9 +17,9 @@ import { telHref } from '@/lib/utils'
 
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа */
 const heroStats = [
+  { value: 94, suffix: '~', label: 'дня средний срок стройки под ключ' },
+  { value: 5, suffix: '+', label: 'лет гарантии на конструктив по договору' },
   { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
-  { value: 15, suffix: '', label: 'лет строим в Ленобласти' },
-  { value: 94, suffix: '~', label: 'дня средний срок под ключ' },
 ]
 
 export function Hero() {
