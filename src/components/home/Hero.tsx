@@ -50,18 +50,26 @@ export function Hero() {
                 <span aria-hidden className="h-px min-w-8 flex-1 bg-black/10" />
               </div>
 
-              {/* Абзац и кнопка: ниже lg скрыты — на телефоне идут после фото */}
-              <div
-                className="mt-7 hidden flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 lg:flex"
+              {/* Абзац, ниже отдельной строкой кнопки — как в референсе.
+                  Ниже lg скрыты: на телефоне идут после фото */}
+              <p
+                className="mt-7 hidden max-w-[440px] font-sans text-[13.5px] leading-[1.55] text-[#6a6a6a] lg:block"
                 data-reveal
                 style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
               >
-                <p className="max-w-[380px] font-sans text-[13.5px] leading-[1.55] text-[#6a6a6a]">
-                  От 78 до 250 м²: проект, фундамент, каркас, кровля, инженерия и отделка.{' '}
-                  <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
-                </p>
-                <Button href="/calculator" arrow className="shrink-0">
+                От 78 до 250 м²: проект, фундамент, каркас, кровля, инженерия и отделка.{' '}
+                <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
+              </p>
+              <div
+                className="mt-6 hidden flex-wrap gap-2.5 lg:flex"
+                data-reveal
+                style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
+              >
+                <Button href="/calculator" arrow>
                   Рассчитать смету
+                </Button>
+                <Button href="/projects" variant="outline">
+                  Каталог объектов
                 </Button>
               </div>
             </div>
@@ -106,7 +114,7 @@ export function Hero() {
                 height={1536}
                 priority
                 sizes="(min-width: 1024px) 50vw, 110vw"
-                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_72%] lg:bottom-[-15%] lg:left-[-7.5%] lg:right-auto lg:top-auto lg:h-[115%] lg:w-[111%] lg:object-bottom"
+                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_72%] lg:bottom-[-22%] lg:left-[-7.5%] lg:right-auto lg:top-auto lg:h-[124%] lg:w-[111%] lg:object-bottom"
               />
               {/* Тёмный градиент сверху — белые пилюли читаются на любом небе */}
               <div
@@ -126,7 +134,7 @@ export function Hero() {
                 height={1536}
                 priority
                 sizes="(min-width: 1024px) 50vw, 110vw"
-                className="absolute bottom-[-15%] left-[-7.5%] h-[115%] w-[111%] max-w-none object-cover object-bottom"
+                className="absolute bottom-[-22%] left-[-7.5%] h-[124%] w-[111%] max-w-none object-cover object-bottom"
               />
             </div>
 
@@ -189,9 +197,12 @@ export function Hero() {
               От 78 до 250 м²: проект, фундамент, каркас, кровля, инженерия и отделка.{' '}
               <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
             </p>
-            <div className="mt-4" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
+            <div className="mt-4 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
               <Button href="/calculator" arrow className="max-sm:w-full">
                 Рассчитать смету
+              </Button>
+              <Button href="/projects" variant="outline" className="max-sm:w-full">
+                Каталог объектов
               </Button>
             </div>
           </div>
