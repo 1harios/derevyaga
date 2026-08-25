@@ -77,7 +77,7 @@ export function Hero() {
                       <span aria-hidden className="mx-4 mt-1 h-11 w-px shrink-0 bg-black/10 xl:mx-6" />
                     ) : null}
                     <div>
-                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none">
+                      <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
                         <CountUp value={stat.value} duration={1400 + index * 250} />
                         <span className="text-ink-faint">{stat.suffix}</span>
                       </div>
@@ -205,7 +205,7 @@ export function Hero() {
                   <span aria-hidden className="mx-3 mt-0.5 h-9 w-px shrink-0 bg-black/10" />
                 ) : null}
                 <div className="min-w-0">
-                  <div className="num text-[22px] leading-none">
+                  <div className="num text-[22px] leading-none [font-variant-numeric:normal]">
                     <CountUp value={stat.value} duration={1200 + index * 200} />
                     <span className="text-ink-faint">{stat.suffix}</span>
                   </div>
