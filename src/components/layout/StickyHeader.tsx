@@ -111,7 +111,7 @@ export function StickyHeader() {
                   />
                 </svg>
               </a>
-              <Button href="#final-form" size="sm" arrow className="hidden sm:inline-flex">
+              <Button href="/#final-form" size="sm" arrow className="hidden sm:inline-flex">
                 Оставить заявку
               </Button>
               <MobileNav className="lg:hidden" size="sm" />

@@ -2,10 +2,13 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-
-const STORAGE_KEY = 'derevyaga.cookie-consent'
-
-export type CookieChoice = 'all' | 'necessary'
+import {
+  COOKIE_CONSENT_EVENT,
+  COOKIE_CONSENT_STORAGE_KEY,
+  COOKIE_SETTINGS_EVENT,
+  readCookieChoice,
+  type CookieChoice,
+} from '@/lib/cookie-consent'
 
 /**
  * Баннер cookie. Аналитика не запускается до явного согласия: выбор лежит
@@ -15,13 +18,26 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (!window.localStorage.getItem(STORAGE_KEY)) setVisible(true)
+    const frame = window.requestAnimationFrame(() => {
+      if (!readCookieChoice()) setVisible(true)
+    })
+
+    const showSettings = () => setVisible(true)
+    window.addEventListener(COOKIE_SETTINGS_EVENT, showSettings)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener(COOKIE_SETTINGS_EVENT, showSettings)
+    }
   }, [])
 
   function decide(choice: CookieChoice) {
-    window.localStorage.setItem(STORAGE_KEY, choice)
-    window.dispatchEvent(new CustomEvent('cookie-consent', { detail: choice }))
+    const previousChoice = readCookieChoice()
+    window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, choice)
+    window.dispatchEvent(new CustomEvent<CookieChoice>(COOKIE_CONSENT_EVENT, { detail: choice }))
     setVisible(false)
+
+    // Уже загруженный сторонний скрипт нельзя надёжно выгрузить из страницы.
+    if (previousChoice === 'all' && choice === 'necessary') window.location.reload()
   }
 
   if (!visible) return null

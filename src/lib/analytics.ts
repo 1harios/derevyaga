@@ -25,6 +25,7 @@ declare global {
   interface Window {
     ym?: (counterId: number, action: string, ...args: unknown[]) => void
     __derevyagaEventQueue?: Array<[AnalyticsEvent, EventParams | undefined]>
+    __derevyagaMetrikaInitialized?: boolean
   }
 }
 

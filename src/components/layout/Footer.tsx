@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { CookieSettingsButton } from '@/components/layout/CookieSettingsButton'
 import { company, legalLinks } from '@/content/company'
 import { footerColumns } from '@/content/nav'
 import { telHref } from '@/lib/utils'
@@ -78,7 +79,7 @@ export function Footer() {
             <div className="flex flex-col items-start gap-3 lg:items-end">
               <span className="chip bg-white/10 text-white/80">
                 <span aria-hidden className="size-1.5 rounded-full bg-white/70" />
-                Данные обрабатываются на серверах в РФ
+                Настройки cookie под вашим контролем
               </span>
               <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[14px] muted lg:justify-end">
                 {legalLinks.map((item) => (
@@ -88,6 +89,9 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <CookieSettingsButton />
+                </li>
               </ul>
             </div>
           </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { company } from '@/content/company'
 import { track } from '@/lib/analytics'
@@ -48,13 +49,13 @@ export function StickyCta() {
             <path d="M6.6 3.2 8 6.1 6.4 7.7c.9 1.9 2 3 3.9 3.9L12 10l2.9 1.4c.5.3.7.9.5 1.4l-.7 1.8c-.2.6-.8 1-1.4.9-5-.6-8.8-4.4-9.4-9.4-.1-.6.3-1.2.9-1.4l1.8-.7c.5-.2 1.1 0 1.4.5Z" />
           </svg>
         </a>
-        <a
-          href="#final-form"
+        <Link
+          href="/#final-form"
           tabIndex={visible ? 0 : -1}
           className="btn btn--dark flex-1 shadow-float"
         >
           Рассчитать дом
-        </a>
+        </Link>
       </div>
     </div>
   )

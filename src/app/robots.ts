@@ -10,8 +10,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        // Служебное и без поискового смысла: API, кабинет, юридические заглушки
-        disallow: ['/api/', '/lk', '/legal/'],
+        // Служебные маршруты API не должны обходиться поисковыми роботами.
+        // Кабинет и юридические страницы доступны для обхода, чтобы робот
+        // увидел их meta noindex и корректно исключил из выдачи.
+        disallow: ['/api/'],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

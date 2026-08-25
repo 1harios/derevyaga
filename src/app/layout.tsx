@@ -1,13 +1,18 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
+import { AttributionTracker } from '@/components/layout/AttributionTracker'
 import { AmoChatWidget } from '@/components/layout/AmoChatWidget'
 import { CookieBanner } from '@/components/layout/CookieBanner'
 import { Footer } from '@/components/layout/Footer'
 import { RevealObserver } from '@/components/layout/RevealObserver'
 import { StickyHeader } from '@/components/layout/StickyHeader'
+import { YandexMetrika } from '@/components/layout/YandexMetrika'
 import { StickyCta } from '@/components/ui/StickyCta'
 import { company } from '@/content/company'
 import './globals.css'
 import { siteUrl } from '@/lib/site-url'
+
+const isPreviewDomain = new URL(siteUrl).hostname.endsWith('.vercel.app')
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -24,7 +29,9 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [{ url: '/brand/og-default.png', width: 1640, height: 856 }],
   },
-  robots: { index: true, follow: true },
+  // Публичный Vercel-стенд содержит демонстрационные данные. Боевой домен
+  // автоматически станет индексируемым после настройки NEXT_PUBLIC_SITE_URL.
+  robots: { index: !isPreviewDomain, follow: true },
   alternates: { canonical: '/' },
 }
 
@@ -52,6 +59,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <RevealObserver />
+        <Suspense fallback={null}>
+          <AttributionTracker />
+        </Suspense>
+        <YandexMetrika />
         <StickyHeader />
         <main id="main">{children}</main>
         <Footer />

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { company } from '@/content/company'
 import { mainNav, secondaryNav } from '@/content/nav'
@@ -15,21 +15,64 @@ import { cn, telHref } from '@/lib/utils'
  */
 export function MobileNav({ className, size = 'md' }: { className?: string; size?: 'md' | 'sm' }) {
   const [open, setOpen] = useState(false)
+  const dialogId = useId()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
+    if (!open) return
+
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const frame = window.requestAnimationFrame(() => closeRef.current?.focus())
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setOpen(false)
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      )
+      if (!focusable.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', onKeyDown)
+
     return () => {
+      window.cancelAnimationFrame(frame)
       document.body.style.overflow = ''
+      document.removeEventListener('keydown', onKeyDown)
+      previouslyFocused?.focus()
     }
   }, [open])
 
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Открыть меню"
         aria-expanded={open}
+        aria-controls={dialogId}
         className={cn('icon-btn icon-btn--dark', size === 'sm' ? 'size-10' : 'size-11', className)}
       >
         <span aria-hidden className="relative block h-2.5 w-4">
@@ -40,6 +83,8 @@ export function MobileNav({ className, size = 'md' }: { className?: string; size
       </button>
 
       <div
+        ref={dialogRef}
+        id={dialogId}
         className={cn(
           'fixed inset-0 z-50 overflow-y-auto bg-canvas transition-opacity duration-200 ease-out',
           open ? 'opacity-100' : 'pointer-events-none opacity-0',
@@ -61,6 +106,7 @@ export function MobileNav({ className, size = 'md' }: { className?: string; size
               <Image src="/brand/logo-derevyaga.webp" alt="Деревяга" width={836} height={306} className="h-8 w-auto" />
             </span>
             <button
+              ref={closeRef}
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Закрыть меню"
@@ -112,10 +158,10 @@ export function MobileNav({ className, size = 'md' }: { className?: string; size
               {company.phone}
             </a>
             <p className="text-[14px] muted">{company.workHours}</p>
-            <Button href="#final-form" onClick={() => setOpen(false)} wide arrow>
+            <Button href="/#final-form" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1} wide arrow>
               Оставить заявку
             </Button>
-            <Button href="/lk" variant="outline" wide>
+            <Button href="/lk" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1} variant="outline" wide>
               Личный кабинет
             </Button>
           </div>

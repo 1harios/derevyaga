@@ -165,8 +165,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Планировка: решения + место под чертежи, которых пока нет */}
       <Section>
         <div className="panel">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12">
-            <div>
+          <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12">
+            <div className="min-w-0">
               <p className="eyebrow mb-3">Планировка</p>
               <h2>Что внутри и почему так</h2>
               <p className="lead mt-4">
@@ -185,7 +185,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* ЗАМЕНИТЬ: поэтажные планы от проектировщика */}
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid min-w-0 gap-3 sm:grid-cols-2">
               <AssetPlaceholder
                 what={`План первого этажа «${project.name}» с размерами комнат`}
                 size="1200×900, схема на белом фоне"

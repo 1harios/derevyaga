@@ -1,4 +1,5 @@
 import { normalizePhone } from './utils'
+import { readAttribution } from './attribution'
 
 /**
  * Клиентская часть отправки заявки. Здесь только сбор контекста и вызов
@@ -34,7 +35,7 @@ export type LeadMeta = {
   timeOnSiteSec: number
 }
 
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const
 
 const pageOpenedAt = typeof window !== 'undefined' ? Date.now() : 0
 
@@ -46,7 +47,7 @@ export function collectLeadMeta(): LeadMeta {
   const params = new URLSearchParams(window.location.search)
   const utm: Record<string, string> = {}
   for (const key of UTM_KEYS) {
-    const value = params.get(key) ?? readCookie(key)
+    const value = params.get(key) ?? readAttribution(key) ?? readCookie(key)
     if (value) utm[key] = value
   }
 
@@ -56,8 +57,8 @@ export function collectLeadMeta(): LeadMeta {
     device: navigator.userAgent,
     screen: `${window.screen.width}x${window.screen.height}`,
     utm,
-    yclid: params.get('yclid') ?? readCookie('yclid') ?? undefined,
-    gclid: params.get('gclid') ?? readCookie('gclid') ?? undefined,
+    yclid: params.get('yclid') ?? readAttribution('yclid') ?? readCookie('yclid') ?? undefined,
+    gclid: params.get('gclid') ?? readAttribution('gclid') ?? readCookie('gclid') ?? undefined,
     ymClientId: readCookie('_ym_uid') ?? undefined,
     timeOnSiteSec: Math.round((Date.now() - pageOpenedAt) / 1000),
   }
@@ -86,9 +87,13 @@ export async function submitLead(payload: LeadPayload): Promise<SubmitResult> {
     })
 
     if (!response.ok) {
+      const data = (await response.json().catch(() => null)) as { error?: unknown } | null
       return {
         ok: false,
-        message: 'Не получилось отправить заявку. Попробуйте ещё раз или позвоните нам.',
+        message:
+          typeof data?.error === 'string'
+            ? data.error
+            : 'Не получилось отправить заявку. Попробуйте ещё раз или позвоните нам.',
       }
     }
 

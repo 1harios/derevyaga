@@ -2,39 +2,69 @@ import { NextResponse } from 'next/server'
 import { isAmoConfigured, sendLeadToAmo } from '@/lib/amocrm'
 
 /**
- * Единая точка приёма заявок.
- *
- * Закрыты два слоя: валидация с антиспамом и доставка в amoCRM (сделка
- * с контактом и примечанием — см. src/lib/amocrm.ts). CRM дёргается в фоне
- * после ответа клиенту: заявка к этому моменту уже зафиксирована в логе,
- * поэтому падение CRM не теряет лид и не портит ответ. На третьей итерации
- * добавляются: запись в PostgreSQL, очередь доставки с ретраями и Telegram.
+ * Единая точка приёма заявок: проверяет входные данные, отсекает простой
+ * спам и подтверждает успех только после фактической доставки в amoCRM.
  */
 
 export const runtime = 'nodejs'
-
-type LeadBody = {
-  formType?: string
-  phone?: string
-  name?: string
-  comment?: string
-  area?: number
-  projectSlug?: string
-  calculationId?: string
-  marketingConsent?: boolean
-  companyWebsite?: string
-  fillMs?: number
-  meta?: Record<string, unknown>
-}
 
 const MIN_FILL_MS = 2000
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 5
 const DEDUPE_WINDOW_MS = 5 * 60_000
 
-/** Временное хранилище на процесс. На третьей итерации переезжает в базу. */
+/** Временное хранилище на процесс. Для общего лимита между инстансами нужна БД. */
 const rateLimiter = new Map<string, number[]>()
 const recentLeads = new Map<string, number>()
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function optionalString(value: unknown, maxLength: number): string | undefined {
+  if (typeof value !== 'string') return undefined
+  const result = value.trim().slice(0, maxLength)
+  return result || undefined
+}
+
+function optionalNumber(value: unknown, min: number, max: number): number | undefined {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max) {
+    return undefined
+  }
+  return value
+}
+
+function sanitizeMeta(value: unknown): Record<string, unknown> {
+  if (!isRecord(value)) return {}
+
+  const rawUtm = isRecord(value.utm) ? value.utm : {}
+  const utm = Object.fromEntries(
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+      .map((key) => [key, optionalString(rawUtm[key], 500)] as const)
+      .filter((entry): entry is readonly [string, string] => Boolean(entry[1])),
+  )
+
+  const page = optionalString(value.page, 1000)
+  const referrer = optionalString(value.referrer, 1000)
+  const device = optionalString(value.device, 500)
+  const screen = optionalString(value.screen, 32)
+  const yclid = optionalString(value.yclid, 500)
+  const gclid = optionalString(value.gclid, 500)
+  const ymClientId = optionalString(value.ymClientId, 100)
+  const timeOnSiteSec = optionalNumber(value.timeOnSiteSec, 0, 31_536_000)
+
+  return {
+    ...(page ? { page } : {}),
+    ...(referrer ? { referrer } : {}),
+    ...(device ? { device } : {}),
+    ...(screen ? { screen } : {}),
+    ...(Object.keys(utm).length ? { utm } : {}),
+    ...(yclid ? { yclid } : {}),
+    ...(gclid ? { gclid } : {}),
+    ...(ymClientId ? { ymClientId } : {}),
+    ...(timeOnSiteSec !== undefined ? { timeOnSiteSec } : {}),
+  }
+}
 
 function normalizePhone(input: string): string {
   const digits = input.replace(/\D/g, '')
@@ -56,79 +86,86 @@ function tooManyRequests(ip: string): boolean {
 }
 
 export async function POST(request: Request) {
-  let body: LeadBody
+  let parsed: unknown
 
   try {
-    body = (await request.json()) as LeadBody
+    parsed = await request.json()
   } catch {
     return NextResponse.json({ error: 'Некорректный запрос' }, { status: 400 })
   }
 
+  if (!isRecord(parsed)) {
+    return NextResponse.json({ error: 'Некорректный запрос' }, { status: 400 })
+  }
+
+  const body = parsed
   const ip = clientIp(request)
 
-  // Слой 1: ограничение частоты по IP
   if (tooManyRequests(ip)) {
     return NextResponse.json({ error: 'Слишком много попыток, попробуйте через минуту' }, { status: 429 })
   }
 
-  // Слой 2: honeypot. Человек это поле не видит, бот заполняет.
-  if (body.companyWebsite) {
-    return NextResponse.json({ ok: true }, { status: 200 })
+  // Человек не видит это поле, а простые боты обычно заполняют.
+  if (optionalString(body.companyWebsite, 500)) {
+    return NextResponse.json({ ok: true })
   }
 
-  // Слой 3: слишком быстрое заполнение
-  if (typeof body.fillMs === 'number' && body.fillMs > 0 && body.fillMs < MIN_FILL_MS) {
-    return NextResponse.json({ ok: true }, { status: 200 })
+  const fillMs = optionalNumber(body.fillMs, 0, 86_400_000)
+  if (fillMs !== undefined && fillMs > 0 && fillMs < MIN_FILL_MS) {
+    return NextResponse.json({ ok: true })
   }
 
-  // Валидация на сервере — клиентской не доверяем
-  const phone = normalizePhone(body.phone ?? '')
+  const phone = normalizePhone(optionalString(body.phone, 64) ?? '')
   if (!/^\+7\d{10}$/.test(phone)) {
     return NextResponse.json({ error: 'Проверьте номер телефона' }, { status: 422 })
   }
 
-  const formType = (body.formType ?? 'unknown').slice(0, 64)
-
-  // Идемпотентность: тот же телефон с той же формы в течение 5 минут — не дубль
+  const formType = optionalString(body.formType, 64) ?? 'unknown'
   const dedupeKey = `${phone}:${formType}`
   const previous = recentLeads.get(dedupeKey)
   const now = Date.now()
   if (previous && now - previous < DEDUPE_WINDOW_MS) {
     return NextResponse.json({ ok: true, duplicate: true })
   }
-  recentLeads.set(dedupeKey, now)
 
   const lead = {
     id: crypto.randomUUID(),
     receivedAt: new Date().toISOString(),
     formType,
     phone,
-    name: body.name?.slice(0, 120),
-    comment: body.comment?.slice(0, 2000),
-    area: body.area,
-    projectSlug: body.projectSlug,
-    calculationId: body.calculationId,
-    marketingConsent: Boolean(body.marketingConsent),
-    ip,
-    meta: body.meta ?? {},
+    name: optionalString(body.name, 120),
+    comment: optionalString(body.comment, 2000),
+    area: optionalNumber(body.area, 1, 100_000),
+    projectSlug: optionalString(body.projectSlug, 120),
+    calculationId: optionalString(body.calculationId, 120),
+    marketingConsent: body.marketingConsent === true,
+    meta: sanitizeMeta(body.meta),
   }
 
-  // Сначала фиксируем заявку в логе — это страховка от потери лида,
-  // пока нет базы. На третьей итерации здесь появится запись в PostgreSQL
-  // и очередь доставки с ретраями.
-  console.info('[lead]', JSON.stringify(lead))
+  // В лог не пишем телефон, IP, комментарий и прочие персональные данные.
+  console.info('[lead] received', {
+    id: lead.id,
+    receivedAt: lead.receivedAt,
+    formType: lead.formType,
+  })
 
-  // Доставка в amoCRM. На постоянном сервере (Beget, standalone) — в фоне,
-  // после ответа клиенту. На serverless (Vercel, тестовый стенд) функция
-  // замораживается сразу после ответа и фоновая задача оборвалась бы,
-  // поэтому там доставку ждём до ответа — у адаптера свой таймаут 10 с.
-  if (isAmoConfigured()) {
-    if (process.env.VERCEL) {
-      await sendLeadToAmo(lead)
-    } else {
-      void sendLeadToAmo(lead)
-    }
+  if (!isAmoConfigured()) {
+    console.error('[lead] delivery is not configured', { id: lead.id })
+    return NextResponse.json(
+      { error: 'Сервис заявок временно недоступен. Позвоните нам — ответим сразу.' },
+      { status: 503 },
+    )
   }
 
+  const delivered = await sendLeadToAmo(lead)
+  if (!delivered) {
+    return NextResponse.json(
+      { error: 'Не получилось отправить заявку. Позвоните нам или попробуйте ещё раз.' },
+      { status: 502 },
+    )
+  }
+
+  // Запоминаем заявку как дубль только после успешной доставки.
+  recentLeads.set(dedupeKey, now)
   return NextResponse.json({ ok: true, leadId: lead.id })
 }

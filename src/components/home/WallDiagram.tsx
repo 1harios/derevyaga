@@ -14,12 +14,10 @@ export function WallDiagram() {
   // Схема монохромная: цвет в макете отдан фотографиям, а не диаграммам
   const fills = ['#1e2521', '#c9c7c2', '#8d938c', '#e4e2de', '#8d938c', '#d5d3ce', '#f7f6f4']
 
-  let offset = 0
   const bands = wallLayers.map((layer, index) => {
     const width = (widths[index] / total) * 100
-    const band = { ...layer, x: offset, width, index, fill: fills[index] }
-    offset += width
-    return band
+    const x = (widths.slice(0, index).reduce((sum, value) => sum + value, 0) / total) * 100
+    return { ...layer, x, width, index, fill: fills[index] }
   })
 
   return (

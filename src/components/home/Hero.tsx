@@ -119,7 +119,7 @@ export function Hero() {
                 width={1696}
                 height={2528}
                 priority
-                unoptimized
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-11%] lg:right-auto lg:w-[114%]"
               />
               {/* Тёмный градиент сверху — белые пилюли читаются на любом небе */}
@@ -139,7 +139,7 @@ export function Hero() {
                 width={1696}
                 height={2528}
                 priority
-                unoptimized
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-11%] lg:right-auto lg:w-[114%]"
               />
             </div>
