@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
@@ -107,23 +108,24 @@ export function Hero() {
           </div>
 
           {/* Фото из двух слоёв: фон обрезается скруглённым блоком, а вырезка
-              дома лежит поверх без клипа слева — свес крыши выглядывает
-              за край блока. Ниже lg — один слой с кадром на дом */}
+              дома лежит поверх без клипа слева — козырёк выглядывает за край
+              блока. Кадрирование по референсу: дом крупно, лес сверху.
+              Ниже lg — один слой */}
           <div className="relative min-h-[380px] max-lg:aspect-[4/5] lg:h-full">
             <div className="absolute inset-0 overflow-hidden rounded-2xl">
               <Image
-                src="/photos/hero-fon.webp"
-                alt="Сданный каркасный дом с террасой в сосновом лесу"
-                width={1024}
-                height={1536}
+                src="/photos/hero2-fon.webp"
+                alt="Каркасный дом цвета мха с крыльцом на фоне соснового леса"
+                width={1696}
+                height={2528}
                 priority
-                sizes="(min-width: 1024px) 50vw, 110vw"
-                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_72%] lg:bottom-[-22%] lg:left-[-7.5%] lg:right-auto lg:top-auto lg:h-[124%] lg:w-[111%] lg:object-bottom"
+                sizes="(min-width: 1024px) 52vw, 110vw"
+                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-6.5%] lg:right-auto lg:w-[110%]"
               />
               {/* Тёмный градиент сверху — белые пилюли читаются на любом небе */}
               <div
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-[42%] bg-gradient-to-b from-black/45 via-black/15 to-transparent"
+                className="absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-black/40 via-black/12 to-transparent"
               />
             </div>
 
@@ -132,15 +134,45 @@ export function Hero() {
               className="pointer-events-none absolute inset-0 z-[1] max-lg:hidden [clip-path:inset(0px_0px_0px_-90px_round_36px)]"
             >
               <Image
-                src="/photos/hero-dom-vyrezka.webp"
+                src="/photos/hero2-dom.webp"
                 alt=""
-                width={1024}
-                height={1536}
+                width={1696}
+                height={2528}
                 priority
-                sizes="(min-width: 1024px) 50vw, 110vw"
-                className="absolute bottom-[-22%] left-[-7.5%] h-[124%] w-[111%] max-w-none object-cover object-bottom"
+                sizes="(min-width: 1024px) 52vw, 110vw"
+                className="absolute inset-0 h-full w-full max-w-none object-cover object-[50%_55%] lg:left-[-6.5%] lg:right-auto lg:w-[110%]"
               />
             </div>
+
+            {/* Плашка «Смотреть проекты» по референсу: белая карточка
+                с зелёной круглой кнопкой-стрелкой, нижний левый угол фото */}
+            <Link
+              href="/projects"
+              data-reveal
+              style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
+              className="group/plate absolute bottom-4 left-4 z-[2] flex w-[176px] flex-col rounded-2xl bg-white p-5 shadow-[0_12px_32px_rgba(20,26,22,0.20)] transition-transform duration-200 ease-out hover:-translate-y-0.5 sm:bottom-6 sm:left-6"
+            >
+              <span className="font-sans text-[19px] leading-[1.25] font-medium text-[#1b211d]">
+                Смотреть
+                <br />
+                проекты
+              </span>
+              <span className="mt-4 ml-auto grid size-9 place-items-center rounded-full bg-[#436453] text-white">
+                <svg
+                  viewBox="0 0 14 14"
+                  aria-hidden
+                  className="icon-arrow size-3.5 group-hover/plate:[transform:rotate(45deg)]"
+                >
+                  <path
+                    d="M3 3h8v8M11 3 3 11"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </Link>
 
             {/* Пилюли: «Оставить заявку» слева, телефон и кабинет справа */}
             <div className="absolute inset-x-4 top-6 z-[2] flex flex-wrap items-center justify-between gap-2">
