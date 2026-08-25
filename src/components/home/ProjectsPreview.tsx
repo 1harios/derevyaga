@@ -34,7 +34,11 @@ export function ProjectsPreview() {
 
           <ul
             ref={trackRef}
-            className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            /* На десктопе ручной скролл выключен (lg:overflow-x-hidden):
+               колесо и тачпад не сдвигают ленту при вертикальной прокрутке,
+               листание — только стрелками (программный scrollBy работает
+               и при скрытом overflow). На телефоне остаётся свайп. */
+            className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden"
           >
             {projects.map((project, index) => (
               <li
