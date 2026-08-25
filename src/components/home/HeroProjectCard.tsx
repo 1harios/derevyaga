@@ -11,8 +11,6 @@ import { projects } from '@/content/projects'
  * полупрозрачные круглые стрелки листания справа. Снизу выглядывает
  * следующая карточка — эффект стопки.
  */
-const STARS = [0, 1, 2, 3, 4]
-
 export function HeroProjectCard({ className }: { className?: string } = {}) {
   const [index, setIndex] = useState(0)
   const project = projects[index]
@@ -56,22 +54,10 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
             {project.name} · {project.area} м²
           </span>
 
-          {/* Стеклянный бейдж и золотые звёзды, как в референсе */}
-          <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1.5">
-            <span className="rounded-full border border-white/70 bg-white/15 px-3 py-1 font-sans text-[11.5px] font-medium text-white backdrop-blur-md">
-              {project.tag === 'new' ? 'Новинка' : 'Хит'}
-            </span>
-            <span className="flex gap-0.5">
-              {STARS.map((star) => (
-                <svg key={star} viewBox="0 0 14 14" aria-hidden className="size-3.5">
-                  <path
-                    d="M7 1.1l1.75 3.6 3.95.55-2.88 2.77.7 3.93L7 10.1l-3.52 1.85.7-3.93L1.3 5.25l3.95-.55L7 1.1Z"
-                    fill="#f5b825"
-                  />
-                </svg>
-              ))}
-            </span>
-          </div>
+          {/* Бейдж проекта */}
+          <span className="absolute bottom-3 left-3 rounded-full bg-[#436453] px-2.5 py-1 font-sans text-[11.5px] font-medium text-white">
+            {project.tag === 'new' ? 'Новинка' : 'Хит'}
+          </span>
         </Link>
 
         {/* Полупрозрачные стрелки листания — стекло, как в референсе */}
@@ -80,7 +66,7 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
             type="button"
             onClick={() => shift(-1)}
             aria-label="Предыдущий проект"
-            className="grid size-9 place-items-center rounded-full bg-black/20 text-white ring-1 ring-white/35 backdrop-blur-md transition-colors duration-200 hover:bg-black/35"
+            className="grid size-9 place-items-center rounded-full bg-white/95 text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.15)] transition-colors duration-200 hover:bg-white"
           >
             <svg viewBox="0 0 14 14" aria-hidden className="size-3.5">
               <path d="M7 11V3M3.5 6.5 7 3l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -90,7 +76,7 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
             type="button"
             onClick={() => shift(1)}
             aria-label="Следующий проект"
-            className="grid size-9 place-items-center rounded-full bg-black/20 text-white ring-1 ring-white/35 backdrop-blur-md transition-colors duration-200 hover:bg-black/35"
+            className="grid size-9 place-items-center rounded-full bg-white/95 text-[#1b211d] shadow-[0_1px_4px_rgba(30,37,33,0.15)] transition-colors duration-200 hover:bg-white"
           >
             <svg viewBox="0 0 14 14" aria-hidden className="size-3.5">
               <path d="M7 3v8M3.5 7.5 7 11l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

@@ -96,7 +96,7 @@ export function Hero() {
 
             {/* Мини-карточка проекта — низ панели */}
             <div className="max-lg:hidden">
-              <div className="lg:h-[clamp(170px,24svh,320px)]">
+              <div className="lg:h-[clamp(220px,30svh,360px)]">
                 <HeroProjectCard className="lg:h-full" />
               </div>
             </div>
