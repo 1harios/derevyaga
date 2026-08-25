@@ -150,18 +150,18 @@ export function Hero() {
               href="/projects"
               data-reveal
               style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
-              className="group/plate absolute bottom-4 left-4 z-[2] flex min-h-[170px] w-[168px] flex-col rounded-xl bg-white p-5 pt-7 pl-7 shadow-[0_12px_32px_rgba(20,26,22,0.20)] sm:bottom-6 sm:left-6"
+              className="group/plate absolute bottom-4 left-4 z-[2] flex min-h-[116px] w-[184px] flex-col rounded-[20px] bg-white px-5 py-4 shadow-[0_12px_32px_rgba(20,26,22,0.20)] sm:bottom-6 sm:left-6 sm:w-[194px]"
             >
-              <span className="font-sans text-[20px] leading-[1.25] font-medium text-[#1b211d]">
+              <span className="font-sans text-[17px] leading-[1.15] font-medium text-[#1b211d]">
                 Смотреть
                 <br />
                 <span className="font-normal text-[#6c736d]">проекты</span>
               </span>
-              <span className="mt-auto ml-auto grid size-10 place-items-center rounded-full bg-[#436453] text-white">
+              <span className="mt-auto ml-auto grid size-9 place-items-center rounded-full bg-[#436453] text-white">
                 <svg
                   viewBox="0 0 14 14"
                   aria-hidden
-                  className="icon-arrow size-3.5 group-hover/plate:[transform:rotate(45deg)]"
+                  className="icon-arrow size-3 group-hover/plate:[transform:rotate(45deg)]"
                 >
                   <path
                     d="M3 3h8v8M11 3 3 11"
