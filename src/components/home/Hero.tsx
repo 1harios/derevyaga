@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Image from 'next/image'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { HeroProjectCard } from '@/components/home/HeroProjectCard'
@@ -66,17 +67,17 @@ export function Hero() {
                 </Button>
               </div>
 
-              {/* Цифры как в референсе: сразу под абзацем, растянуты
-                  равномерно на всю ширину панели, с тонкими разделителями */}
+              {/* Цифры как в референсе: крайние блоки прижаты к краям панели,
+                  промежутки между блоками и палочками строго одинаковые */}
               <div
-                className="mt-9 hidden items-start lg:flex"
+                className="mt-9 hidden items-start justify-between gap-4 lg:flex"
                 data-reveal
                 style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
               >
                 {heroStats.map((stat, index) => (
-                  <div key={stat.label} className="flex flex-1 items-start">
+                  <Fragment key={stat.label}>
                     {index > 0 ? (
-                      <span aria-hidden className="mr-4 h-11 w-px shrink-0 bg-black/10 xl:mr-6" />
+                      <span aria-hidden className="h-11 w-px shrink-0 bg-black/10" />
                     ) : null}
                     <div>
                       <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
@@ -87,7 +88,7 @@ export function Hero() {
                         {stat.label}
                       </p>
                     </div>
-                  </div>
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -203,11 +204,11 @@ export function Hero() {
           </div>
 
           {/* Мобильная версия цифр: тот же стиль без плашек, с разделителями */}
-          <div className="flex items-start px-1 lg:hidden" data-reveal>
+          <div className="flex items-start justify-between gap-3 px-1 lg:hidden" data-reveal>
             {heroStats.map((stat, index) => (
-              <div key={stat.label} className="flex flex-1 items-start">
+              <Fragment key={stat.label}>
                 {index > 0 ? (
-                  <span aria-hidden className="mx-3 mt-0.5 h-9 w-px shrink-0 bg-black/10" />
+                  <span aria-hidden className="mt-0.5 h-9 w-px shrink-0 bg-black/10" />
                 ) : null}
                 <div className="min-w-0">
                   <div className="num text-[22px] leading-none [font-variant-numeric:normal]">
@@ -216,7 +217,7 @@ export function Hero() {
                   </div>
                   <p className="mt-1 text-[11.5px] leading-[1.35] muted">{stat.label}</p>
                 </div>
-              </div>
+              </Fragment>
             ))}
           </div>
 
