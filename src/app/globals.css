@@ -1036,3 +1036,37 @@
   letter-spacing: 0.01em;
 }
 
+
+/* ── Кастомный скроллбар в духе дизайн-системы ─────────────────────
+   Тонкий ползунок со скруглением, «парит» за счёт прозрачной рамки;
+   при наведении и захвате окрашивается в фирменный мох. Слайдеры,
+   прячущие свои полосы прокрутки, это не затрагивает. */
+html {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c8c6c1 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c8c6c1;
+  border-radius: 999px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background-color: #4e6254;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

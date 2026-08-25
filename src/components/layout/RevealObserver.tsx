@@ -47,8 +47,16 @@ export function RevealObserver() {
 
       batch.forEach((el) => io.observe(el))
 
+      /* Страховка от сбоя наблюдателя: принудительно проявляем только то,
+         что уже в вьюпорте или выше него. Секции ниже экрана продолжают
+         ждать прокрутки — иначе их анимация проигрывалась заранее. */
       const failsafe = window.setTimeout(() => {
-        batch.forEach((el) => el.classList.add('is-in'))
+        batch.forEach((el) => {
+          if (el.classList.contains('is-in')) return
+          if (el.getBoundingClientRect().top < window.innerHeight * 1.1) {
+            el.classList.add('is-in')
+          }
+        })
         timers.delete(failsafe)
       }, 3000)
       timers.add(failsafe)
