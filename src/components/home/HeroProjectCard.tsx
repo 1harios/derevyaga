@@ -19,36 +19,42 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
 
   return (
     <div className={`relative ${className ?? ''}`} data-reveal>
-      {/* Стопка, как в референсе: из-под карточки выглядывает чистая
-          светлая подложка — краешек следующей карточки */}
-      <div aria-hidden className="absolute inset-x-5 top-6 -bottom-2 -z-10 rounded-xl bg-white/70" />
+      {/* Стопка, как в референсе: из-под карточки заметно выглядывает
+          белый краешек следующей карточки с мягкой тенью */}
+      <div
+        aria-hidden
+        className="absolute inset-x-4 top-6 -bottom-2.5 -z-10 rounded-xl bg-white shadow-[0_6px_18px_rgba(30,37,33,0.10)]"
+      />
 
       <div className="relative h-full overflow-hidden rounded-xl">
-        <Link href={`/projects/${project.slug}`} className="group/card block h-full">
-          <Image
-            key={project.slug}
-            src={project.photo}
-            alt={project.photoAlt}
-            width={900}
-            height={1350}
-            sizes="(min-width: 1024px) 38vw, 92vw"
-            className="aspect-[16/8] w-full object-cover object-[50%_58%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7] lg:aspect-auto lg:h-full"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/55 via-black/20 to-transparent"
-          />
+        {/* Ключ по проекту: при листании контент перемонтируется
+            и проигрывается анимация въезда */}
+        <div key={project.slug} className="hero-card-swap h-full">
+          <Link href={`/projects/${project.slug}`} className="group/card block h-full">
+            <Image
+              src={project.photo}
+              alt={project.photoAlt}
+              width={900}
+              height={1350}
+              sizes="(min-width: 1024px) 38vw, 92vw"
+              className="aspect-[16/8] w-full object-cover object-[50%_58%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7] lg:aspect-auto lg:h-full"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/55 via-black/20 to-transparent"
+            />
 
-          {/* Тег проекта — как метка локации в референсе */}
-          <span className="absolute top-3 left-3 rounded-full bg-white px-3 py-1.5 font-sans text-[12.5px] font-medium text-[#1b211d]">
-            {project.name} · {project.area} м²
-          </span>
+            {/* Тег проекта — как метка локации в референсе */}
+            <span className="absolute top-3 left-3 rounded-full bg-white px-3 py-1.5 font-sans text-[12.5px] font-medium text-[#1b211d]">
+              {project.name} · {project.area} м²
+            </span>
 
-          {/* Бейдж проекта */}
-          <span className="absolute bottom-3 left-3 rounded-full bg-[#436453] px-2.5 py-1 font-sans text-[11.5px] font-medium text-white">
-            {project.tag === 'new' ? 'Новинка' : 'Хит'}
-          </span>
-        </Link>
+            {/* Бейдж проекта */}
+            <span className="absolute bottom-3 left-3 rounded-full bg-[#436453] px-2.5 py-1 font-sans text-[11.5px] font-medium text-white">
+              {project.tag === 'new' ? 'Новинка' : 'Хит'}
+            </span>
+          </Link>
+        </div>
 
         {/* Полупрозрачные стрелки листания — стекло, как в референсе */}
         <div className="absolute top-1/2 right-3 flex -translate-y-1/2 flex-col gap-1.5">

@@ -1035,3 +1035,18 @@
   font-weight: 500;
   letter-spacing: 0.01em;
 }
+
+/* Смена проекта в мини-карточке героя: новая карточка мягко въезжает */
+@keyframes hero-card-swap {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-card-swap {
+  animation: hero-card-swap 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
