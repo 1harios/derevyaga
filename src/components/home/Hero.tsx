@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
@@ -35,9 +34,9 @@ export function Hero() {
             {/* Заголовок и теглайн — верхний ярус */}
             <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
               <h1 className="text-pretty lg:text-[clamp(40px,2vw+20px,54px)] lg:leading-[1.06]" data-reveal>
-                Готовый каркасный дом{' '}
+                Каркасный дом для жизни{' '}
                 <br className="max-md:hidden" />
-                под ключ за 94&nbsp;дня
+                под ключ — за 94&nbsp;дня
               </h1>
 
               {/* Теглайн с линией */}
@@ -47,7 +46,7 @@ export function Hero() {
                 style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
               >
                 <span className="shrink-0 font-sans text-[13px] font-medium text-[#1b211d]">
-                  Санкт-Петербург и Ленинградская область
+                  Строим в Санкт-Петербурге и Ленинградской области
                 </span>
                 <span aria-hidden className="h-px min-w-8 flex-1 bg-black/10" />
               </div>
@@ -63,8 +62,10 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
               >
-                От 78 до 250 м²: проект, фундамент, каркас, кровля, инженерия и отделка.{' '}
-                <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
+                Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+                <span className="text-[#1b211d]">
+                  Стоимость и срок фиксируем в договоре до начала работ.
+                </span>
               </p>
               <div
                 className="mt-6 flex flex-wrap gap-2.5"
@@ -144,36 +145,6 @@ export function Hero() {
               />
             </div>
 
-            {/* Плашка «Смотреть проекты» по референсу: белая карточка
-                с зелёной круглой кнопкой-стрелкой, нижний левый угол фото */}
-            <Link
-              href="/projects"
-              data-reveal
-              style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
-              className="group/plate absolute bottom-4 left-4 z-[2] flex min-h-[116px] w-[184px] flex-col rounded-[20px] bg-white px-5 py-4 shadow-[0_12px_32px_rgba(20,26,22,0.20)] sm:bottom-6 sm:left-6 sm:w-[194px]"
-            >
-              <span className="font-sans text-[17px] leading-[1.15] font-medium text-[#1b211d]">
-                Смотреть
-                <br />
-                <span className="font-normal text-[#6c736d]">проекты</span>
-              </span>
-              <span className="mt-auto ml-auto grid size-9 place-items-center rounded-full bg-[#436453] text-white">
-                <svg
-                  viewBox="0 0 14 14"
-                  aria-hidden
-                  className="icon-arrow size-3 group-hover/plate:[transform:rotate(45deg)]"
-                >
-                  <path
-                    d="M3 3h8v8M11 3 3 11"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </Link>
-
             {/* Пилюли: «Оставить заявку» слева, телефон и кабинет справа */}
             <div className="absolute inset-x-4 top-6 z-[2] flex flex-wrap items-center justify-between gap-2">
               <a href="#final-form" className="btn btn--light btn--sm hidden sm:inline-flex">
@@ -230,8 +201,10 @@ export function Hero() {
           {/* Мобильная копия абзаца и кнопки: после фото */}
           <div className="px-1 pt-1 lg:hidden">
             <p className="font-sans text-[14px] leading-[1.55] text-[#6a6a6a]" data-reveal>
-              От 78 до 250 м²: проект, фундамент, каркас, кровля, инженерия и отделка.{' '}
-              <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
+              Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+              <span className="text-[#1b211d]">
+                Стоимость и срок фиксируем в договоре до начала работ.
+              </span>
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
               <Button href="/calculator" arrow className="max-sm:w-full">
