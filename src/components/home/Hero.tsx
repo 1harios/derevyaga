@@ -66,10 +66,10 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Цифры и мини-карточка проекта — низ панели, только десктоп.
-                Карточка резиновая: занимает остаток высоты панели, чтобы
-                первый экран целиком помещался в вьюпорт */}
-            <div className="flex min-h-0 flex-1 flex-col max-lg:hidden">
+            {/* Цифры и мини-карточка проекта — прижаты к низу панели.
+                Высота карточки ограничена долей вьюпорта, чтобы первый
+                экран целиком помещался на экран */}
+            <div className="mt-auto max-lg:hidden">
               <div
                 className="grid grid-cols-3 gap-4 border-t border-black/[0.06] pt-5"
                 data-reveal
@@ -88,7 +88,7 @@ export function Hero() {
                 ))}
               </div>
 
-              <div className="mt-5 min-h-[150px] flex-1">
+              <div className="mt-5 lg:h-[clamp(180px,26svh,340px)]">
                 <HeroProjectCard className="lg:h-full" />
               </div>
             </div>

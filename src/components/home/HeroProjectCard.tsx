@@ -27,7 +27,7 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
           width={900}
           height={1350}
           sizes="(min-width: 1024px) 38vw, 92vw"
-          className="aspect-[16/8] w-full object-cover object-[50%_62%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7] lg:aspect-auto lg:h-full"
+          className="aspect-[16/8] w-full object-cover object-[50%_62%] transition-transform duration-500 ease-out group-hover/card:scale-[1.03] sm:aspect-[16/7] lg:aspect-auto lg:h-full lg:object-[50%_80%]"
         />
         <div
           aria-hidden
