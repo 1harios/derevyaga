@@ -1,17 +1,30 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { projects } from '@/content/projects'
 
 export function ProjectsPreview() {
   const trackRef = useRef<HTMLUListElement>(null)
+  /* Сдвиг ленты на десктопе. Лента там вообще не скролл-контейнер —
+     двигается только transform'ом по стрелкам, поэтому колесо, тачпад,
+     drag-выделение и восстановление позиции после перезагрузки не могут
+     сдвинуть карточки ни в какой момент. На телефоне остаётся обычный свайп. */
+  const [shiftPx, setShiftPx] = useState(0)
 
   const scrollBy = (direction: 1 | -1) => {
     const track = trackRef.current
     if (!track) return
-    track.scrollBy({ left: direction * track.clientWidth * 0.6, behavior: 'smooth' })
+    const step = direction * track.clientWidth * 0.6
+
+    if (window.innerWidth < 1024) {
+      track.scrollBy({ left: step, behavior: 'smooth' })
+      return
+    }
+
+    const max = track.scrollWidth - track.clientWidth
+    setShiftPx((current) => Math.max(0, Math.min(current + step, max)))
   }
 
   // Панель поднята слоем выше: она накрывает низ конструкции из блока
@@ -32,15 +45,14 @@ export function ProjectsPreview() {
             </p>
           </div>
 
-          <ul
-            ref={trackRef}
-            /* На десктопе ручной скролл выключен (lg:overflow-x-hidden):
-               колесо и тачпад не сдвигают ленту при вертикальной прокрутке,
-               листание — только стрелками (программный scrollBy работает
-               и при скрытом overflow). На телефоне остаётся свайп. */
-            className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden"
-          >
-            {projects.map((project, index) => (
+          {/* Обёртка клипует ленту на десктопе, где она двигается transform'ом */}
+          <div className="lg:-mx-1 lg:overflow-hidden lg:px-1">
+            <ul
+              ref={trackRef}
+              style={{ '--catalog-shift': `${-shiftPx}px` } as React.CSSProperties}
+              className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] lg:mx-0 lg:translate-x-[var(--catalog-shift)] lg:snap-none lg:overflow-visible lg:px-0 lg:transition-transform lg:duration-500 lg:ease-out [&::-webkit-scrollbar]:hidden"
+            >
+              {projects.map((project, index) => (
               <li
                 key={project.slug}
                 data-reveal
@@ -49,8 +61,9 @@ export function ProjectsPreview() {
               >
                 <ProjectCard project={project} priority={index < 2} />
               </li>
-            ))}
-          </ul>
+              ))}
+            </ul>
+          </div>
 
           <div className="mt-6 flex items-center justify-between gap-4">
             <Button href="/projects" arrow>
