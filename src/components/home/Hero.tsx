@@ -28,11 +28,12 @@ export function Hero() {
       <div className="shell">
         <div className="grid gap-3 lg:h-[calc(100svh-16px)] lg:min-h-[700px] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
           {/* Левая панель: шапка, текст, цифры и мини-карточка проекта */}
-          <div className="panel panel--sheen flex flex-col gap-8 pt-6">
+          <div className="panel panel--sheen flex flex-col pt-6">
             <HeaderInline />
 
-            <div>
-              <h1 className="text-pretty" data-reveal>
+            {/* Заголовок и теглайн — верхний ярус */}
+            <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
+              <h1 className="text-pretty lg:text-[clamp(40px,2.5vw+18px,64px)] lg:leading-[1.05]" data-reveal>
                 Готовый каркасный дом{' '}
                 <br className="max-md:hidden" />
                 под ключ за 94&nbsp;дня
@@ -50,10 +51,14 @@ export function Hero() {
                 <span aria-hidden className="h-px min-w-8 flex-1 bg-black/10" />
               </div>
 
-              {/* Абзац, ниже отдельной строкой кнопки — как в референсе.
-                  Ниже lg скрыты: на телефоне идут после фото */}
+            </div>
+
+            {/* Абзац и кнопки — средний ярус, центрируется в свободном
+                пространстве между заголовком и цифрами.
+                Ниже lg скрыт: на телефоне идёт после фото */}
+            <div className="my-auto hidden py-8 lg:block">
               <p
-                className="mt-7 hidden max-w-[440px] font-sans text-[13.5px] leading-[1.55] text-[#6a6a6a] lg:block"
+                className="max-w-[500px] font-sans text-[15px] leading-[1.6] text-[#6a6a6a]"
                 data-reveal
                 style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
               >
@@ -61,7 +66,7 @@ export function Hero() {
                 <span className="text-[#1b211d]">Смета фиксируется в договоре.</span>
               </p>
               <div
-                className="mt-6 hidden flex-wrap gap-2.5 lg:flex"
+                className="mt-6 flex flex-wrap gap-2.5"
                 data-reveal
                 style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
               >
@@ -74,25 +79,24 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Цифры как в референсе: отдельный ярус панели с автоцентровкой —
-                расстояние сверху и снизу одинаковое; крайние блоки по краям,
-                промежутки между блоками и палочками строго равные */}
+            {/* Цифры — якорь низа панели: тонкая линия во всю ширину,
+                крупные числа, равные промежутки между блоками и палочками */}
             <div
-              className="my-auto hidden w-full items-start justify-between gap-4 lg:flex"
+              className="mt-auto hidden w-full items-start justify-between gap-4 border-t border-black/[0.07] pt-6 lg:flex"
               data-reveal
               style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
             >
               {heroStats.map((stat, index) => (
                 <Fragment key={stat.label}>
                   {index > 0 ? (
-                    <span aria-hidden className="h-11 w-px shrink-0 bg-black/10" />
+                    <span aria-hidden className="h-12 w-px shrink-0 bg-black/10" />
                   ) : null}
                   <div>
-                    <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
+                    <div className="num text-[clamp(2rem,1.4rem+1.6vw,2.75rem)] leading-none [font-variant-numeric:normal]">
                       <CountUp value={stat.value} duration={1400 + index * 250} />
                       <span className="text-ink-faint">{stat.suffix}</span>
                     </div>
-                    <p className="mt-2 text-[11px] leading-[1.35] whitespace-nowrap muted xl:text-[12.5px]">
+                    <p className="mt-2 text-[12px] leading-[1.35] whitespace-nowrap muted xl:text-[13.5px]">
                       {stat.label}
                     </p>
                   </div>
