@@ -16,10 +16,10 @@ export function ProjectCard({ project, priority }: { project: Project; priority?
           src={project.photo}
           alt={project.photoAlt}
           width={900}
-          height={1200}
+          height={1350}
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 45vw, 80vw"
           priority={priority}
-          className="aspect-[3/4] w-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.03]"
+          className="aspect-[3/4] w-full object-cover object-top transition-transform duration-200 ease-out group-hover:scale-[1.03]"
         />
 
         {/* Градиент на фирменном мхе: плотный снизу, прозрачный к середине */}
