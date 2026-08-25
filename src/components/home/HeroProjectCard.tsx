@@ -19,11 +19,15 @@ export function HeroProjectCard({ className }: { className?: string } = {}) {
 
   return (
     <div className={`relative ${className ?? ''}`} data-reveal>
-      {/* Стопка, как в референсе: из-под карточки заметно выглядывает
-          белый краешек следующей карточки с мягкой тенью */}
+      {/* Стопка, как в референсе: под карточкой выглядывают ДВЕ плашки —
+          каждая ниже и уже предыдущей */}
       <div
         aria-hidden
         className="absolute inset-x-4 top-6 -bottom-2.5 -z-10 rounded-xl bg-white shadow-[0_6px_18px_rgba(30,37,33,0.10)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-9 top-10 -bottom-5 -z-20 rounded-xl bg-white/60 shadow-[0_6px_16px_rgba(30,37,33,0.08)]"
       />
 
       <div className="relative h-full overflow-hidden rounded-xl">
