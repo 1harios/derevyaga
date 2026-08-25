@@ -150,16 +150,14 @@ export function Hero() {
               href="/projects"
               data-reveal
               style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
-              className="group/plate absolute bottom-4 left-4 z-[2] flex w-[188px] flex-col rounded-xl bg-white p-5 shadow-[0_12px_32px_rgba(20,26,22,0.20)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-[#4e6254] sm:bottom-6 sm:left-6"
+              className="group/plate absolute bottom-4 left-4 z-[2] flex min-h-[170px] w-[168px] flex-col rounded-xl bg-white p-5 pt-7 pl-7 shadow-[0_12px_32px_rgba(20,26,22,0.20)] sm:bottom-6 sm:left-6"
             >
-              <span className="font-sans text-[20px] leading-[1.25] font-medium text-[#1b211d] transition-colors duration-200 group-hover/plate:text-white">
+              <span className="font-sans text-[20px] leading-[1.25] font-medium text-[#1b211d]">
                 Смотреть
                 <br />
-                <span className="font-normal text-[#6c736d] transition-colors duration-200 group-hover/plate:text-white/75">
-                  проекты
-                </span>
+                <span className="font-normal text-[#6c736d]">проекты</span>
               </span>
-              <span className="mt-4 ml-auto grid size-10 place-items-center rounded-full bg-[#436453] text-white transition-colors duration-200 group-hover/plate:bg-white group-hover/plate:text-[#4e6254]">
+              <span className="mt-auto ml-auto grid size-10 place-items-center rounded-full bg-[#436453] text-white">
                 <svg
                   viewBox="0 0 14 14"
                   aria-hidden
