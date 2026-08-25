@@ -14,26 +14,16 @@ import { projects } from '@/content/projects'
 export function HeroProjectCard({ className }: { className?: string } = {}) {
   const [index, setIndex] = useState(0)
   const project = projects[index]
-  const next = projects[(index + 1) % projects.length]
   const shift = (delta: number) =>
     setIndex((value) => (value + delta + projects.length) % projects.length)
 
   return (
     <div className={`relative ${className ?? ''}`} data-reveal>
-      {/* Стопка: следующая карточка выглядывает из-под текущей */}
-      <div aria-hidden className="absolute inset-x-3 top-6 -bottom-2 -z-10 overflow-hidden rounded-2xl">
-        <Image
-          key={next.slug}
-          src={next.photo}
-          alt=""
-          width={900}
-          height={1350}
-          sizes="30vw"
-          className="h-full w-full object-cover object-[50%_58%] brightness-[0.85] blur-[1px]"
-        />
-      </div>
+      {/* Стопка, как в референсе: из-под карточки выглядывает чистая
+          светлая подложка — краешек следующей карточки */}
+      <div aria-hidden className="absolute inset-x-5 top-6 -bottom-2 -z-10 rounded-xl bg-white/70" />
 
-      <div className="relative h-full overflow-hidden rounded-2xl">
+      <div className="relative h-full overflow-hidden rounded-xl">
         <Link href={`/projects/${project.slug}`} className="group/card block h-full">
           <Image
             key={project.slug}
