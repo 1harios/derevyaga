@@ -33,7 +33,7 @@ export function Hero() {
 
             {/* Заголовок и теглайн — верхний ярус */}
             <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
-              <h1 className="text-pretty lg:text-[clamp(40px,2.5vw+18px,64px)] lg:leading-[1.05]" data-reveal>
+              <h1 className="text-pretty lg:text-[clamp(40px,2vw+20px,54px)] lg:leading-[1.06]" data-reveal>
                 Готовый каркасный дом{' '}
                 <br className="max-md:hidden" />
                 под ключ за 94&nbsp;дня
