@@ -65,16 +65,18 @@ export function Hero() {
                   Рассчитать смету
                 </Button>
               </div>
-            </div>
 
-            {/* Цифры как в референсе: без плашек, с тонкими вертикальными
-                разделителями. Ниже — мини-карточка проекта, блок прижат к низу */}
-            <div className="mt-auto max-lg:hidden">
-              <div className="flex items-start" data-reveal style={{ '--reveal-delay': '260ms' } as React.CSSProperties}>
+              {/* Цифры как в референсе: сразу под абзацем, растянуты
+                  равномерно на всю ширину панели, с тонкими разделителями */}
+              <div
+                className="mt-9 hidden items-start lg:flex"
+                data-reveal
+                style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
+              >
                 {heroStats.map((stat, index) => (
-                  <div key={stat.label} className="flex items-start">
+                  <div key={stat.label} className="flex flex-1 items-start">
                     {index > 0 ? (
-                      <span aria-hidden className="mx-4 mt-1 h-11 w-px shrink-0 bg-black/10 xl:mx-6" />
+                      <span aria-hidden className="mr-4 h-11 w-px shrink-0 bg-black/10 xl:mr-6" />
                     ) : null}
                     <div>
                       <div className="num text-[clamp(1.7rem,1.2rem+1.3vw,2.3rem)] leading-none [font-variant-numeric:normal]">
@@ -88,8 +90,11 @@ export function Hero() {
                   </div>
                 ))}
               </div>
+            </div>
 
-              <div className="mt-6 lg:h-[clamp(170px,24svh,320px)]">
+            {/* Мини-карточка проекта — прижата к низу панели */}
+            <div className="mt-auto max-lg:hidden">
+              <div className="lg:h-[clamp(170px,24svh,320px)]">
                 <HeroProjectCard className="lg:h-full" />
               </div>
             </div>
