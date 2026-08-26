@@ -957,7 +957,7 @@
   position: fixed !important;
   top: auto !important;
   left: auto !important;
-  right: 8px !important;
+  right: 4px !important;
   bottom: 20px !important;
   transition: right 0.2s ease-out, bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
@@ -966,7 +966,7 @@
   position: fixed !important;
   top: auto !important;
   left: auto !important;
-  right: 8px !important;
+  right: 4px !important;
   bottom: 92px !important;
   max-width: calc(100vw - 40px) !important;
   max-height: calc(100vh - 112px) !important;
@@ -978,7 +978,7 @@
  * чтобы перебить мобильные правила самого виджета. */
 @media (max-width: 1023px) {
   .amo-button-holder {
-    right: 12px !important;
+    right: 8px !important;
   }
 
   .sticky-cta-visible .amo-button-holder {
