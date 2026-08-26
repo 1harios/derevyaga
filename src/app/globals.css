@@ -962,10 +962,26 @@
   transition: right 0.2s ease-out, bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
 
-.contact-launcher-ready .amo-button-holder > .amo-button,
 .contact-launcher-ready .amo-button-holder > .amo-button__iframe {
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+.contact-launcher-ready .amo-button-holder > .amo-button.amo-button {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  fill: transparent !important;
+  pointer-events: none !important;
+}
+
+.contact-launcher-ready .amo-button-holder > .amo-button .amo-button--main-icon {
+  opacity: 0 !important;
+}
+
+.contact-launcher-ready .amo-button-holder .amo-livechat.amo-livechat_chat {
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .contact-launcher {
