@@ -1,8 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { company } from '@/content/company'
 import { amoChatSnippet } from '@/content/integrations'
+import { track } from '@/lib/analytics'
 import { COOKIE_CONSENT_EVENT, readCookieChoice, type CookieChoice } from '@/lib/cookie-consent'
+
+declare global {
+  interface Window {
+    amoSocialButton?: (method: string, callback?: (...args: unknown[]) => void) => void
+  }
+}
 
 /**
  * Онлайн-чат amoCRM («Кнопка на сайт»). Диалоги падают прямо в amoCRM:
@@ -14,6 +22,11 @@ import { COOKIE_CONSENT_EVENT, readCookieChoice, type CookieChoice } from '@/lib
  * Пустой сниппет и режим статического превью — чат выключен.
  */
 export function AmoChatWidget() {
+  const [isReady, setIsReady] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const launcherRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEMO_MODE === '1') return
 
@@ -58,6 +71,16 @@ export function AmoChatWidget() {
       script.id = 'amo-chat-snippet'
       script.textContent = code
       document.body.appendChild(script)
+
+      window.amoSocialButton?.('onChatReady', () => {
+        document.documentElement.classList.add('contact-launcher-ready')
+        setIsReady(true)
+      })
+      window.amoSocialButton?.('onChatShow', () => {
+        setIsOpen(false)
+        setIsChatOpen(true)
+      })
+      window.amoSocialButton?.('onChatHide', () => setIsChatOpen(false))
     }
 
     const onConsent = (event: Event) => {
@@ -66,8 +89,87 @@ export function AmoChatWidget() {
 
     if (readCookieChoice() === 'all') mount()
     window.addEventListener(COOKIE_CONSENT_EVENT, onConsent)
-    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, onConsent)
+    return () => {
+      window.removeEventListener(COOKIE_CONSENT_EVENT, onConsent)
+      document.documentElement.classList.remove('contact-launcher-ready')
+    }
   }, [])
 
-  return null
+  useEffect(() => {
+    if (!isOpen) return
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!launcherRef.current?.contains(event.target as Node)) setIsOpen(false)
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    document.addEventListener('pointerdown', closeOnOutsideClick)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [isOpen])
+
+  if (!isReady) return null
+
+  const openOnlineChat = () => {
+    setIsOpen(false)
+    track('chat_open')
+    window.amoSocialButton?.('runChatShow')
+  }
+
+  return (
+    <div
+      ref={launcherRef}
+      className={`contact-launcher${isChatOpen ? ' contact-launcher--chat-open' : ''}`}
+    >
+      <div id="contact-launcher-menu" className={`contact-launcher__menu${isOpen ? ' is-open' : ''}`}>
+        <div className="contact-launcher__heading">
+          <strong>Напишите нам</strong>
+          <span>Ответим в рабочее время</span>
+        </div>
+
+        <div className="contact-launcher__options">
+          <a
+            href={company.vk}
+            target="_blank"
+            rel="noreferrer"
+            className="contact-launcher__option"
+            onClick={() => track('messenger_click', { service: 'vk' })}
+          >
+            <span className="contact-launcher__service-icon contact-launcher__service-icon--vk" aria-hidden>VK</span>
+            <span>ВКонтакте</span>
+          </a>
+          <a
+            href={company.telegram}
+            target="_blank"
+            rel="noreferrer"
+            className="contact-launcher__option"
+            onClick={() => track('messenger_click', { service: 'telegram' })}
+          >
+            <span className="contact-launcher__service-icon contact-launcher__service-icon--telegram" aria-hidden>➤</span>
+            <span>Телеграм</span>
+          </a>
+          <button type="button" className="contact-launcher__option" onClick={openOnlineChat}>
+            <span className="contact-launcher__service-icon contact-launcher__service-icon--chat" aria-hidden>•••</span>
+            <span>Онлайн-чат</span>
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className={`contact-launcher__trigger${isOpen ? ' is-open' : ''}`}
+        aria-label={isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'}
+        aria-expanded={isOpen}
+        aria-controls="contact-launcher-menu"
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span className="contact-launcher__bubble" aria-hidden><i /><i /><i /></span>
+      </button>
+    </div>
+  )
 }

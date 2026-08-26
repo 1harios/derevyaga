@@ -14,6 +14,7 @@ export const company = {
   phone: '+7 (812) 000-00-00',
   email: 'info@derevyaga.example',
   telegram: 'https://t.me/derevyaga',
+  vk: 'https://vk.com/derevyaga',
   whatsapp: 'https://wa.me/78120000000',
   address: 'Санкт-Петербург, ЗАМЕНИТЬ: улица, дом, офис',
   workHours: 'Пн–Сб, 9:00–20:00',

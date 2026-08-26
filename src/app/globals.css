@@ -962,6 +962,222 @@
   transition: right 0.2s ease-out, bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
 
+.contact-launcher-ready .amo-button-holder {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.contact-launcher {
+  position: fixed;
+  z-index: 9999;
+  right: 4px;
+  bottom: 20px;
+  transition: bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.2s ease;
+}
+
+.contact-launcher--chat-open {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-launcher__trigger {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: #fff;
+  box-shadow: 0 12px 32px rgb(20 32 25 / 24%);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-launcher__trigger:hover {
+  background: var(--color-brand-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgb(20 32 25 / 28%);
+}
+
+.contact-launcher__trigger:focus-visible {
+  outline: 3px solid rgb(78 98 84 / 34%);
+  outline-offset: 4px;
+}
+
+.contact-launcher__bubble {
+  position: relative;
+  display: flex;
+  width: 28px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 8px;
+  background: currentColor;
+}
+
+.contact-launcher__bubble::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.contact-launcher__bubble i {
+  position: relative;
+  z-index: 1;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  transition: background 0.2s ease;
+}
+
+.contact-launcher__trigger:hover .contact-launcher__bubble i {
+  background: var(--color-brand-deep);
+}
+
+.contact-launcher__trigger.is-open .contact-launcher__bubble {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+}
+
+.contact-launcher__trigger.is-open .contact-launcher__bubble i {
+  opacity: 0;
+}
+
+.contact-launcher__trigger.is-open .contact-launcher__bubble::before,
+.contact-launcher__trigger.is-open .contact-launcher__bubble::after {
+  content: '';
+  position: absolute;
+  inset: 11px 1px auto;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  clip-path: none;
+}
+
+.contact-launcher__trigger.is-open .contact-launcher__bubble::before {
+  transform: rotate(45deg);
+}
+
+.contact-launcher__trigger.is-open .contact-launcher__bubble::after {
+  transform: rotate(-45deg);
+}
+
+.contact-launcher__menu {
+  position: absolute;
+  right: 8px;
+  bottom: calc(100% + 12px);
+  width: min(280px, calc(100vw - 28px));
+  padding: 18px;
+  border: 1px solid rgb(30 37 33 / 8%);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 97%);
+  box-shadow: 0 20px 56px rgb(20 32 25 / 20%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.97);
+  transform-origin: right bottom;
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1);
+  backdrop-filter: blur(14px);
+}
+
+.contact-launcher__menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.contact-launcher__heading {
+  display: grid;
+  gap: 2px;
+  padding: 0 4px 14px;
+}
+
+.contact-launcher__heading strong {
+  color: var(--color-ink);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.contact-launcher__heading span {
+  color: var(--color-ink-soft);
+  font-size: 12px;
+}
+
+.contact-launcher__options {
+  display: grid;
+  gap: 6px;
+}
+
+.contact-launcher__option {
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.contact-launcher__option:hover {
+  background: var(--color-panel);
+  transform: translateX(2px);
+}
+
+.contact-launcher__option:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 1px;
+}
+
+.contact-launcher__service-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.contact-launcher__service-icon--vk {
+  background: #2787f5;
+}
+
+.contact-launcher__service-icon--telegram {
+  padding-right: 2px;
+  background: #2aabee;
+  font-size: 18px;
+  transform: rotate(-12deg);
+}
+
+.contact-launcher__service-icon--chat {
+  padding-bottom: 7px;
+  background: var(--color-brand);
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
 .amo-livechat {
   position: fixed !important;
   top: auto !important;
@@ -981,7 +1197,12 @@
     right: 8px !important;
   }
 
-  .sticky-cta-visible .amo-button-holder {
+  .contact-launcher {
+    right: 8px;
+  }
+
+  .sticky-cta-visible .amo-button-holder,
+  .sticky-cta-visible .contact-launcher {
     bottom: calc(76px + env(safe-area-inset-bottom)) !important;
   }
 }
@@ -1046,6 +1267,15 @@
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-launcher,
+  .contact-launcher__trigger,
+  .contact-launcher__menu,
+  .contact-launcher__option {
+    transition: none;
+  }
 }
 
 
