@@ -38,15 +38,17 @@ export function ProjectsPreview() {
       startScrollLeft: event.currentTarget.scrollLeft,
       moved: false,
     }
-    event.currentTarget.setPointerCapture(event.pointerId)
-    setIsDragging(true)
   }
 
   const moveDragging = (event: ReactPointerEvent<HTMLUListElement>) => {
     const drag = dragRef.current
     if (!drag.active || event.pointerId !== drag.pointerId) return
     const distance = event.clientX - drag.startX
-    if (Math.abs(distance) > 4) drag.moved = true
+    if (Math.abs(distance) > 4 && !drag.moved) {
+      drag.moved = true
+      event.currentTarget.setPointerCapture(event.pointerId)
+      setIsDragging(true)
+    }
     if (!drag.moved) return
     event.preventDefault()
     event.currentTarget.scrollLeft = drag.startScrollLeft - distance
