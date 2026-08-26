@@ -1,30 +1,79 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
+import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { projects } from '@/content/projects'
 
 export function ProjectsPreview() {
   const trackRef = useRef<HTMLUListElement>(null)
-  /* Сдвиг ленты на десктопе. Лента там вообще не скролл-контейнер —
-     двигается только transform'ом по стрелкам, поэтому колесо, тачпад,
-     drag-выделение и восстановление позиции после перезагрузки не могут
-     сдвинуть карточки ни в какой момент. На телефоне остаётся обычный свайп. */
-  const [shiftPx, setShiftPx] = useState(0)
+  const dragRef = useRef({ active: false, pointerId: -1, startX: 0, startScrollLeft: 0, moved: false })
+  const suppressClickRef = useRef(false)
+  const [isDragging, setIsDragging] = useState(false)
 
   const scrollBy = (direction: 1 | -1) => {
     const track = trackRef.current
     if (!track) return
-    const step = direction * track.clientWidth * 0.6
+    const cards = Array.from(track.children) as HTMLElement[]
+    const step = cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth * 0.6
+    track.scrollBy({ left: direction * step, behavior: 'smooth' })
+  }
 
-    if (window.innerWidth < 1024) {
-      track.scrollBy({ left: step, behavior: 'smooth' })
-      return
+  const snapToNearestCard = () => {
+    const track = trackRef.current
+    if (!track) return
+    const cards = Array.from(track.children) as HTMLElement[]
+    const step = cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : 0
+    if (!step) return
+    track.scrollTo({ left: Math.round(track.scrollLeft / step) * step, behavior: 'smooth' })
+  }
+
+  const startDragging = (event: ReactPointerEvent<HTMLUListElement>) => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return
+    dragRef.current = {
+      active: true,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: event.currentTarget.scrollLeft,
+      moved: false,
     }
+    event.currentTarget.setPointerCapture(event.pointerId)
+    setIsDragging(true)
+  }
 
-    const max = track.scrollWidth - track.clientWidth
-    setShiftPx((current) => Math.max(0, Math.min(current + step, max)))
+  const moveDragging = (event: ReactPointerEvent<HTMLUListElement>) => {
+    const drag = dragRef.current
+    if (!drag.active || event.pointerId !== drag.pointerId) return
+    const distance = event.clientX - drag.startX
+    if (Math.abs(distance) > 4) drag.moved = true
+    if (!drag.moved) return
+    event.preventDefault()
+    event.currentTarget.scrollLeft = drag.startScrollLeft - distance
+  }
+
+  const stopDragging = (event: ReactPointerEvent<HTMLUListElement>) => {
+    const drag = dragRef.current
+    if (!drag.active || event.pointerId !== drag.pointerId) return
+    drag.active = false
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    setIsDragging(false)
+
+    if (drag.moved) {
+      suppressClickRef.current = true
+      window.setTimeout(() => {
+        suppressClickRef.current = false
+      }, 120)
+      requestAnimationFrame(snapToNearestCard)
+    }
+  }
+
+  const preventCardClickAfterDrag = (event: ReactMouseEvent<HTMLUListElement>) => {
+    if (!suppressClickRef.current) return
+    event.preventDefault()
+    event.stopPropagation()
   }
 
   // Панель поднята слоем выше: она накрывает низ конструкции из блока
@@ -45,12 +94,20 @@ export function ProjectsPreview() {
             </p>
           </div>
 
-          {/* Обёртка клипует ленту на десктопе, где она двигается transform'ом */}
+          {/* Нативная горизонтальная лента: свайп на телефоне, тачпад и
+              перетаскивание мышью на компьютере. */}
           <div className="lg:-mx-1 lg:overflow-hidden lg:px-1">
             <ul
               ref={trackRef}
-              style={{ '--catalog-shift': `${-shiftPx}px` } as React.CSSProperties}
-              className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] lg:mx-0 lg:translate-x-[var(--catalog-shift)] lg:snap-none lg:overflow-visible lg:px-0 lg:transition-transform lg:duration-500 lg:ease-out [&::-webkit-scrollbar]:hidden"
+              onPointerDown={startDragging}
+              onPointerMove={moveDragging}
+              onPointerUp={stopDragging}
+              onPointerCancel={stopDragging}
+              onClickCapture={preventCardClickAfterDrag}
+              onDragStart={(event) => event.preventDefault()}
+              className={`-mx-1 flex gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden ${
+                isDragging ? 'cursor-grabbing snap-none select-none' : 'cursor-grab snap-x snap-mandatory'
+              }`}
             >
               {projects.map((project, index) => (
               <li
@@ -75,17 +132,17 @@ export function ProjectsPreview() {
                 type="button"
                 onClick={() => scrollBy(-1)}
                 aria-label="Предыдущие проекты"
-                className="icon-btn"
+                className="icon-btn catalog-nav-btn catalog-nav-btn--prev"
               >
-                ←
+                <LuArrowLeft aria-hidden />
               </button>
               <button
                 type="button"
                 onClick={() => scrollBy(1)}
                 aria-label="Следующие проекты"
-                className="icon-btn"
+                className="icon-btn catalog-nav-btn catalog-nav-btn--next"
               >
-                →
+                <LuArrowRight aria-hidden />
               </button>
             </div>
           </div>

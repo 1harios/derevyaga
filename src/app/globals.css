@@ -603,6 +603,34 @@
     cursor: not-allowed;
   }
 
+  /* Стрелки каталога продолжают язык основных кнопок: тёмная круглая
+     «монетка», тонкая иконка и деревянный акцент при наведении. */
+  .catalog-nav-btn {
+    border: 1px solid rgb(255 255 255 / 10%);
+    background: var(--color-dark);
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .catalog-nav-btn:hover {
+    background: var(--color-wood);
+  }
+
+  .catalog-nav-btn svg {
+    width: 19px;
+    height: 19px;
+    stroke-width: 1.7;
+    transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .catalog-nav-btn--prev:hover svg {
+    transform: translateX(-2px);
+  }
+
+  .catalog-nav-btn--next:hover svg {
+    transform: translateX(2px);
+  }
+
   /* Плашка-чип: теги, метки на фото, статусы */
   .chip {
     display: inline-flex;
