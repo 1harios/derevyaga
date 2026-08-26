@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { FaTelegram, FaVk } from 'react-icons/fa6'
+import { LuMessageCircleMore } from 'react-icons/lu'
+import { ArrowIcon } from '@/components/ui/Button'
 import { company } from '@/content/company'
 import { amoChatSnippet } from '@/content/integrations'
 import { track } from '@/lib/analytics'
@@ -130,6 +133,17 @@ export function AmoChatWidget() {
     )
   }
 
+  const closeOnlineChat = () => {
+    if (window.amoSocialButton) {
+      window.amoSocialButton('runChatHide')
+      return
+    }
+
+    document.querySelector<HTMLElement>('.amo-button')?.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true, view: window }),
+    )
+  }
+
   return (
     <div
       ref={launcherRef}
@@ -149,12 +163,12 @@ export function AmoChatWidget() {
             className="contact-launcher__option"
             onClick={() => track('messenger_click', { service: 'vk' })}
           >
-            <span className="contact-launcher__service-icon" aria-hidden>ВК</span>
+            <span className="contact-launcher__service-icon" aria-hidden><FaVk /></span>
             <span className="contact-launcher__option-copy">
               <strong>ВКонтакте</strong>
               <small>Сообщения сообщества</small>
             </span>
-            <span className="contact-launcher__option-arrow" aria-hidden>↗</span>
+            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
           </a>
           <a
             href={company.telegram}
@@ -163,31 +177,37 @@ export function AmoChatWidget() {
             className="contact-launcher__option"
             onClick={() => track('messenger_click', { service: 'telegram' })}
           >
-            <span className="contact-launcher__service-icon" aria-hidden>ТГ</span>
+            <span className="contact-launcher__service-icon" aria-hidden><FaTelegram /></span>
             <span className="contact-launcher__option-copy">
               <strong>Телеграм</strong>
               <small>Перейти в мессенджер</small>
             </span>
-            <span className="contact-launcher__option-arrow" aria-hidden>↗</span>
+            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
           </a>
           <button type="button" className="contact-launcher__option" onClick={openOnlineChat}>
-            <span className="contact-launcher__service-icon" aria-hidden>•••</span>
+            <span className="contact-launcher__service-icon" aria-hidden><LuMessageCircleMore /></span>
             <span className="contact-launcher__option-copy">
               <strong>Онлайн-чат</strong>
               <small>Ответим прямо на сайте</small>
             </span>
-            <span className="contact-launcher__option-arrow" aria-hidden>→</span>
+            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
           </button>
         </div>
       </div>
 
       <button
         type="button"
-        className={`contact-launcher__trigger${isOpen ? ' is-open' : ''}`}
-        aria-label={isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'}
+        className={`contact-launcher__trigger${isOpen || isChatOpen ? ' is-open' : ''}`}
+        aria-label={isChatOpen ? 'Закрыть онлайн-чат' : isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'}
         aria-expanded={isOpen}
         aria-controls="contact-launcher-menu"
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => {
+          if (isChatOpen) {
+            closeOnlineChat()
+            return
+          }
+          setIsOpen((open) => !open)
+        }}
       >
         <span className="contact-launcher__bubble" aria-hidden><i /><i /><i /></span>
       </button>

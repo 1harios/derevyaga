@@ -986,15 +986,15 @@
 
 .contact-launcher {
   position: fixed;
-  z-index: 9999;
+  z-index: 2147483647;
   right: 4px;
   bottom: 20px;
   transition: bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.2s ease;
 }
 
 .contact-launcher--chat-open {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .contact-launcher__trigger {
@@ -1174,9 +1174,11 @@
   border-radius: 14px;
   background: var(--color-brand-tint);
   color: var(--color-brand-deep);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+}
+
+.contact-launcher__service-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 .contact-launcher__option-copy {
@@ -1210,13 +1212,22 @@
   border-radius: 50%;
   background: var(--color-panel);
   color: var(--color-brand-deep);
-  font-size: 14px;
   transition: background 0.18s ease, color 0.18s ease;
 }
 
+.contact-launcher__option-arrow svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
 .contact-launcher__option:hover .contact-launcher__option-arrow {
-  background: var(--color-brand);
+  background: var(--color-wood);
   color: #fff;
+}
+
+.contact-launcher__option:hover .contact-launcher__option-arrow svg {
+  transform: rotate(45deg);
 }
 
 .amo-livechat {
