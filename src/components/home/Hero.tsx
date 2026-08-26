@@ -10,7 +10,7 @@ import { telHref } from '@/lib/utils'
  * Первый экран: серая панель-ячейка слева и фото справа, как в исходной
  * компоновке — дом-вырезка выходит за рамку фотоблока (двухслойный приём).
  * Внутри панели: крупный заголовок, теглайн с линией, абзац с кнопкой
- * «Рассчитать смету» и строка цифр с разделителями. На фото — пилюли
+ * «Рассчитать проект» и строка цифр с разделителями. На фото — пилюли
  * «Оставить заявку», телефон и личный кабинет.
  */
 
@@ -34,9 +34,9 @@ export function Hero() {
             {/* Заголовок и теглайн — верхний ярус */}
             <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
               <h1 className="text-pretty lg:text-[clamp(40px,2vw+20px,54px)] lg:leading-[1.06]" data-reveal>
-                Каркасный дом для жизни{' '}
+                Строительство{' '}
                 <br className="max-md:hidden" />
-                под ключ — за 94&nbsp;дня
+                Каркасных домов
               </h1>
 
               {/* Теглайн с линией */}
@@ -45,10 +45,10 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
               >
-                <span className="shrink-0 font-sans text-[13px] font-medium text-[#1b211d]">
+                <span className="min-w-0 font-sans text-[12.5px] font-medium text-[#1b211d] sm:shrink-0 sm:text-[13px]">
                   Строим в Санкт-Петербурге и Ленинградской области
                 </span>
-                <span aria-hidden className="h-px min-w-8 flex-1 bg-black/10" />
+                <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-black/10 sm:block" />
               </div>
 
             </div>
@@ -73,7 +73,7 @@ export function Hero() {
                 style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
               >
                 <Button href="/calculator" arrow>
-                  Рассчитать смету
+                  Рассчитать проект
                 </Button>
                 <Button href="/projects" variant="outline">
                   Каталог объектов
@@ -208,7 +208,7 @@ export function Hero() {
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
               <Button href="/calculator" arrow className="max-sm:w-full">
-                Рассчитать смету
+                Рассчитать проект
               </Button>
               <Button href="/projects" variant="outline" className="max-sm:w-full">
                 Каталог объектов
@@ -216,21 +216,21 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Мобильная версия цифр: тот же стиль без плашек, с разделителями */}
-          <div className="flex items-start justify-between gap-3 px-1 lg:hidden" data-reveal>
+          {/* На узких экранах цифры собраны в один спокойный список. */}
+          <div className="rounded-[18px] border border-line bg-panel px-4 lg:hidden" data-reveal>
             {heroStats.map((stat, index) => (
-              <Fragment key={stat.label}>
-                {index > 0 ? (
-                  <span aria-hidden className="mt-0.5 h-9 w-px shrink-0 bg-black/10" />
-                ) : null}
-                <div className="min-w-0">
-                  <div className="num text-[22px] leading-none [font-variant-numeric:normal]">
+              <div
+                key={stat.label}
+                className={`grid grid-cols-[76px_minmax(0,1fr)] items-center gap-4 py-3.5 ${
+                  index > 0 ? 'border-t border-line' : ''
+                }`}
+              >
+                  <div className="num text-[25px] leading-none [font-variant-numeric:normal]">
                     <CountUp value={stat.value} duration={1200 + index * 200} />
                     <span className="text-ink-faint">{stat.suffix}</span>
                   </div>
-                  <p className="mt-1 text-[11.5px] leading-[1.35] muted">{stat.label}</p>
-                </div>
-              </Fragment>
+                  <p className="text-[12.5px] leading-[1.4] muted">{stat.label}</p>
+              </div>
             ))}
           </div>
 

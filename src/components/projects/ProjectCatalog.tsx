@@ -150,12 +150,12 @@ export function ProjectCatalog() {
                 Сбросить фильтры
               </button>
             ) : null}
-            <label className="flex items-center gap-2 text-[14px] muted">
+            <label className="flex w-full flex-col items-stretch gap-2 text-[14px] muted sm:w-auto sm:flex-row sm:items-center">
               Сортировка
               <select
                 value={sort}
                 onChange={(event) => setSort(event.target.value as SortId)}
-                className="field-input min-h-10 w-auto cursor-pointer rounded-full py-1.5 pl-4 pr-3 text-[14px] text-ink"
+                className="field-input min-h-11 w-full cursor-pointer rounded-full py-1.5 pl-4 pr-3 text-[14px] text-ink sm:w-auto"
               >
                 {SORTS.map((item) => (
                   <option key={item.id} value={item.id}>

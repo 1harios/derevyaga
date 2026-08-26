@@ -14,16 +14,16 @@ export function CalcSummary({ result, compact }: { result: CalcResult; compact?:
       </div>
 
       <dl className="mt-6 space-y-2 border-t border-white/12 pt-5 text-[15px]">
-        <div className="flex items-baseline justify-between gap-4">
-          <dt className="muted">Срок стройки</dt>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+          <dt className="min-w-0 muted">Срок стройки</dt>
           <dd className="tabular-nums">{pluralized(result.days, ['день', 'дня', 'дней'])}</dd>
         </div>
 
         <p className="muted pt-3 text-[13px]">Из чего складывается середина диапазона</p>
 
         {result.breakdown.map((row) => (
-          <div key={row.label} className="flex items-baseline justify-between gap-4">
-            <dt className="muted">{row.label}</dt>
+          <div key={row.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+            <dt className="min-w-0 muted">{row.label}</dt>
             <dd className="shrink-0 tabular-nums">{formatPrice(row.value)}</dd>
           </div>
         ))}
@@ -34,8 +34,8 @@ export function CalcSummary({ result, compact }: { result: CalcResult; compact?:
           <p className="muted mb-3 text-[13px]">График платежей</p>
           <ul className="space-y-1.5 text-[14px]">
             {result.payments.map((payment) => (
-              <li key={payment.stage} className="flex items-baseline justify-between gap-4">
-                <span className="muted">{payment.stage}</span>
+              <li key={payment.stage} className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+                <span className="min-w-0 muted">{payment.stage}</span>
                 <span className="shrink-0 tabular-nums">
                   {Math.round(payment.share * 100)}% · {formatPrice(payment.amount)}
                 </span>

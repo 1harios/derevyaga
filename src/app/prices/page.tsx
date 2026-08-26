@@ -155,9 +155,12 @@ export default function PricesPage() {
                   <p className="mt-1.5 text-[13px] leading-[1.5] muted">{factor.note}</p>
                   <dl className="mt-4 space-y-2 border-t border-line pt-4 text-[14px]">
                     {factor.rows.map((row) => (
-                      <div key={row.name} className="flex items-baseline justify-between gap-4">
+                      <div
+                        key={row.name}
+                        className="flex flex-col gap-0.5 min-[360px]:flex-row min-[360px]:items-baseline min-[360px]:justify-between min-[360px]:gap-4"
+                      >
                         <dt className="muted">{row.name}</dt>
-                        <dd className="shrink-0 tabular-nums">{row.value}</dd>
+                        <dd className="tabular-nums min-[360px]:text-right">{row.value}</dd>
                       </div>
                     ))}
                   </dl>

@@ -65,7 +65,7 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
               onClick={() => setShowAfter(value)}
               aria-pressed={showAfter === value}
               className={cn(
-                'min-h-8 rounded-full px-3.5 font-sans text-[13px] transition-colors duration-200 ease-out',
+                'min-h-11 rounded-full px-4 font-sans text-[13px] transition-colors duration-200 ease-out',
                 showAfter === value ? 'bg-[#436453] text-white' : 'text-[#1b211d] hover:bg-black/[0.04]',
               )}
             >

@@ -7,7 +7,7 @@ export function CookieSettingsButton() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(COOKIE_SETTINGS_EVENT))}
-      className="link-underline text-left"
+      className="link-underline inline-flex min-h-11 items-center text-left"
     >
       Настройки cookie
     </button>

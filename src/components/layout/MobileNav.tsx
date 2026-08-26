@@ -13,7 +13,7 @@ import { cn, telHref } from '@/lib/utils'
  * внутри первого экрана и в плавающей шапке при прокрутке — у каждой свой
  * экземпляр со своим состоянием, поэтому лишних связей между ними нет.
  */
-export function MobileNav({ className, size = 'md' }: { className?: string; size?: 'md' | 'sm' }) {
+export function MobileNav({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
   const dialogId = useId()
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -73,7 +73,7 @@ export function MobileNav({ className, size = 'md' }: { className?: string; size
         aria-label="Открыть меню"
         aria-expanded={open}
         aria-controls={dialogId}
-        className={cn('icon-btn icon-btn--dark', size === 'sm' ? 'size-10' : 'size-11', className)}
+        className={cn('icon-btn icon-btn--dark size-11', className)}
       >
         <span aria-hidden className="relative block h-2.5 w-4">
           <span className="absolute inset-x-0 top-0 h-px bg-current" />

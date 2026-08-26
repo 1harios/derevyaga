@@ -29,7 +29,7 @@ export function HeaderInline() {
       </Link>
 
       {/* На мобильном ссылки не помещаются — там кнопка меню */}
-      <MobileNav className="md:hidden" size="sm" />
+      <MobileNav className="md:hidden" />
 
       <nav aria-label="Основное меню" className="hidden md:block">
         <ul className="flex items-center gap-5 xl:gap-8">

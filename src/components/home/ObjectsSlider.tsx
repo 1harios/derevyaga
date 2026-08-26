@@ -222,7 +222,7 @@ export function ObjectsSlider() {
             })}
           </div>
 
-          <Button href="/objects" variant="light" arrow className="min-h-full lg:px-8">
+          <Button href="/objects" variant="light" arrow className="w-full lg:min-h-full lg:w-auto lg:px-8">
             Все объекты
           </Button>
         </div>

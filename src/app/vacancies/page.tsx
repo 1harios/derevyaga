@@ -65,9 +65,13 @@ export default function VacanciesPage() {
                   <h3 className="text-[clamp(1.2rem,1.05rem+0.6vw,1.5rem)]">{vacancy.title}</h3>
                   <p className="mt-2 text-[15px] leading-[1.6] muted">{vacancy.summary}</p>
                 </div>
-                <div className="shrink-0 text-left sm:text-right">
-                  <div className="num text-[20px]">{vacancy.pay}</div>
-                  <div className="mt-1 text-[13px] muted">{vacancy.format}</div>
+                <div className="min-w-0 max-w-full text-left sm:shrink-0 sm:text-right">
+                  <div className="num text-[18px] [overflow-wrap:anywhere] sm:text-[20px]">
+                    {vacancy.pay}
+                  </div>
+                  <div className="mt-1 text-[13px] leading-[1.45] muted [overflow-wrap:anywhere]">
+                    {vacancy.format}
+                  </div>
                 </div>
               </div>
 
