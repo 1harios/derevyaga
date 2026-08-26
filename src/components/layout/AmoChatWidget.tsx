@@ -118,7 +118,16 @@ export function AmoChatWidget() {
   const openOnlineChat = () => {
     setIsOpen(false)
     track('chat_open')
-    window.amoSocialButton?.('runChatShow')
+    if (window.amoSocialButton) {
+      window.amoSocialButton('runChatShow')
+      return
+    }
+
+    // В отдельных браузерах amoCRM убирает публичную функцию после запуска.
+    // Тогда открываем чат через его штатную кнопку, оставленную в DOM.
+    document.querySelector<HTMLElement>('.amo-button')?.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true, view: window }),
+    )
   }
 
   return (
@@ -128,8 +137,8 @@ export function AmoChatWidget() {
     >
       <div id="contact-launcher-menu" className={`contact-launcher__menu${isOpen ? ' is-open' : ''}`}>
         <div className="contact-launcher__heading">
-          <strong>Напишите нам</strong>
-          <span>Ответим в рабочее время</span>
+          <strong>Связаться с нами</strong>
+          <span>Выберите удобный способ</span>
         </div>
 
         <div className="contact-launcher__options">
@@ -140,8 +149,12 @@ export function AmoChatWidget() {
             className="contact-launcher__option"
             onClick={() => track('messenger_click', { service: 'vk' })}
           >
-            <span className="contact-launcher__service-icon contact-launcher__service-icon--vk" aria-hidden>VK</span>
-            <span>ВКонтакте</span>
+            <span className="contact-launcher__service-icon" aria-hidden>ВК</span>
+            <span className="contact-launcher__option-copy">
+              <strong>ВКонтакте</strong>
+              <small>Сообщения сообщества</small>
+            </span>
+            <span className="contact-launcher__option-arrow" aria-hidden>↗</span>
           </a>
           <a
             href={company.telegram}
@@ -150,12 +163,20 @@ export function AmoChatWidget() {
             className="contact-launcher__option"
             onClick={() => track('messenger_click', { service: 'telegram' })}
           >
-            <span className="contact-launcher__service-icon contact-launcher__service-icon--telegram" aria-hidden>➤</span>
-            <span>Телеграм</span>
+            <span className="contact-launcher__service-icon" aria-hidden>ТГ</span>
+            <span className="contact-launcher__option-copy">
+              <strong>Телеграм</strong>
+              <small>Перейти в мессенджер</small>
+            </span>
+            <span className="contact-launcher__option-arrow" aria-hidden>↗</span>
           </a>
           <button type="button" className="contact-launcher__option" onClick={openOnlineChat}>
-            <span className="contact-launcher__service-icon contact-launcher__service-icon--chat" aria-hidden>•••</span>
-            <span>Онлайн-чат</span>
+            <span className="contact-launcher__service-icon" aria-hidden>•••</span>
+            <span className="contact-launcher__option-copy">
+              <strong>Онлайн-чат</strong>
+              <small>Ответим прямо на сайте</small>
+            </span>
+            <span className="contact-launcher__option-arrow" aria-hidden>→</span>
           </button>
         </div>
       </div>
