@@ -21,12 +21,17 @@ export function StickyCta() {
       const finalFormVisible = finalForm
         ? finalForm.getBoundingClientRect().top < window.innerHeight
         : false
-      setVisible(passedHero && !finalFormVisible)
+      const nextVisible = passedHero && !finalFormVisible
+      setVisible(nextVisible)
+      document.documentElement.classList.toggle('sticky-cta-visible', nextVisible)
     }
 
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      document.documentElement.classList.remove('sticky-cta-visible')
+    }
   }, [])
 
   return (

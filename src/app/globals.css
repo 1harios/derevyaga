@@ -957,15 +957,16 @@
   position: fixed !important;
   top: auto !important;
   left: auto !important;
-  right: 20px !important;
+  right: 8px !important;
   bottom: 20px !important;
+  transition: right 0.2s ease-out, bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
 
 .amo-livechat {
   position: fixed !important;
   top: auto !important;
   left: auto !important;
-  right: 20px !important;
+  right: 8px !important;
   bottom: 92px !important;
   max-width: calc(100vw - 40px) !important;
   max-height: calc(100vh - 112px) !important;
@@ -975,6 +976,16 @@
 /* На телефонах amo раскрывает чат на всю высоту — отдаём ему весь экран,
  * иначе окно упирается в отступ снизу и вылезает за верх. Селектор по id —
  * чтобы перебить мобильные правила самого виджета. */
+@media (max-width: 1023px) {
+  .amo-button-holder {
+    right: 12px !important;
+  }
+
+  .sticky-cta-visible .amo-button-holder {
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
 @media (max-width: 640px) {
   #amo-livechat {
     top: 0 !important;
