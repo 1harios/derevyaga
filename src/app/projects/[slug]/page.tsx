@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { Fragment } from 'react'
 import { FinalCta } from '@/components/home/FinalCta'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { ComplectationColumns } from '@/components/ui/ComparisonTable'
 import { AssetPlaceholder } from '@/components/ui/Placeholder'
-import { Breadcrumbs } from '@/components/ui/Primitives'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import { StagesTimeline } from '@/components/ui/Timeline'
@@ -42,13 +42,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const project = projects.find((item) => item.slug === slug)
   if (!project) notFound()
 
-  const specs = [
-    { label: 'Площадь', value: `${project.area} м²` },
-    { label: 'Этажность', value: project.floorsLabel },
-    { label: 'Спальни', value: String(project.bedrooms) },
-    { label: 'Санузлы', value: String(project.bathrooms) },
-    { label: 'Терраса', value: `${project.terrace} м²` },
-    { label: 'Срок под ключ', value: pluralized(project.days, ['день', 'дня', 'дней']) },
+  const heroStats = [
+    { value: String(project.area), suffix: ' м²', label: 'площадь дома' },
+    { value: String(project.bedrooms), suffix: '', label: 'спальни в проекте' },
+    { value: String(project.days), suffix: '', label: 'дней срок под ключ' },
   ]
 
   /** Похожие — ближайшие по площади, кроме текущего */
@@ -76,72 +73,95 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Первый экран проекта: панель с шапкой слева, фото на всю высоту справа */}
+      {/* Первый экран проекта повторяет композицию главной: типографический
+          блок слева, фотография во всю высоту справа, цифры — якорь низа. */}
       <section className="pt-1">
         <div className="shell">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
+          <div className="grid gap-3 lg:h-[calc(100svh-16px)] lg:min-h-[700px] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
             <div className="panel panel--sheen flex flex-col pt-6">
               <HeaderInline />
 
-              <div className="mt-4 md:mt-8">
-                <Breadcrumbs
-                  items={[
-                    { href: '/', label: 'Главная' },
-                    { href: '/projects', label: 'Проекты' },
-                    { label: `${project.name} ${project.area} м²` },
-                  ]}
-                />
+              <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
+                <h1 className="text-pretty lg:text-[clamp(40px,2vw+20px,54px)] lg:leading-[1.06]" data-reveal>
+                  {project.name}
+                  <br />
+                  {project.area} м² · {project.floorsLabel.toLowerCase()}
+                </h1>
+
+                <div
+                  className="mt-4 flex items-center gap-4"
+                  data-reveal
+                  style={{ '--reveal-delay': '100ms' } as React.CSSProperties}
+                >
+                  <span className="min-w-0 font-sans text-[12.5px] font-medium text-ink sm:shrink-0 sm:text-[13px]">
+                    {pluralized(project.bedrooms, ['спальня', 'спальни', 'спален'])} ·{' '}
+                    {pluralized(project.bathrooms, ['санузел', 'санузла', 'санузлов'])} · терраса {project.terrace} м²
+                  </span>
+                  <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-black/10 sm:block" />
+                </div>
               </div>
 
-              <div className="flex flex-1 flex-col justify-between gap-8 pt-2">
-                <div>
-                  <h1 className="text-pretty" data-reveal>
-                    {project.name} — {project.floorsLabel.toLowerCase()},
-                    <br />
-                    {project.area} м²
-                  </h1>
-                  <p className="lead mt-5 max-w-xl" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
-                    {project.summary}
+              <div className="my-auto py-8 lg:py-6">
+                <p
+                  className="max-w-[520px] font-sans text-[15px] leading-[1.6] text-ink-soft"
+                  data-reveal
+                  style={{ '--reveal-delay': '180ms' } as React.CSSProperties}
+                >
+                  {project.summary}
+                </p>
+
+                <div
+                  className="mt-6 flex flex-wrap items-end gap-x-8 gap-y-3"
+                  data-reveal
+                  style={{ '--reveal-delay': '220ms' } as React.CSSProperties}
+                >
+                  <div>
+                    <div className="text-[12px] text-ink-soft">Цена в базовой комплектации</div>
+                    <div className="num mt-1 text-[clamp(1.75rem,1.35rem+1.3vw,2.4rem)]">
+                      от {formatPrice(project.priceFrom)}
+                    </div>
+                  </div>
+                  <p className="max-w-[245px] pb-1 text-[12.5px] leading-[1.5] text-ink-soft">
+                    Цена и состав работ фиксируются в договоре до начала строительства.
                   </p>
-
-                  <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-4" data-reveal style={{ '--reveal-delay': '170ms' } as React.CSSProperties}>
-                    <div>
-                      <div className="text-[13px] muted">Цена в базовой комплектации</div>
-                      <div className="num mt-1 text-[clamp(1.6rem,1.2rem+1.6vw,2.4rem)]">
-                        от {formatPrice(project.priceFrom)}
-                      </div>
-                    </div>
-                    <div className="max-w-[240px] text-[13px] leading-[1.5] muted">
-                      Смета фиксируется в договоре: за подорожание материалов доплачивать
-                      не придётся.
-                    </div>
-                  </div>
-
-                  <div className="mt-7 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '250ms' } as React.CSSProperties}>
-                    <Button href="#final-form" arrow>
-                      Получить смету проекта
-                    </Button>
-                    <Button href="/calculator" variant="outline">
-                      Пересчитать под себя
-                    </Button>
-                  </div>
                 </div>
 
-                {/* Характеристики прижаты к низу панели, на одной линии с низом фото */}
-                <dl className="grid grid-cols-3 gap-x-4 gap-y-5 border-t border-line pt-6 sm:grid-cols-6 lg:grid-cols-3 xl:grid-cols-6">
-                  {specs.map((spec) => (
-                    <div key={spec.label}>
-                      <dt className="text-[13px] muted">{spec.label}</dt>
-                      <dd className="mt-1 font-heading text-[16px] font-medium tabular-nums">
-                        {spec.value}
-                      </dd>
+                <div
+                  className="mt-6 flex flex-wrap gap-2.5"
+                  data-reveal
+                  style={{ '--reveal-delay': '270ms' } as React.CSSProperties}
+                >
+                  <Button href="#final-form" arrow>
+                    Получить смету проекта
+                  </Button>
+                  <Button href="/calculator" variant="outline">
+                    Пересчитать под себя
+                  </Button>
+                </div>
+              </div>
+
+              <div
+                className="mt-auto flex w-full items-start justify-between gap-3 border-t border-black/[0.07] pt-6"
+                data-reveal
+                style={{ '--reveal-delay': '300ms' } as React.CSSProperties}
+              >
+                {heroStats.map((stat, index) => (
+                  <Fragment key={stat.label}>
+                    {index > 0 ? <span aria-hidden className="h-12 w-px shrink-0 bg-black/10" /> : null}
+                    <div className="min-w-0 flex-1">
+                      <div className="num text-[clamp(1.6rem,1.2rem+1.35vw,2.4rem)] leading-none">
+                        {stat.value}<span className="text-ink-faint">{stat.suffix}</span>
+                      </div>
+                      <p className="mt-2 text-[11.5px] leading-[1.35] text-ink-soft sm:text-[12.5px]">
+                        {stat.label}
+                      </p>
                     </div>
-                  ))}
-                </dl>
+                  </Fragment>
+                ))}
               </div>
             </div>
 
-            <div className="relative min-h-[380px] max-lg:aspect-[4/5] lg:h-auto">
+            <div className="relative min-h-[380px] max-lg:aspect-[4/5] lg:h-full">
               <div className="absolute inset-0 overflow-hidden rounded-2xl">
                 <Image
                   src={project.photo}
