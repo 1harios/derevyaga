@@ -6,6 +6,7 @@ import { FinalCta } from '@/components/home/FinalCta'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { ComplectationColumns } from '@/components/ui/ComparisonTable'
+import { CountUp } from '@/components/ui/CountUp'
 import { AssetPlaceholder } from '@/components/ui/Placeholder'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Section, SectionHeader } from '@/components/ui/Section'
@@ -43,9 +44,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound()
 
   const heroStats = [
-    { value: String(project.area), suffix: ' м²', label: 'площадь дома' },
-    { value: String(project.bedrooms), suffix: '', label: 'спальни в проекте' },
-    { value: String(project.days), suffix: '', label: 'дней срок под ключ' },
+    { value: project.area, suffix: ' м²', label: 'площадь дома' },
+    { value: project.bedrooms, suffix: '', label: 'спальни в проекте' },
+    { value: project.days, suffix: '', label: 'дней срок под ключ' },
   ]
 
   /** Похожие — ближайшие по площади, кроме текущего */
@@ -150,7 +151,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     {index > 0 ? <span aria-hidden className="h-12 w-px shrink-0 bg-black/10" /> : null}
                     <div className="min-w-0 flex-1">
                       <div className="num text-[clamp(1.6rem,1.2rem+1.35vw,2.4rem)] leading-none">
-                        {stat.value}<span className="text-ink-faint">{stat.suffix}</span>
+                        <CountUp value={stat.value} duration={1400 + index * 250} />
+                        <span className="text-ink-faint">{stat.suffix}</span>
                       </div>
                       <p className="mt-2 text-[11.5px] leading-[1.35] text-ink-soft sm:text-[12.5px]">
                         {stat.label}
