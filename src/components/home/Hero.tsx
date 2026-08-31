@@ -4,7 +4,8 @@ import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
 import { company } from '@/content/company'
-import { telHref } from '@/lib/utils'
+import { projects } from '@/content/projects'
+import { formatPrice, telHref } from '@/lib/utils'
 
 /**
  * Первый экран: серая панель-ячейка слева и фото справа, как в исходной
@@ -17,10 +18,12 @@ import { telHref } from '@/lib/utils'
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
     Как в референсе: просто цифры с тонкими разделителями, без плашек */
 const heroStats = [
-  { value: 94, suffix: '~', label: 'дня средний срок стройки' },
+  { value: 2, suffix: '', label: 'дня на расчёт сметы для банка' },
   { value: 5, suffix: '+', label: 'лет гарантии на конструктив' },
   { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
 ]
+
+const minimumProjectPrice = Math.min(...projects.map((project) => project.priceFrom))
 
 export function Hero() {
   return (
@@ -33,10 +36,19 @@ export function Hero() {
 
             {/* Заголовок и теглайн — верхний ярус */}
             <div className="mt-8 lg:mt-[clamp(2rem,5svh,3.5rem)]">
+              <div
+                className="mb-4 flex flex-wrap gap-2"
+                data-reveal
+              >
+                <span className="chip chip--brand">Семейная ипотека</span>
+                <span className="chip chip--brand">Материнский капитал</span>
+                <span className="chip chip--brand">Рассрочка по этапам</span>
+              </div>
+
               <h1 className="text-pretty lg:text-[clamp(40px,2vw+20px,54px)] lg:leading-[1.06]" data-reveal>
-                Строительство{' '}
-                <br className="max-md:hidden" />
-                Каркасных домов
+                Каркасные дома
+                <br />
+                от {formatPrice(minimumProjectPrice)}
               </h1>
 
               {/* Теглайн с линией */}
@@ -46,7 +58,7 @@ export function Hero() {
                 style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
               >
                 <span className="min-w-0 font-sans text-[12.5px] font-medium text-[#1b211d] sm:shrink-0 sm:text-[13px]">
-                  Строим в Санкт-Петербурге и Ленинградской области
+                  Цены на сайте актуальны · фиксируем в договоре
                 </span>
                 <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-black/10 sm:block" />
               </div>
@@ -62,9 +74,9 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
               >
-                Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+                Дома для постоянного проживания в Санкт-Петербурге и Ленинградской области.{' '}
                 <span className="text-[#1b211d]">
-                  Стоимость и срок фиксируем в договоре до начала работ.
+                  Работаем с ипотекой и маткапиталом, готовим документы для банка.
                 </span>
               </p>
               <div
@@ -72,11 +84,11 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
               >
-                <Button href="/calculator" arrow>
-                  Рассчитать проект
+                <Button href="/projects" arrow>
+                  Выбрать дом
                 </Button>
-                <Button href="/projects" variant="outline">
-                  Каталог объектов
+                <Button href="/mortgage" variant="outline">
+                  Рассчитать ипотеку
                 </Button>
               </div>
             </div>
@@ -201,17 +213,17 @@ export function Hero() {
           {/* Мобильная копия абзаца и кнопки: после фото */}
           <div className="px-1 pt-1 lg:hidden">
             <p className="font-sans text-[14px] leading-[1.55] text-[#6a6a6a]" data-reveal>
-              Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+              Дома для постоянного проживания в Санкт-Петербурге и Ленинградской области.{' '}
               <span className="text-[#1b211d]">
-                Стоимость и срок фиксируем в договоре до начала работ.
+                Работаем с ипотекой и маткапиталом, готовим документы для банка.
               </span>
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
-              <Button href="/calculator" arrow className="max-sm:w-full">
-                Рассчитать проект
+              <Button href="/projects" arrow className="max-sm:w-full">
+                Выбрать дом
               </Button>
-              <Button href="/projects" variant="outline" className="max-sm:w-full">
-                Каталог объектов
+              <Button href="/mortgage" variant="outline" className="max-sm:w-full">
+                Рассчитать ипотеку
               </Button>
             </div>
           </div>

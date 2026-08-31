@@ -2,6 +2,7 @@ import { BuildStepsBlock } from '@/components/home/BuildStepsBlock'
 import { CabinetBlock } from '@/components/home/CabinetBlock'
 import { FaqBlock } from '@/components/home/FaqBlock'
 import { FinalCta } from '@/components/home/FinalCta'
+import { FeaturedHomes } from '@/components/home/FeaturedHomes'
 import { Hero } from '@/components/home/Hero'
 import { WhyUsBlock } from '@/components/home/WhyUsBlock'
 import { ObjectsSlider } from '@/components/home/ObjectsSlider'
@@ -57,6 +58,7 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <Hero />
+      <FeaturedHomes />
       <WhyUsBlock />
       <TechnologyBlock />
       <ProjectsPreview />

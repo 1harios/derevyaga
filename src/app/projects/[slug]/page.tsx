@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Fragment } from 'react'
 import { FinalCta } from '@/components/home/FinalCta'
@@ -16,6 +17,15 @@ import { projects, projectTagLabels } from '@/content/projects'
 import { totalDays } from '@/content/stages'
 import { formatPrice, pluralized } from '@/lib/utils'
 import { siteUrl } from '@/lib/site-url'
+
+const constructionMaterials = [
+  { label: 'Фундамент', value: 'Свайно-винтовой с обвязкой' },
+  { label: 'Каркас', value: 'Брус камерной сушки 45×195 мм' },
+  { label: 'Утепление', value: 'Стены 200 мм · кровля 250 мм · пол 200 мм' },
+  { label: 'Защита стен', value: 'Ветрозащита, пароизоляция и вентзазор' },
+  { label: 'Кровля', value: 'Металлочерепица с водостоком' },
+  { label: 'Фасад', value: 'Имитация бруса, покраска в два слоя' },
+]
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
@@ -128,6 +138,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </div>
 
                 <div
+                  className="mt-4 flex flex-wrap gap-2"
+                  data-reveal
+                  style={{ '--reveal-delay': '245ms' } as React.CSSProperties}
+                >
+                  <Link href="/mortgage" className="chip chip--brand">Семейная ипотека</Link>
+                  <Link href="/mortgage" className="chip chip--brand">Материнский капитал</Link>
+                  <span className="chip">Цена актуальна</span>
+                </div>
+
+                <div
                   className="mt-6 flex flex-wrap gap-2.5"
                   data-reveal
                   style={{ '--reveal-delay': '270ms' } as React.CSSProperties}
@@ -184,6 +204,29 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
+      <Section>
+        <div className="panel">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-12">
+            <div>
+              <p className="eyebrow mb-3">В базовой цене</p>
+              <h2 className="text-pretty">Что входит и из чего строим</h2>
+              <p className="mt-4 max-w-sm text-[14px] leading-[1.55] text-ink-soft">
+                Основные материалы уже учтены в стоимости проекта. Точный объём и марки закрепляем в смете до договора.
+              </p>
+            </div>
+
+            <ul className="grid gap-x-6 sm:grid-cols-2">
+              {constructionMaterials.map((item) => (
+                <li key={item.label} className="border-t border-line py-4">
+                  <span className="text-[12px] text-ink-soft">{item.label}</span>
+                  <p className="mt-1 text-[15px] leading-[1.45] text-ink">{item.value}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
       {/* Планировка: решения + место под чертежи, которых пока нет */}
       <Section>
         <div className="panel">
@@ -236,8 +279,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <SectionHeader
           align="center"
           eyebrow="Комплектации"
-          title={`В каком виде можно заказать «${project.name}»`}
-          description="Конструктив, утепление и узлы одинаковые во всех трёх вариантах — разница в объёме работ. Цена «от» на этой странице указана за базовую комплектацию."
+          title={`Что входит в цену «${project.name}»`}
+          description="Конструктив одинаковый во всех вариантах. Выберите уровень готовности: каркас, под чистовую или под ключ."
         />
         <ComplectationColumns />
       </Section>

@@ -1,25 +1,38 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { projectTagLabels, type Project } from '@/content/projects'
-import { formatPrice, pluralized } from '@/lib/utils'
+import { cn, formatPrice, pluralized } from '@/lib/utils'
 
 /**
  * Карточка каталога по присланному образцу: фото на всю площадь, снизу
  * фирменный градиент, поверх него цена крупно, строка характеристик,
  * тонкий разделитель и мелкая подпись.
  */
-export function ProjectCard({ project, priority }: { project: Project; priority?: boolean }) {
+export function ProjectCard({
+  project,
+  priority,
+  variant = 'default',
+}: {
+  project: Project
+  priority?: boolean
+  variant?: 'default' | 'large'
+}) {
+  const large = variant === 'large'
+
   return (
-    <article className="group relative isolate overflow-hidden rounded-xl">
+    <article className={cn('group relative isolate overflow-hidden', large ? 'rounded-2xl' : 'rounded-xl')}>
       <Link href={`/projects/${project.slug}`} className="block">
         <Image
           src={project.photo}
           alt={project.photoAlt}
           width={900}
           height={1350}
-          sizes="(min-width: 1280px) 25vw, (min-width: 768px) 45vw, 80vw"
+          sizes={large ? '(min-width: 768px) 50vw, 100vw' : '(min-width: 1280px) 25vw, (min-width: 768px) 45vw, 80vw'}
           priority={priority}
-          className="aspect-[3/4] w-full object-cover object-top transition-transform duration-200 ease-out group-hover:scale-[1.03]"
+          className={cn(
+            'w-full object-cover object-top transition-transform duration-200 ease-out group-hover:scale-[1.03]',
+            large ? 'aspect-[4/3] sm:aspect-[16/10]' : 'aspect-[3/4]',
+          )}
         />
 
         {/* Градиент на фирменном мхе: плотный снизу, прозрачный к середине */}
@@ -38,15 +51,15 @@ export function ProjectCard({ project, priority }: { project: Project; priority?
           </span>
         ) : null}
 
-        <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+        <div className={cn('absolute inset-x-0 bottom-0 text-white', large ? 'p-5 sm:p-7' : 'p-5')}>
           <div className="flex items-end justify-between gap-4">
-            <span className="num text-[clamp(1.25rem,1.05rem+0.7vw,1.6rem)]">
+            <span className={cn('num', large ? 'text-[clamp(1.65rem,1.3rem+1.2vw,2.25rem)]' : 'text-[clamp(1.25rem,1.05rem+0.7vw,1.6rem)]')}>
               от {formatPrice(project.priceFrom)}
             </span>
           </div>
 
           <div className="mt-3 flex items-end justify-between gap-4">
-            <span className="text-[14px] leading-snug text-white/85">
+            <span className={cn('leading-snug text-white/85', large ? 'text-[15px] sm:text-[17px]' : 'text-[14px]')}>
               {project.name}
               <br />
               {project.floorsLabel.toLowerCase()}
@@ -65,7 +78,7 @@ export function ProjectCard({ project, priority }: { project: Project; priority?
           </div>
 
           <div className="mt-4 border-t border-white/25 pt-3 text-[13px] text-white/70">
-            Срок {pluralized(project.days, ['день', 'дня', 'дней'])} · смета в договоре
+            Цена актуальна · срок {pluralized(project.days, ['день', 'дня', 'дней'])}
           </div>
         </div>
       </Link>
