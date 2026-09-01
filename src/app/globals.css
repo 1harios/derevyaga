@@ -1319,22 +1319,8 @@
   }
 
   .sticky-cta-visible .amo-button-holder,
-  .sticky-cta-visible .contact-launcher--menu-open,
-  .sticky-cta-visible .contact-launcher--chat-open {
+  .sticky-cta-visible .contact-launcher {
     bottom: calc(76px + env(safe-area-inset-bottom)) !important;
-  }
-}
-
-/* На экранах, где для кнопки нет отдельного бокового поля, не кладём её
- * поверх карточек. Во время прокрутки остаётся мобильная CTA-панель;
- * чат возвращается у первого экрана и финальной формы. Уже открытые меню
- * и диалог не скрываем, чтобы пользователь мог закончить действие. */
-@media (max-width: 1535px) {
-  .sticky-cta-visible
-    .contact-launcher:not(.contact-launcher--menu-open):not(.contact-launcher--chat-open) {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(12px);
   }
 }
 
