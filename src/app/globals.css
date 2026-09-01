@@ -1015,7 +1015,7 @@
 .contact-launcher {
   position: fixed;
   z-index: 2147483647;
-  right: 12px;
+  right: 2px;
   bottom: 20px;
   transition:
     bottom 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -1029,9 +1029,10 @@
 }
 
 .contact-launcher__trigger {
+  position: relative;
   display: grid;
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   place-items: center;
   border: 0;
   border-radius: 50%;
@@ -1040,6 +1041,34 @@
   box-shadow: 0 12px 32px rgb(20 32 25 / 24%);
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-launcher__trigger::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgb(78 98 84 / 42%);
+  border-radius: inherit;
+  pointer-events: none;
+  animation: contact-launcher-pulse 2.8s ease-out infinite;
+}
+
+@keyframes contact-launcher-pulse {
+  0%,
+  55%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  12% {
+    opacity: 0.42;
+  }
+
+  48% {
+    opacity: 0;
+    transform: scale(1.22);
+  }
 }
 
 .contact-launcher__trigger:hover {
@@ -1056,8 +1085,8 @@
 .contact-launcher__bubble {
   position: relative;
   display: flex;
-  width: 28px;
-  height: 22px;
+  width: 24px;
+  height: 19px;
   align-items: center;
   justify-content: center;
   gap: 3px;
@@ -1094,6 +1123,11 @@
   width: 24px;
   height: 24px;
   background: transparent;
+}
+
+.contact-launcher__trigger.is-open::before {
+  animation: none;
+  opacity: 0;
 }
 
 .contact-launcher__trigger.is-open .contact-launcher__bubble i {
@@ -1281,7 +1315,7 @@
   }
 
   .contact-launcher {
-    right: 12px;
+    right: 4px;
   }
 
   .sticky-cta-visible .amo-button-holder,
@@ -1305,6 +1339,11 @@
 }
 
 @media (max-width: 640px) {
+  .contact-launcher__trigger {
+    width: 48px;
+    height: 48px;
+  }
+
   #amo-livechat {
     top: 0 !important;
     bottom: auto !important;
@@ -1372,6 +1411,11 @@
   .contact-launcher__menu,
   .contact-launcher__option {
     transition: none;
+  }
+
+  .contact-launcher__trigger::before {
+    animation: none;
+    opacity: 0;
   }
 }
 
