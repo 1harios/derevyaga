@@ -132,6 +132,8 @@ async function getAmoFields(cached = false): Promise<AmoCustomField[]> {
     throw new Error(`amoCRM не вернула поля (${response.status}): ${await responseError(response)}`)
   }
 
+  if (response.status === 204) return []
+
   const payload = (await response.json()) as AmoFieldsResponse
   return payload._embedded?.custom_fields ?? []
 }
@@ -144,6 +146,8 @@ async function getAmoElements(cached = false): Promise<AmoCatalogElement[]> {
   if (!response.ok) {
     throw new Error(`amoCRM не вернула проекты (${response.status}): ${await responseError(response)}`)
   }
+
+  if (response.status === 204) return []
 
   const payload = (await response.json()) as AmoElementsResponse
   return payload._embedded?.elements ?? []
