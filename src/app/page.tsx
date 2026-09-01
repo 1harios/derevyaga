@@ -58,13 +58,12 @@ const jsonLd = {
 export default async function HomePage() {
   const projects = await getProjects()
   const homeProjects = projects.filter((project) => project.showOnHome !== false)
-  const minimumProjectPrice = Math.min(...projects.map((project) => project.priceFrom))
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <Hero minimumProjectPrice={minimumProjectPrice} />
+      <Hero />
       <FeaturedHomes projects={homeProjects} />
       <WhyUsBlock />
       <TechnologyBlock />
