@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { LuBedDouble, LuClock3, LuMaximize2 } from 'react-icons/lu'
 import { projectTagLabels, type Project } from '@/content/projects'
 import { formatPrice, pluralized } from '@/lib/utils'
 
@@ -54,17 +55,24 @@ export function ProjectCard({ project, priority }: { project: Project; priority?
 
             <span className="flex shrink-0 divide-x divide-white/25 text-center">
               <span className="px-3">
-                <span className="block text-[15px] leading-none">{project.area} м²</span>
+                <span className="flex items-center justify-center gap-1.5 text-[15px] leading-none">
+                  <LuMaximize2 aria-hidden className="size-3.5 text-white/70" />
+                  {project.area} м²
+                </span>
                 <span className="mt-1 block text-[12px] text-white/70">площадь</span>
               </span>
               <span className="pl-3">
-                <span className="block text-[15px] leading-none">{project.bedrooms}</span>
+                <span className="flex items-center justify-center gap-1.5 text-[15px] leading-none">
+                  <LuBedDouble aria-hidden className="size-3.5 text-white/70" />
+                  {project.bedrooms}
+                </span>
                 <span className="mt-1 block text-[12px] text-white/70">спальни</span>
               </span>
             </span>
           </div>
 
-          <div className="mt-4 border-t border-white/25 pt-3 text-[13px] text-white/70">
+          <div className="mt-4 flex items-center gap-1.5 border-t border-white/25 pt-3 text-[13px] text-white/70">
+            <LuClock3 aria-hidden className="size-3.5" />
             Цена актуальна · срок {pluralized(project.days, ['день', 'дня', 'дней'])}
           </div>
         </div>

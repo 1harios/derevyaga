@@ -67,12 +67,13 @@ const PROJECT_FIELDS: FieldDefinition[] = [
     ],
   },
   { name: 'Короткое описание', type: 'textarea', sort: 1100 },
-  { name: 'Фото карточки', type: 'url', sort: 1110 },
-  { name: 'Подпись к фото', type: 'text', sort: 1120 },
-  { name: 'Особенности проекта', type: 'textarea', sort: 1130 },
-  { name: 'Фотографии галереи', type: 'textarea', sort: 1140 },
-  { name: 'Комплектация и материалы', type: 'textarea', sort: 1150 },
-  { name: 'Порядок отображения', type: 'numeric', sort: 1160 },
+  { name: 'Подробное описание', type: 'textarea', sort: 1110 },
+  { name: 'Фото карточки', type: 'url', sort: 1120 },
+  { name: 'Подпись к фото', type: 'text', sort: 1130 },
+  { name: 'Особенности проекта', type: 'textarea', sort: 1140 },
+  { name: 'Фотографии галереи', type: 'textarea', sort: 1150 },
+  { name: 'Комплектация и материалы', type: 'textarea', sort: 1160 },
+  { name: 'Порядок отображения', type: 'numeric', sort: 1170 },
 ]
 
 function amoConfigured(): boolean {
@@ -228,6 +229,14 @@ function projectFromElement(element: AmoCatalogElement): (Project & { order: num
 
   const rawTag = asText(fieldValue(element, 'Метка'))
   const highlights = asLines(fieldValue(element, 'Особенности проекта'))
+  const description = asLines(fieldValue(element, 'Подробное описание'))
+  const gallery = asLines(fieldValue(element, 'Фотографии галереи'))
+    .map(normalizePhoto)
+    .filter(Boolean)
+    .map((src, index) => ({
+      src,
+      alt: `${element.name.trim()} — дополнительный вид дома ${index + 1}`,
+    }))
 
   return {
     slug,
@@ -241,8 +250,10 @@ function projectFromElement(element: AmoCatalogElement): (Project & { order: num
     days,
     ...(rawTag === 'Хит' ? { tag: 'hit' as const } : rawTag === 'Новинка' ? { tag: 'new' as const } : {}),
     summary: asText(fieldValue(element, 'Короткое описание')),
+    ...(description.length ? { description } : {}),
     photo,
     photoAlt: asText(fieldValue(element, 'Подпись к фото')) || `Каркасный дом «${element.name.trim()}»`,
+    ...(gallery.length ? { gallery } : {}),
     highlights: highlights.length ? highlights : ['Планировку адаптируем под ваш участок и состав семьи'],
     showOnHome: asBoolean(fieldValue(element, 'Показывать на главной')),
     order: asNumber(fieldValue(element, 'Порядок отображения')) || 9999,
@@ -348,9 +359,14 @@ function seedValues(fields: AmoCustomField[], project: Project, index: number): 
   add(fieldByName(fields, 'Срок строительства, дней'), project.days)
   add(fieldByName(fields, 'Метка'), project.tag === 'hit' ? 'Хит' : project.tag === 'new' ? 'Новинка' : '')
   add(fieldByName(fields, 'Короткое описание'), project.summary)
+  add(fieldByName(fields, 'Подробное описание'), project.description?.join('\n\n'))
   add(fieldByName(fields, 'Фото карточки'), `${photoOrigin}${project.photo}`)
   add(fieldByName(fields, 'Подпись к фото'), project.photoAlt)
   add(fieldByName(fields, 'Особенности проекта'), project.highlights.join('\n'))
+  add(
+    fieldByName(fields, 'Фотографии галереи'),
+    project.gallery?.map((image) => `${photoOrigin}${image.src}`).join('\n'),
+  )
   add(fieldByName(fields, 'Порядок отображения'), (index + 1) * 10)
 
   return values
@@ -408,4 +424,42 @@ export async function seedAmoProjectCatalog(): Promise<{
     created,
     published: projectsFromElements(savedElements).map((project) => project.name),
   }
+}
+
+/** Обновляет только сгенерированные демонстрационные проекты, не затрагивая остальные карточки менеджера. */
+export async function syncAmoGeneratedProjects(): Promise<{
+  catalogId: number
+  updated: string[]
+}> {
+  const { catalogId } = amoConfig()
+  await ensureAmoProjectCatalogFields()
+  const [fields, elements] = await Promise.all([getAmoFields(), getAmoElements()])
+  const generatedSlugs = new Set(['roshchino-86', 'korela-152'])
+  const targets = fallbackProjects.filter((project) => generatedSlugs.has(project.slug))
+
+  const updates = targets.flatMap((project) => {
+    const element = elements.find(
+      (item) => asText(fieldValue(item, 'Адрес страницы') || codedValue(item, 'SKU')) === project.slug,
+    )
+    if (!element) return []
+
+    return [{
+      id: element.id,
+      name: project.name,
+      custom_fields_values: seedValues(fields, project, fallbackProjects.indexOf(project)),
+    }]
+  })
+
+  if (!updates.length) return { catalogId, updated: [] }
+
+  const updateResponse = await amoRequest(`/api/v4/catalogs/${catalogId}/elements`, {
+    method: 'PATCH',
+    body: JSON.stringify(updates),
+  })
+
+  if (!updateResponse.ok) {
+    throw new Error(`amoCRM не обновила проекты (${updateResponse.status}): ${await responseError(updateResponse)}`)
+  }
+
+  return { catalogId, updated: targets.map((project) => project.name) }
 }

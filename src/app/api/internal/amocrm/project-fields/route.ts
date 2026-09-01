@@ -1,6 +1,10 @@
 import { timingSafeEqual } from 'node:crypto'
 import { NextResponse } from 'next/server'
-import { ensureAmoProjectCatalogFields, seedAmoProjectCatalog } from '@/lib/amocrm-projects'
+import {
+  ensureAmoProjectCatalogFields,
+  seedAmoProjectCatalog,
+  syncAmoGeneratedProjects,
+} from '@/lib/amocrm-projects'
 
 export const runtime = 'nodejs'
 
@@ -44,6 +48,23 @@ export async function PUT(request: Request) {
     console.error('[amocrm] project seed failed', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Не удалось перенести проекты в amoCRM' },
+      { status: 502 },
+    )
+  }
+}
+
+export async function PATCH(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Недостаточно прав' }, { status: 401 })
+  }
+
+  try {
+    const result = await syncAmoGeneratedProjects()
+    return NextResponse.json({ ok: true, ...result })
+  } catch (error) {
+    console.error('[amocrm] generated projects sync failed', error)
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Не удалось обновить проекты в amoCRM' },
       { status: 502 },
     )
   }

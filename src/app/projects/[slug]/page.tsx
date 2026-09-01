@@ -3,6 +3,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Fragment } from 'react'
+import {
+  LuBath,
+  LuBedDouble,
+  LuCircleCheck,
+  LuClock3,
+  LuHouse,
+  LuLayers3,
+  LuMaximize2,
+  LuPaintbrush,
+  LuShieldCheck,
+  LuThermometerSun,
+  LuTrees,
+  LuWarehouse,
+} from 'react-icons/lu'
 import { FinalCta } from '@/components/home/FinalCta'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
@@ -22,12 +36,12 @@ import { siteUrl } from '@/lib/site-url'
 export const revalidate = 300
 
 const constructionMaterials = [
-  { label: 'Фундамент', value: 'Свайно-винтовой с обвязкой' },
-  { label: 'Каркас', value: 'Брус камерной сушки 45×195 мм' },
-  { label: 'Утепление', value: 'Стены 200 мм · кровля 250 мм · пол 200 мм' },
-  { label: 'Защита стен', value: 'Ветрозащита, пароизоляция и вентзазор' },
-  { label: 'Кровля', value: 'Металлочерепица с водостоком' },
-  { label: 'Фасад', value: 'Имитация бруса, покраска в два слоя' },
+  { icon: LuLayers3, label: 'Фундамент', value: 'Свайно-винтовой с обвязкой' },
+  { icon: LuHouse, label: 'Каркас', value: 'Брус камерной сушки 45×195 мм' },
+  { icon: LuThermometerSun, label: 'Утепление', value: 'Стены 200 мм · кровля 250 мм · пол 200 мм' },
+  { icon: LuShieldCheck, label: 'Защита стен', value: 'Ветрозащита, пароизоляция и вентзазор' },
+  { icon: LuWarehouse, label: 'Кровля', value: 'Металлочерепица с водостоком' },
+  { icon: LuPaintbrush, label: 'Фасад', value: 'Имитация бруса, покраска в два слоя' },
 ]
 
 export async function generateStaticParams() {
@@ -60,10 +74,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound()
 
   const heroStats = [
-    { value: project.area, suffix: ' м²', label: 'площадь дома' },
-    { value: project.bedrooms, suffix: '', label: 'спальни в проекте' },
-    { value: project.days, suffix: '', label: 'дней срок под ключ' },
+    { icon: LuMaximize2, value: project.area, suffix: ' м²', label: 'площадь дома' },
+    { icon: LuBedDouble, value: project.bedrooms, suffix: '', label: 'спальни в проекте' },
+    { icon: LuClock3, value: project.days, suffix: '', label: 'дней срок под ключ' },
   ]
+  const galleryImages = project.gallery?.length
+    ? [{ src: project.photo, alt: project.photoAlt }, ...project.gallery]
+    : []
 
   /** Похожие — ближайшие по площади, кроме текущего */
   const similar = [...projects]
@@ -110,9 +127,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   data-reveal
                   style={{ '--reveal-delay': '100ms' } as React.CSSProperties}
                 >
-                  <span className="min-w-0 font-sans text-[12.5px] font-medium text-ink sm:shrink-0 sm:text-[13px]">
-                    {pluralized(project.bedrooms, ['спальня', 'спальни', 'спален'])} ·{' '}
-                    {pluralized(project.bathrooms, ['санузел', 'санузла', 'санузлов'])} · терраса {project.terrace} м²
+                  <span className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 font-sans text-[12.5px] font-medium text-ink sm:shrink-0 sm:text-[13px]">
+                    <span className="inline-flex items-center gap-1.5">
+                      <LuBedDouble aria-hidden className="size-4 text-brand" />
+                      {pluralized(project.bedrooms, ['спальня', 'спальни', 'спален'])}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <LuBath aria-hidden className="size-4 text-brand" />
+                      {pluralized(project.bathrooms, ['санузел', 'санузла', 'санузлов'])}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <LuTrees aria-hidden className="size-4 text-brand" />
+                      терраса {project.terrace} м²
+                    </span>
                   </span>
                   <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-black/10 sm:block" />
                 </div>
@@ -176,6 +203,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   <Fragment key={stat.label}>
                     {index > 0 ? <span aria-hidden className="h-12 w-px shrink-0 bg-black/10" /> : null}
                     <div className="min-w-0 flex-1">
+                      <stat.icon aria-hidden className="mb-2 size-4 text-brand" />
                       <div className="num text-[clamp(1.6rem,1.2rem+1.35vw,2.4rem)] leading-none">
                         <CountUp value={stat.value} duration={1400 + index * 250} />
                         <span className="text-ink-faint">{stat.suffix}</span>
@@ -210,6 +238,45 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
+      {project.description?.length || galleryImages.length ? (
+        <Section>
+          <div className="panel">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12">
+              <div>
+                <p className="eyebrow mb-3">О проекте</p>
+                <h2 className="text-pretty">Дом, в котором удобно каждый день</h2>
+                <div className="mt-5 space-y-4 text-[14.5px] leading-[1.65] text-ink-soft">
+                  {(project.description ?? [project.summary]).map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+
+              {galleryImages.length ? (
+                <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+                  {galleryImages.map((image, index) => (
+                    <div
+                      key={image.src}
+                      className={`relative min-h-[300px] overflow-hidden rounded-xl ${
+                        index === 0 ? 'sm:translate-y-6' : ''
+                      }`}
+                    >
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        sizes="(min-width: 1024px) 32vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </Section>
+      ) : null}
+
       <Section>
         <div className="panel">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-12">
@@ -224,7 +291,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <ul className="grid gap-x-6 sm:grid-cols-2">
               {constructionMaterials.map((item) => (
                 <li key={item.label} className="border-t border-line py-4">
-                  <span className="text-[12px] text-ink-soft">{item.label}</span>
+                  <span className="inline-flex items-center gap-2 text-[12px] text-ink-soft">
+                    <item.icon aria-hidden className="size-4 text-brand" />
+                    {item.label}
+                  </span>
                   <p className="mt-1 text-[15px] leading-[1.45] text-ink">{item.value}</p>
                 </li>
               ))}
@@ -248,7 +318,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <ul className="mt-7 space-y-4 border-t border-line pt-7 text-[15px] leading-[1.55]">
                 {project.highlights.map((item) => (
                   <li key={item} className="flex gap-3">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" />
+                    <LuCircleCheck aria-hidden className="mt-0.5 size-5 shrink-0 text-brand" />
                     <span>{item}</span>
                   </li>
                 ))}
