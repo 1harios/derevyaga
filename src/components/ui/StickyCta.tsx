@@ -36,7 +36,7 @@ export function StickyCta() {
 
   return (
     <div
-      className={`fixed inset-x-3 bottom-3 z-40 transition-transform duration-200 ease-out lg:hidden ${
+      className={`fixed bottom-3 left-3 right-[70px] z-40 transition-transform duration-200 ease-out lg:hidden ${
         visible ? 'translate-y-0' : 'translate-y-[140%]'
       }`}
       aria-hidden={!visible}
