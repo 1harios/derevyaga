@@ -147,7 +147,9 @@ export function AmoChatWidget() {
   return (
     <div
       ref={launcherRef}
-      className={`contact-launcher${isChatOpen ? ' contact-launcher--chat-open' : ''}`}
+      className={`contact-launcher${isOpen ? ' contact-launcher--menu-open' : ''}${
+        isChatOpen ? ' contact-launcher--chat-open' : ''
+      }`}
     >
       <div id="contact-launcher-menu" className={`contact-launcher__menu${isOpen ? ' is-open' : ''}`}>
         <div className="contact-launcher__heading">
