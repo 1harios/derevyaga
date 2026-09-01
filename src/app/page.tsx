@@ -13,7 +13,10 @@ import { TechnologyBlock } from '@/components/home/TechnologyBlock'
 import { company } from '@/content/company'
 import { faqItems } from '@/content/faq'
 import { mapsRating } from '@/content/reviews'
+import { getProjects } from '@/lib/amocrm-projects'
 import { siteUrl } from '@/lib/site-url'
+
+export const revalidate = 300
 
 /** Микроразметка: организация с адресом и часами плюс блок вопросов */
 const jsonLd = {
@@ -52,16 +55,20 @@ const jsonLd = {
   ],
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const projects = await getProjects()
+  const homeProjects = projects.filter((project) => project.showOnHome !== false)
+  const minimumProjectPrice = Math.min(...projects.map((project) => project.priceFrom))
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <Hero />
-      <FeaturedHomes />
+      <Hero minimumProjectPrice={minimumProjectPrice} />
+      <FeaturedHomes projects={homeProjects} />
       <WhyUsBlock />
       <TechnologyBlock />
-      <ProjectsPreview />
+      <ProjectsPreview projects={projects} />
       <BuildStepsBlock />
       <CabinetBlock />
       <ObjectsSlider />

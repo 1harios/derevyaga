@@ -13,10 +13,13 @@ import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import { StagesTimeline } from '@/components/ui/Timeline'
 import { promises } from '@/content/company'
-import { projects, projectTagLabels } from '@/content/projects'
+import { projectTagLabels } from '@/content/projects'
+import { getProjects } from '@/lib/amocrm-projects'
 import { totalDays } from '@/content/stages'
 import { formatPrice, pluralized } from '@/lib/utils'
 import { siteUrl } from '@/lib/site-url'
+
+export const revalidate = 300
 
 const constructionMaterials = [
   { label: 'Фундамент', value: 'Свайно-винтовой с обвязкой' },
@@ -27,7 +30,8 @@ const constructionMaterials = [
   { label: 'Фасад', value: 'Имитация бруса, покраска в два слоя' },
 ]
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects()
   return projects.map((project) => ({ slug: project.slug }))
 }
 
@@ -37,6 +41,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
+  const projects = await getProjects()
   const project = projects.find((item) => item.slug === slug)
   if (!project) return {}
 
@@ -50,6 +55,7 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const projects = await getProjects()
   const project = projects.find((item) => item.slug === slug)
   if (!project) notFound()
 

@@ -1,17 +1,17 @@
 import type { MetadataRoute } from 'next'
 import { blogPosts } from '@/content/blog'
 import { cities } from '@/content/cities'
-import { projects } from '@/content/projects'
+import { getProjects } from '@/lib/amocrm-projects'
 import { siteUrl } from '@/lib/site-url'
 
-/** Для статического превью (output: export) маршрут должен быть явно статическим */
-export const dynamic = 'force-static'
+export const revalidate = 300
 
 /**
  * Карта сайта собирается из тех же данных, что и страницы: новый проект,
  * статья или город попадают сюда без правок этого файла.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const projects = await getProjects()
   const staticPages: { path: string; priority: number }[] = [
     { path: '/', priority: 1 },
     { path: '/projects', priority: 0.9 },

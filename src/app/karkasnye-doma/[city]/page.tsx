@@ -10,9 +10,11 @@ import { Section, SectionHeader } from '@/components/ui/Section'
 import { cities } from '@/content/cities'
 import { company, promises } from '@/content/company'
 import { builtObjects } from '@/content/objects'
-import { projects } from '@/content/projects'
+import { getProjects } from '@/lib/amocrm-projects'
 import { pricing } from '@/lib/pricing/pricing.config'
 import { formatNumber, formatPrice } from '@/lib/utils'
+
+export const revalidate = 300
 
 export function generateStaticParams() {
   return cities.map((city) => ({ city: city.slug }))
@@ -26,6 +28,7 @@ export async function generateMetadata({
   const { city: slug } = await params
   const city = cities.find((item) => item.slug === slug)
   if (!city) return {}
+  const projects = await getProjects()
 
   return {
     title: `Каркасные дома под ключ ${city.inCity} — цены и сроки`,
@@ -38,6 +41,7 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
   const { city: slug } = await params
   const city = cities.find((item) => item.slug === slug)
   if (!city) notFound()
+  const projects = await getProjects()
 
   const extraKm = Math.max(0, city.distanceKm - pricing.distance.freeKm)
   const logisticsCost = extraKm * pricing.distance.pricePerKm

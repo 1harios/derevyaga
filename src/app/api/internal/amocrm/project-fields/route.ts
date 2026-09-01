@@ -1,6 +1,6 @@
 import { timingSafeEqual } from 'node:crypto'
 import { NextResponse } from 'next/server'
-import { ensureAmoProjectCatalogFields } from '@/lib/amocrm-projects'
+import { ensureAmoProjectCatalogFields, seedAmoProjectCatalog } from '@/lib/amocrm-projects'
 
 export const runtime = 'nodejs'
 
@@ -27,6 +27,23 @@ export async function POST(request: Request) {
     console.error('[amocrm] project fields bootstrap failed', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Не удалось настроить поля amoCRM' },
+      { status: 502 },
+    )
+  }
+}
+
+export async function PUT(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Недостаточно прав' }, { status: 401 })
+  }
+
+  try {
+    const result = await seedAmoProjectCatalog()
+    return NextResponse.json({ ok: true, ...result })
+  } catch (error) {
+    console.error('[amocrm] project seed failed', error)
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Не удалось перенести проекты в amoCRM' },
       { status: 502 },
     )
   }

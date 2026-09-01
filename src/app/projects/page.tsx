@@ -4,31 +4,35 @@ import { PageHero } from '@/components/layout/PageHero'
 import { ProjectCatalog } from '@/components/projects/ProjectCatalog'
 import { Section } from '@/components/ui/Section'
 import { promises } from '@/content/company'
-import { projects } from '@/content/projects'
+import { getProjects } from '@/lib/amocrm-projects'
 import { formatPriceShort } from '@/lib/utils'
 import { siteUrl } from '@/lib/site-url'
 
-export const metadata: Metadata = {
-  title: 'Проекты каркасных домов с ценами и сроками',
-  description: `Каталог каркасных домов под ключ от ${Math.min(...projects.map((p) => p.area))} до ${Math.max(...projects.map((p) => p.area))} м². По каждому проекту — сданный дом, цена и срок из договора. Планировку меняем под вас.`,
-  alternates: { canonical: '/projects' },
+export const revalidate = 300
+
+export async function generateMetadata(): Promise<Metadata> {
+  const projects = await getProjects()
+  return {
+    title: 'Проекты каркасных домов с ценами и сроками',
+    description: `Каталог каркасных домов под ключ от ${Math.min(...projects.map((p) => p.area))} до ${Math.max(...projects.map((p) => p.area))} м². По каждому проекту — сданный дом, цена и срок из договора. Планировку меняем под вас.`,
+    alternates: { canonical: '/projects' },
+  }
 }
 
-/** Микроразметка списка: поисковик видит каталог, а не набор картинок */
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Проекты каркасных домов «Деревяга»',
-  itemListElement: projects.map((project, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    url: `${siteUrl}/projects/${project.slug}`,
-    name: `${project.name} ${project.area} м²`,
-  })),
-}
-
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects()
   const minPrice = Math.min(...projects.map((p) => p.priceFrom))
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Проекты каркасных домов «Деревяга»',
+    itemListElement: projects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `${siteUrl}/projects/${project.slug}`,
+      name: `${project.name} ${project.area} м²`,
+    })),
+  }
 
   return (
     <>
@@ -54,7 +58,7 @@ export default function ProjectsPage() {
       </PageHero>
 
       <Section>
-        <ProjectCatalog />
+        <ProjectCatalog projects={projects} />
 
         <p className="mx-auto mt-6 max-w-2xl text-center text-[14px] leading-[1.6] muted">
           Цена «от» — базовая комплектация проекта при типовом свайно-винтовом фундаменте

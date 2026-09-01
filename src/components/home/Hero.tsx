@@ -4,7 +4,6 @@ import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
 import { company } from '@/content/company'
-import { projects } from '@/content/projects'
 import { formatPrice, telHref } from '@/lib/utils'
 
 /**
@@ -23,9 +22,7 @@ const heroStats = [
   { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
 ]
 
-const minimumProjectPrice = Math.min(...projects.map((project) => project.priceFrom))
-
-export function Hero() {
+export function Hero({ minimumProjectPrice }: { minimumProjectPrice: number }) {
   return (
     <section className="pt-1">
       <div className="shell">

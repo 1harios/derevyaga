@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
-import { projects } from '@/content/projects'
+import type { Project } from '@/content/projects'
+import { formatPrice } from '@/lib/utils'
 
-const affordableHomes = [...projects].sort((a, b) => a.priceFrom - b.priceFrom)
-
-export function FeaturedHomes() {
+export function FeaturedHomes({ projects }: { projects: Project[] }) {
+  const affordableHomes = [...projects].sort((a, b) => a.priceFrom - b.priceFrom)
+  const minimumPrice = affordableHomes[0]?.priceFrom ?? 0
   return (
     <section className="py-8 md:py-10">
       <div className="shell">
@@ -13,7 +14,7 @@ export function FeaturedHomes() {
             <p className="eyebrow mb-3">Доступные проекты</p>
             <h2 className="text-pretty" data-reveal>
               Проекты домов{' '}
-              <span className="block text-ink-soft">от 3 450 000 ₽</span>
+              <span className="block text-ink-soft">от {formatPrice(minimumPrice)}</span>
             </h2>
           </div>
 

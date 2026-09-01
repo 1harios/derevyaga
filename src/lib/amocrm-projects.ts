@@ -1,3 +1,6 @@
+import { projects as fallbackProjects, type Project } from '@/content/projects'
+import { siteUrl } from '@/lib/site-url'
+
 type AmoCustomField = {
   id: number
   name: string
@@ -5,10 +8,26 @@ type AmoCustomField = {
   code?: string | null
 }
 
+type AmoFieldValue = {
+  field_id: number
+  field_name: string
+  field_code?: string | null
+  field_type: string
+  values: Array<{ value?: unknown; enum_id?: number; enum_code?: string }>
+}
+
+type AmoCatalogElement = {
+  id: number
+  name: string
+  custom_fields_values?: AmoFieldValue[] | null
+}
+
 type AmoFieldsResponse = {
-  _embedded?: {
-    custom_fields?: AmoCustomField[]
-  }
+  _embedded?: { custom_fields?: AmoCustomField[] }
+}
+
+type AmoElementsResponse = {
+  _embedded?: { elements?: AmoCatalogElement[] }
 }
 
 type FieldDefinition = {
@@ -18,10 +37,7 @@ type FieldDefinition = {
   enums?: Array<{ value: string; sort: number }>
 }
 
-/**
- * Поля, которыми менеджер управляет карточкой проекта в amoCRM.
- * Название, цена и артикул уже есть в товарном каталоге amoCRM.
- */
+/** Поля, которыми менеджер управляет карточкой проекта в amoCRM. */
 const PROJECT_FIELDS: FieldDefinition[] = [
   { name: 'Публиковать на сайте', type: 'checkbox', sort: 1000 },
   { name: 'Показывать на главной', type: 'checkbox', sort: 1010 },
@@ -59,6 +75,10 @@ const PROJECT_FIELDS: FieldDefinition[] = [
   { name: 'Порядок отображения', type: 'numeric', sort: 1160 },
 ]
 
+function amoConfigured(): boolean {
+  return Boolean(process.env.AMO_DOMAIN && process.env.AMO_TOKEN && process.env.AMO_PROJECTS_CATALOG_ID)
+}
+
 function amoConfig(): { domain: string; token: string; catalogId: number } {
   const domain = process.env.AMO_DOMAIN?.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')
   const token = process.env.AMO_TOKEN?.trim()
@@ -84,11 +104,170 @@ async function amoRequest(path: string, init?: RequestInit): Promise<Response> {
   })
 }
 
+async function amoCachedRequest(path: string): Promise<Response> {
+  const { domain, token } = amoConfig()
+  return fetch(`https://${domain}${path}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    next: { revalidate: 300, tags: ['amo-projects'] },
+  })
+}
+
 async function responseError(response: Response): Promise<string> {
   try {
     return (await response.text()).slice(0, 1000)
   } catch {
     return ''
+  }
+}
+
+async function getAmoFields(cached = false): Promise<AmoCustomField[]> {
+  const { catalogId } = amoConfig()
+  const path = `/api/v4/catalogs/${catalogId}/custom_fields?limit=250&order%5Bsort%5D=asc`
+  const response = cached ? await amoCachedRequest(path) : await amoRequest(path)
+
+  if (!response.ok) {
+    throw new Error(`amoCRM не вернула поля (${response.status}): ${await responseError(response)}`)
+  }
+
+  const payload = (await response.json()) as AmoFieldsResponse
+  return payload._embedded?.custom_fields ?? []
+}
+
+async function getAmoElements(cached = false): Promise<AmoCatalogElement[]> {
+  const { catalogId } = amoConfig()
+  const path = `/api/v4/catalogs/${catalogId}/elements?limit=250`
+  const response = cached ? await amoCachedRequest(path) : await amoRequest(path)
+
+  if (!response.ok) {
+    throw new Error(`amoCRM не вернула проекты (${response.status}): ${await responseError(response)}`)
+  }
+
+  const payload = (await response.json()) as AmoElementsResponse
+  return payload._embedded?.elements ?? []
+}
+
+function fieldValue(element: AmoCatalogElement, name: string): unknown {
+  const normalizedName = name.toLocaleLowerCase('ru-RU')
+  return element.custom_fields_values?.find(
+    (field) => field.field_name.trim().toLocaleLowerCase('ru-RU') === normalizedName,
+  )?.values?.[0]?.value
+}
+
+function codedValue(element: AmoCatalogElement, code: string): unknown {
+  return element.custom_fields_values?.find((field) => field.field_code === code)?.values?.[0]?.value
+}
+
+function asNumber(value: unknown): number {
+  const number = typeof value === 'number' ? value : Number(String(value ?? '').replace(',', '.'))
+  return Number.isFinite(number) ? number : 0
+}
+
+function asBoolean(value: unknown): boolean {
+  return value === true || value === 1 || value === '1' || value === 'true'
+}
+
+function asText(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : String(value ?? '').trim()
+}
+
+function asLines(value: unknown): string[] {
+  return asText(value)
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^[-•]\s*/, '').trim())
+    .filter(Boolean)
+}
+
+function normalizePhoto(value: unknown): string {
+  const photo = asText(value)
+  if (!photo) return ''
+  if (photo.startsWith('/')) return photo
+
+  try {
+    const url = new URL(photo)
+    if (
+      url.pathname.startsWith('/photos/') &&
+      (url.hostname === 'derevyaga.ru' || url.hostname.endsWith('.vercel.app'))
+    ) {
+      return url.pathname
+    }
+  } catch {
+    return ''
+  }
+
+  return photo
+}
+
+function projectFromElement(element: AmoCatalogElement): (Project & { order: number }) | null {
+  if (!asBoolean(fieldValue(element, 'Публиковать на сайте'))) return null
+
+  const slug = asText(fieldValue(element, 'Адрес страницы') || codedValue(element, 'SKU'))
+  const area = asNumber(fieldValue(element, 'Площадь, м²'))
+  const priceFrom = asNumber(codedValue(element, 'PRICE') || fieldValue(element, 'Цена'))
+  const days = asNumber(fieldValue(element, 'Срок строительства, дней'))
+  const photo = normalizePhoto(fieldValue(element, 'Фото карточки'))
+  const floorsLabel = asText(fieldValue(element, 'Этажность'))
+
+  if (
+    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) ||
+    area <= 0 ||
+    priceFrom <= 0 ||
+    days <= 0 ||
+    !photo ||
+    !['Один этаж', 'Два этажа', 'С мансардой'].includes(floorsLabel)
+  ) {
+    console.warn('[amocrm] опубликованный проект заполнен не полностью', element.id)
+    return null
+  }
+
+  const rawTag = asText(fieldValue(element, 'Метка'))
+  const highlights = asLines(fieldValue(element, 'Особенности проекта'))
+
+  return {
+    slug,
+    name: element.name.trim(),
+    area,
+    floorsLabel,
+    bedrooms: asNumber(fieldValue(element, 'Спальни')),
+    bathrooms: asNumber(fieldValue(element, 'Санузлы')),
+    terrace: asNumber(fieldValue(element, 'Терраса, м²')),
+    priceFrom,
+    days,
+    ...(rawTag === 'Хит' ? { tag: 'hit' as const } : rawTag === 'Новинка' ? { tag: 'new' as const } : {}),
+    summary: asText(fieldValue(element, 'Короткое описание')),
+    photo,
+    photoAlt: asText(fieldValue(element, 'Подпись к фото')) || `Каркасный дом «${element.name.trim()}»`,
+    highlights: highlights.length ? highlights : ['Планировку адаптируем под ваш участок и состав семьи'],
+    showOnHome: asBoolean(fieldValue(element, 'Показывать на главной')),
+    order: asNumber(fieldValue(element, 'Порядок отображения')) || 9999,
+  }
+}
+
+function projectsFromElements(elements: AmoCatalogElement[]): Array<Project & { order: number }> {
+  return elements
+    .map(projectFromElement)
+    .filter((project): project is Project & { order: number } => Boolean(project))
+    .sort((a, b) => a.order - b.order || a.priceFrom - b.priceFrom)
+}
+
+/** Каталог для страниц сайта. При сбое amoCRM сайт продолжает работать на локальной копии. */
+export async function getProjects(): Promise<Project[]> {
+  if (!amoConfigured()) return fallbackProjects
+
+  try {
+    const elements = await getAmoElements(true)
+    const projects = projectsFromElements(elements).map((project) => {
+      const publicProject: Project & { order?: number } = { ...project }
+      delete publicProject.order
+      return publicProject
+    })
+
+    return projects.length ? projects : fallbackProjects
+  } catch (error) {
+    console.error('[amocrm] projects fallback', error instanceof Error ? error.message : error)
+    return fallbackProjects
   }
 }
 
@@ -98,27 +277,14 @@ export async function ensureAmoProjectCatalogFields(): Promise<{
   created: string[]
 }> {
   const { catalogId } = amoConfig()
-  const fieldsResponse = await amoRequest(
-    `/api/v4/catalogs/${catalogId}/custom_fields?limit=250&order%5Bsort%5D=asc`,
-  )
-
-  if (!fieldsResponse.ok) {
-    throw new Error(`amoCRM не вернула поля (${fieldsResponse.status}): ${await responseError(fieldsResponse)}`)
-  }
-
-  const fieldsPayload = (await fieldsResponse.json()) as AmoFieldsResponse
-  const existingFields = fieldsPayload._embedded?.custom_fields ?? []
+  const existingFields = await getAmoFields()
   const existingNames = new Set(existingFields.map((field) => field.name.trim().toLocaleLowerCase('ru-RU')))
   const missingFields = PROJECT_FIELDS.filter(
     (field) => !existingNames.has(field.name.toLocaleLowerCase('ru-RU')),
   )
 
   if (!missingFields.length) {
-    return {
-      catalogId,
-      existing: existingFields.map((field) => field.name),
-      created: [],
-    }
+    return { catalogId, existing: existingFields.map((field) => field.name), created: [] }
   }
 
   const createResponse = await amoRequest(`/api/v4/catalogs/${catalogId}/custom_fields`, {
@@ -137,5 +303,105 @@ export async function ensureAmoProjectCatalogFields(): Promise<{
     catalogId,
     existing: existingFields.map((field) => field.name),
     created: createdFields.map((field) => field.name),
+  }
+}
+
+function fieldByName(fields: AmoCustomField[], name: string): AmoCustomField | undefined {
+  const normalized = name.toLocaleLowerCase('ru-RU')
+  return fields.find((field) => field.name.trim().toLocaleLowerCase('ru-RU') === normalized)
+}
+
+function fieldByCode(fields: AmoCustomField[], code: string): AmoCustomField | undefined {
+  return fields.find((field) => field.code === code)
+}
+
+type AmoSeedFieldValue = {
+  field_id: number
+  values: Array<{ value: unknown }>
+}
+
+function seedValues(fields: AmoCustomField[], project: Project, index: number): AmoSeedFieldValue[] {
+  const values: AmoSeedFieldValue[] = []
+  const photoOrigin = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : siteUrl
+
+  const add = (field: AmoCustomField | undefined, value: unknown) => {
+    if (!field || value === undefined || value === null || value === '') return
+    values.push({ field_id: field.id, values: [{ value }] })
+  }
+
+  add(fieldByCode(fields, 'SKU') ?? fieldByName(fields, 'Артикул'), project.slug)
+  add(fieldByCode(fields, 'PRICE') ?? fieldByName(fields, 'Цена'), project.priceFrom)
+  add(fieldByName(fields, 'Публиковать на сайте'), true)
+  add(fieldByName(fields, 'Показывать на главной'), true)
+  add(fieldByName(fields, 'Адрес страницы'), project.slug)
+  add(fieldByName(fields, 'Площадь, м²'), project.area)
+  add(fieldByName(fields, 'Этажность'), project.floorsLabel)
+  add(fieldByName(fields, 'Спальни'), project.bedrooms)
+  add(fieldByName(fields, 'Санузлы'), project.bathrooms)
+  add(fieldByName(fields, 'Терраса, м²'), project.terrace)
+  add(fieldByName(fields, 'Срок строительства, дней'), project.days)
+  add(fieldByName(fields, 'Метка'), project.tag === 'hit' ? 'Хит' : project.tag === 'new' ? 'Новинка' : '')
+  add(fieldByName(fields, 'Короткое описание'), project.summary)
+  add(fieldByName(fields, 'Фото карточки'), `${photoOrigin}${project.photo}`)
+  add(fieldByName(fields, 'Подпись к фото'), project.photoAlt)
+  add(fieldByName(fields, 'Особенности проекта'), project.highlights.join('\n'))
+  add(fieldByName(fields, 'Порядок отображения'), (index + 1) * 10)
+
+  return values
+}
+
+/** Один раз переносит локальные карточки в пустой список amoCRM, не перезаписывая работу менеджера. */
+export async function seedAmoProjectCatalog(): Promise<{
+  catalogId: number
+  existing: string[]
+  created: string[]
+  published: string[]
+}> {
+  const { catalogId } = amoConfig()
+  await ensureAmoProjectCatalogFields()
+  const [fields, elements] = await Promise.all([getAmoFields(), getAmoElements()])
+
+  const existingSlugs = new Set(
+    elements.map((element) => asText(fieldValue(element, 'Адрес страницы') || codedValue(element, 'SKU'))),
+  )
+  const existingNames = new Set(elements.map((element) => element.name.trim().toLocaleLowerCase('ru-RU')))
+  const missing = fallbackProjects.filter(
+    (project) =>
+      !existingSlugs.has(project.slug) && !existingNames.has(project.name.toLocaleLowerCase('ru-RU')),
+  )
+
+  if (!missing.length) {
+    return {
+      catalogId,
+      existing: elements.map((element) => element.name),
+      created: [],
+      published: projectsFromElements(elements).map((project) => project.name),
+    }
+  }
+
+  const createResponse = await amoRequest(`/api/v4/catalogs/${catalogId}/elements`, {
+    method: 'POST',
+    body: JSON.stringify(
+      missing.map((project) => ({
+        name: project.name,
+        custom_fields_values: seedValues(fields, project, fallbackProjects.indexOf(project)),
+      })),
+    ),
+  })
+
+  if (!createResponse.ok) {
+    throw new Error(`amoCRM не создала проекты (${createResponse.status}): ${await responseError(createResponse)}`)
+  }
+
+  const createdPayload = (await createResponse.json()) as AmoElementsResponse
+  const created = createdPayload._embedded?.elements?.map((element) => element.name) ?? []
+  const savedElements = await getAmoElements()
+  return {
+    catalogId,
+    existing: elements.map((element) => element.name),
+    created,
+    published: projectsFromElements(savedElements).map((project) => project.name),
   }
 }

@@ -4,9 +4,9 @@ import { useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent
 import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
-import { projects } from '@/content/projects'
+import type { Project } from '@/content/projects'
 
-export function ProjectsPreview() {
+export function ProjectsPreview({ projects }: { projects: Project[] }) {
   const trackRef = useRef<HTMLUListElement>(null)
   const dragRef = useRef({ active: false, pointerId: -1, startX: 0, startScrollLeft: 0, moved: false })
   const suppressClickRef = useRef(false)

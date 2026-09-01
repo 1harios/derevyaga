@@ -14,6 +14,8 @@ export type Project = {
   photoAlt: string
   /** Планировочные решения для страницы проекта — 3–4 пункта */
   highlights: string[]
+  /** Можно скрыть карточку с главной, оставив её в полном каталоге. */
+  showOnHome?: boolean
 }
 
 /**

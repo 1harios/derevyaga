@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
-import { projects } from '@/content/projects'
+import type { Project } from '@/content/projects'
 import { track } from '@/lib/analytics'
 import { cn, plural } from '@/lib/utils'
 
@@ -71,7 +71,7 @@ function FilterChip({
   )
 }
 
-export function ProjectCatalog() {
+export function ProjectCatalog({ projects }: { projects: Project[] }) {
   const [floors, setFloors] = useState<FloorsId>('all')
   const [area, setArea] = useState<AreaId>('all')
   const [bedrooms, setBedrooms] = useState<BedroomsId>(0)
@@ -92,7 +92,7 @@ export function ProjectCatalog() {
     if (sort === 'price-desc') return [...list].sort((a, b) => b.priceFrom - a.priceFrom)
     if (sort === 'area-asc') return [...list].sort((a, b) => a.area - b.area)
     return list
-  }, [floors, area, bedrooms, sort])
+  }, [floors, area, bedrooms, sort, projects])
 
   const isFiltered = floors !== 'all' || area !== 'all' || bedrooms !== 0
 
