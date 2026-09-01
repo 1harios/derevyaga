@@ -26,7 +26,7 @@ export function Hero() {
   return (
     <section className="pt-1">
       <div className="shell">
-        <div className="grid gap-3 lg:h-[clamp(640px,82svh,820px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
+        <div className="grid gap-3 lg:h-[calc(100svh-16px)] lg:min-h-[700px] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
           {/* Левая панель: шапка, текст, цифры и мини-карточка проекта */}
           <div className="panel panel--sheen flex flex-col pt-6">
             <HeaderInline />
