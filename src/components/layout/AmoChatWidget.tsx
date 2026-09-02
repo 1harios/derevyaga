@@ -28,7 +28,30 @@ export function AmoChatWidget() {
   const [isReady, setIsReady] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
+  // Лончер показываем не в момент загрузки, а после первой прокрутки или через
+  // несколько секунд — иначе он ложится на кнопки первого экрана
+  const [isRevealed, setIsRevealed] = useState(false)
   const launcherRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const reveal = () => setIsRevealed(true)
+    const onScroll = () => {
+      if (window.scrollY > 120) reveal()
+    }
+    const timer = window.setTimeout(reveal, 4000)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  // Класс нужен плавающей панели CTA, чтобы отступить от лончера, — ставим его
+  // только когда лончер действительно виден
+  useEffect(() => {
+    if (isReady && isRevealed) document.documentElement.classList.add('contact-launcher-ready')
+  }, [isReady, isRevealed])
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEMO_MODE === '1') return
@@ -75,10 +98,7 @@ export function AmoChatWidget() {
       script.textContent = code
       document.body.appendChild(script)
 
-      window.amoSocialButton?.('onChatReady', () => {
-        document.documentElement.classList.add('contact-launcher-ready')
-        setIsReady(true)
-      })
+      window.amoSocialButton?.('onChatReady', () => setIsReady(true))
       window.amoSocialButton?.('onChatShow', () => {
         setIsOpen(false)
         setIsChatOpen(true)
@@ -116,7 +136,7 @@ export function AmoChatWidget() {
     }
   }, [isOpen])
 
-  if (!isReady) return null
+  if (!isReady || !isRevealed) return null
 
   const openOnlineChat = () => {
     setIsOpen(false)

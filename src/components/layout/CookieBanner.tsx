@@ -18,14 +18,16 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
+    // Показываем не в момент загрузки, а через полторы секунды: посетитель успевает
+    // увидеть первый экран целиком, и плашка не ложится на то, что он читает
+    const timer = window.setTimeout(() => {
       if (!readCookieChoice()) setVisible(true)
-    })
+    }, 1500)
 
     const showSettings = () => setVisible(true)
     window.addEventListener(COOKIE_SETTINGS_EVENT, showSettings)
     return () => {
-      window.cancelAnimationFrame(frame)
+      window.clearTimeout(timer)
       window.removeEventListener(COOKIE_SETTINGS_EVENT, showSettings)
     }
   }, [])
@@ -46,21 +48,22 @@ export function CookieBanner() {
     <div
       role="region"
       aria-label="Использование cookie"
-      // На телефоне баннер поднят над липкой панелью действий. На десктопе —
-      // компактная карточка в самом нижнем правом углу: кнопка чата монтируется
-      // только после согласия, поэтому угол свободен, а дом на фото первого
-      // экрана остаётся открытым (раньше баннер стоял выше и закрывал крыльцо).
-      className="fixed inset-x-3 bottom-24 z-45 md:inset-x-auto md:right-5 md:bottom-5 md:max-w-xs"
+      // Тонкая плашка вдоль нижнего края: не спорит с контентом конкретной страницы
+      // (карточка в углу закрывала фото первого экрана и расчёт в калькуляторе).
+      // На телефоне поднята над липкой панелью действий.
+      className="fixed inset-x-3 bottom-24 z-45 md:inset-x-5 md:bottom-4"
     >
-      <div className="card rounded-xl p-4 md:p-5">
-        <p className="text-[13.5px] leading-[1.5]">
+      <div className="card flex flex-col gap-3 rounded-xl p-4 md:flex-row md:items-center md:justify-between md:gap-6 md:px-6 md:py-3">
+        <p className="text-[13px] leading-[1.45] md:text-[13.5px]">
           Мы используем cookie: обязательные — чтобы сайт работал, аналитические — чтобы понимать,
-          какие страницы полезны. Аналитику не включаем без вашего согласия.{' '}
+          какие страницы полезны.{' '}
+          {/* На телефоне вторую фразу прячем — плашка становится на строку короче */}
+          <span className="max-md:hidden">Аналитику не включаем без вашего согласия. </span>
           <Link href="/legal/cookie" className="link-underline">
             Политика cookie
           </Link>
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           <button type="button" onClick={() => decide('all')} className="btn btn--dark btn--sm">
             Принять все
           </button>

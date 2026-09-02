@@ -41,7 +41,7 @@ export function StickyHeader() {
         }`}
       >
         <div className="shell">
-          <div className="flex items-center justify-between gap-5 rounded-full border border-line/70 bg-white/85 py-2 pl-4 pr-2 shadow-float backdrop-blur-xl md:pl-5">
+          <div className="flex items-center justify-between gap-5 rounded-full border border-line bg-white/92 py-2 pl-4 pr-2 shadow-float backdrop-blur-xl md:pl-5">
             <Link
               href="/"
               aria-label="Деревяга — на главную"

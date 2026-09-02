@@ -1,7 +1,7 @@
 'use client'
 
-import { useId } from 'react'
-import { formatPhoneMask } from '@/lib/utils'
+import { useId, useState } from 'react'
+import { formatPhoneMask, isValidPhone } from '@/lib/utils'
 
 export function PhoneField({
   value,
@@ -19,6 +19,10 @@ export function PhoneField({
   const id = useId()
   const hintId = `${id}-hint`
   const errorId = `${id}-error`
+  // Подсказка о неполном номере появляется сразу при уходе из поля,
+  // не дожидаясь кнопки отправки; ошибка формы (проп error) приоритетнее
+  const [blurError, setBlurError] = useState<string>()
+  const shownError = error ?? blurError
 
   return (
     <div>
@@ -35,14 +39,26 @@ export function PhoneField({
         required
         placeholder="+7 (___) ___-__-__"
         value={value}
-        onChange={(event) => onChange(formatPhoneMask(event.target.value))}
-        aria-invalid={error ? 'true' : undefined}
-        aria-describedby={error ? errorId : hintId}
+        onChange={(event) => {
+          const next = formatPhoneMask(event.target.value)
+          onChange(next)
+          if (blurError && isValidPhone(next)) setBlurError(undefined)
+        }}
+        onBlur={() => {
+          const digits = value.replace(/\D/g, '')
+          setBlurError(
+            digits.length > 0 && !isValidPhone(value)
+              ? 'Проверьте номер, кажется, не хватает цифры'
+              : undefined,
+          )
+        }}
+        aria-invalid={shownError ? 'true' : undefined}
+        aria-describedby={shownError ? errorId : hintId}
         className="field-input"
       />
-      {error ? (
+      {shownError ? (
         <p id={errorId} role="alert" className="field-error">
-          {error}
+          {shownError}
         </p>
       ) : (
         <p id={hintId} className="field-hint">

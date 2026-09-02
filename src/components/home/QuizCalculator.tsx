@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { CalcSummary } from '@/components/home/CalcSummary'
 import { Button } from '@/components/ui/Button'
 import { LeadForm } from '@/components/ui/LeadForm'
@@ -31,6 +31,7 @@ export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {
     }
   })
   const [showForm, setShowForm] = useState(false)
+  const summaryRef = useRef<HTMLDivElement>(null)
 
   const result = useMemo(() => calculate(input), [input])
   const patch = (next: Partial<CalcInput>) => setInput((prev) => ({ ...prev, ...next }))
@@ -40,6 +41,13 @@ export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {
     if (isLast) {
       setShowForm(true)
       track('calc_complete', { amount: result.priceFrom, area: input.area })
+      // На телефоне итог стоит под шагами — подводим к нему,
+      // иначе после «Показать смету» кажется, что ничего не произошло
+      if (window.matchMedia('(max-width: 1023px)').matches) {
+        window.requestAnimationFrame(() =>
+          summaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        )
+      }
       return
     }
     setStep((value) => value + 1)
@@ -65,8 +73,12 @@ export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {
             <div className="card rounded-xl p-6 md:p-8">
               <div className="mb-8">
                 <ProgressBar
-                  value={((step + 1) / STEPS.length) * 100}
-                  label={`Шаг ${step + 1} из ${STEPS.length}: ${STEPS[step]}`}
+                  value={showForm && isLast ? 100 : ((step + 1) / STEPS.length) * 100}
+                  label={
+                    showForm && isLast
+                      ? 'Готово: смета рассчитана'
+                      : `Шаг ${step + 1} из ${STEPS.length}: ${STEPS[step]}`
+                  }
                 />
               </div>
 
@@ -198,22 +210,34 @@ export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {
                 </div>
               ) : null}
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-line pt-6">
+              {/* На телефоне панель кнопок липнет к низу экрана над плавающей панелью CTA,
+                  чтобы «Дальше» не приходилось искать прокруткой на длинных шагах */}
+              <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-line pt-6 max-lg:sticky max-lg:bottom-[84px] max-lg:z-[5] max-lg:-mx-6 max-lg:bg-surface/95 max-lg:px-6 max-lg:pb-4 max-lg:backdrop-blur-sm md:max-lg:-mx-8 md:max-lg:px-8">
                 {step > 0 ? (
                   <Button variant="outline" onClick={() => setStep((value) => value - 1)}>
                     Назад
                   </Button>
                 ) : null}
-                <Button onClick={goNext} arrow={isLast}>
-                  {isLast ? 'Показать смету' : 'Дальше'}
-                </Button>
-                <span className="text-[14px] muted">
-                  Без регистрации — телефон спросим только в конце
-                </span>
+                {showForm && isLast ? (
+                  <p className="text-[14px] muted">
+                    Смета готова: диапазон цены, срок и форма для PDF —{' '}
+                    <span className="lg:hidden">ниже</span>
+                    <span className="max-lg:hidden">справа</span>
+                  </p>
+                ) : (
+                  <>
+                    <Button onClick={goNext} arrow={isLast}>
+                      {isLast ? 'Показать смету' : 'Дальше'}
+                    </Button>
+                    <span className="text-[14px] muted max-lg:hidden">
+                      Без регистрации — телефон спросим только в конце
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 
-            <div className="stack">
+            <div ref={summaryRef} className="stack scroll-mt-24">
               <CalcSummary result={result} compact={!showForm} />
 
               {showForm ? (
