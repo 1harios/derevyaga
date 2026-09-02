@@ -2,12 +2,15 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
+
+const SIZES = '(min-width: 1024px) 50vw, 100vw'
 
 /**
  * Дом, который «собирается» по мере выбора: текущий кадр стадии с подписью.
- * Кадр меняется по key — новая картинка мягко проявляется (класс constructor-fade).
- * Картинки следующего шага подгружаются скрытыми, но только после того, как
- * загрузился текущий кадр — чтобы не конкурировать с ним за сеть на первом экране.
+ * Новый кадр грузится поверх предыдущего и проявляется, когда готов, — дом
+ * перестраивается, а не моргает белым. Кадры следующего шага подгружаются
+ * скрытыми после того, как загрузился текущий, чтобы не спорить с ним за сеть.
  */
 export function HouseVisual({
   src,
@@ -24,21 +27,44 @@ export function HouseVisual({
   stepsTotal: number
   prefetch: string[]
 }) {
-  const [firstLoaded, setFirstLoaded] = useState(false)
+  // loaded — последний загрузившийся кадр, under — тот, что был на экране до него
+  const [frames, setFrames] = useState<{ loaded: string | null; under: string | null }>({
+    loaded: null,
+    under: null,
+  })
+  const ready = frames.loaded === src
+  // Пока новый кадр грузится, снизу остаётся предыдущий; когда загрузился — тот, поверх которого он проявляется
+  const under = frames.loaded !== null && !ready ? frames.loaded : frames.under
 
   return (
     <figure className="relative overflow-hidden rounded-xl bg-white shadow-card">
-      <Image
-        key={src}
-        src={src}
-        alt={alt}
-        width={1200}
-        height={900}
-        priority
-        sizes="(min-width: 1024px) 50vw, 100vw"
-        onLoad={() => setFirstLoaded(true)}
-        className="constructor-fade aspect-[4/3] w-full object-cover"
-      />
+      <div className="relative aspect-[4/3] w-full">
+        {under && under !== src ? (
+          <Image
+            src={under}
+            alt=""
+            aria-hidden
+            width={1200}
+            height={900}
+            sizes={SIZES}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : null}
+        <Image
+          key={src}
+          src={src}
+          alt={alt}
+          width={1200}
+          height={900}
+          priority
+          sizes={SIZES}
+          onLoad={() => setFrames((prev) => ({ loaded: src, under: prev.loaded }))}
+          className={cn(
+            'absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-out',
+            frames.loaded !== null && !ready && 'opacity-0',
+          )}
+        />
+      </div>
 
       <figcaption className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-full bg-white/92 px-4 py-2.5 text-[13px] leading-snug shadow-card backdrop-blur md:inset-x-4 md:bottom-4 md:text-[13.5px]">
         <span className="min-w-0 text-ink">{caption}</span>
@@ -48,7 +74,7 @@ export function HouseVisual({
       </figcaption>
 
       {/* Предзагрузка кадров следующего шага — после загрузки текущего */}
-      {firstLoaded
+      {frames.loaded
         ? prefetch
             .filter((item) => item !== src)
             .map((item) => (
@@ -59,7 +85,7 @@ export function HouseVisual({
                 width={1200}
                 height={900}
                 loading="eager"
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                sizes={SIZES}
                 className="hidden"
               />
             ))

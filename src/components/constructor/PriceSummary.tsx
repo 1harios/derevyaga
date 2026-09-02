@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button'
 import { constructorConfig } from '@/lib/constructor/config'
-import { clampDistance, type ConstructorInput, type HouseEstimate } from '@/lib/constructor/engine'
+import { clampDistance, estimateMortgage, type ConstructorInput, type HouseEstimate } from '@/lib/constructor/engine'
 import { formatPrice } from '@/lib/utils'
 import type { StepId } from './visuals'
 
@@ -78,6 +78,17 @@ export function PriceSummary({
   const insulation = constructorConfig.insulation.find((item) => item.id === input.insulation)?.label ?? ''
   const hasDistance = clampDistance(input.distanceKm) > 0
 
+  // Платёж по программам с параметрами по умолчанию — семейная выделена, обычная для сравнения
+  const { mortgage } = constructorConfig
+  const family = mortgage.programs.find((item) => item.highlight) ?? mortgage.programs[0]
+  const standard = mortgage.programs.find((item) => !item.highlight)
+  const monthlyFor = (programId: (typeof mortgage.programs)[number]['id']) =>
+    estimateMortgage(estimate.total, {
+      program: programId,
+      downPaymentPct: mortgage.downPaymentDefaultPct,
+      termYears: mortgage.defaultTermYears,
+    }).monthly
+
   return (
     <div className="card rounded-xl p-5 md:p-6">
       <dl className="space-y-3.5 text-[14px]">
@@ -106,9 +117,38 @@ export function PriceSummary({
         />
       </dl>
 
-      <div className="mt-4 flex items-end justify-between gap-4 border-t border-line pt-4">
-        <span className="text-[14px] text-ink-soft">{hasDistance ? 'Итого с доставкой' : 'Итого без доставки'}</span>
-        <span className="num text-[clamp(1.5rem,1.2rem+1vw,2rem)]">{formatPrice(estimate.total)}</span>
+      <div className="mt-4 border-t border-line pt-4">
+        <div className="flex items-end justify-between gap-4">
+          <span className="text-[14px] text-ink-soft">{hasDistance ? 'Итого с доставкой' : 'Итого без доставки'}</span>
+          <span className="num text-[clamp(1.9rem,1.35rem+1.7vw,2.6rem)] leading-none tracking-tight">
+            {formatPrice(estimate.total)}
+          </span>
+        </div>
+
+        {/* Платёж по ипотеке — сразу под итогом, нажатие ведёт к подбору программы */}
+        <button
+          type="button"
+          onClick={onMortgage}
+          className="mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-brand-tint px-4 py-3 text-left transition-colors hover:bg-brand-tint/70"
+        >
+          <span>
+            <span className="block text-[12px] leading-none text-brand-deep/80">
+              {family.label} {family.rate} %
+            </span>
+            <span className="num mt-1.5 block text-[20px] leading-none text-brand-deep">
+              от {formatPrice(monthlyFor(family.id))}/мес
+            </span>
+          </span>
+          <span className="text-right text-[11.5px] leading-snug text-brand-deep/80">
+            взнос {mortgage.downPaymentDefaultPct} % · {mortgage.defaultTermYears} лет
+            {standard ? (
+              <>
+                <br />
+                обычная {standard.rate} % — {formatPrice(monthlyFor(standard.id))}/мес
+              </>
+            ) : null}
+          </span>
+        </button>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">

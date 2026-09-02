@@ -69,6 +69,11 @@ export function sizeFolder(size: SizeId): string {
   return hasOwnFrames(size) ? size : '6x6'
 }
 
+/** Иконка размера для карточек шага «Размер»: дом в базовой комплектации на белом, «Другой» — эскиз */
+export function sizeIcon(size: SizeId): string {
+  return `${BASE}/icons/size-${size}.webp`
+}
+
 /** Размеченный участок под дом */
 export function plotImage(size: SizeId): string {
   return `${BASE}/${sizeFolder(size)}/stage-plot.webp`

@@ -9,6 +9,7 @@ import {
   defaultConstructorInput,
   describeInput,
   estimateHouse,
+  estimateMortgage,
   type ConstructorInput,
 } from '@/lib/constructor/engine'
 import { track } from '@/lib/analytics'
@@ -17,7 +18,7 @@ import { HouseVisual } from './HouseVisual'
 import { MortgagePanel } from './MortgagePanel'
 import { OptionCards } from './OptionCards'
 import { PriceSummary } from './PriceSummary'
-import { STEPS, houseImage, imagesForStep, pilesImage, roofImage, visualFor } from './visuals'
+import { STEPS, houseImage, imagesForStep, pilesImage, roofImage, sizeIcon, visualFor } from './visuals'
 
 const cfg = constructorConfig
 
@@ -74,6 +75,18 @@ export function HouseConstructor() {
   const priceFor = (pricePerM2: number) =>
     isCustom ? 'по запросу' : pricePerM2 ? `+ ${formatPrice(pricePerM2 * size.area)}` : 'в цене'
 
+  // Платёж по выделенной программе (семейная) с параметрами по умолчанию — приписки «₽/мес» к ценам
+  const family = cfg.mortgage.programs.find((item) => item.highlight) ?? cfg.mortgage.programs[0]
+  const monthlyFor = (price: number) =>
+    estimateMortgage(price, {
+      program: family.id,
+      downPaymentPct: cfg.mortgage.downPaymentDefaultPct,
+      termYears: cfg.mortgage.defaultTermYears,
+    }).monthly
+  /** «+ 135 ₽/мес» к надбавке за м²; для базовых вариантов и «Другого» — пусто */
+  const monthlyNote = (pricePerM2: number) =>
+    isCustom || !pricePerM2 ? undefined : `+ ${formatPrice(monthlyFor(pricePerM2 * size.area))}/мес`
+
   function renderStep() {
     switch (step.id) {
       case 'size':
@@ -87,6 +100,9 @@ export function HouseConstructor() {
               label: item.label,
               note: item.id === 'custom' ? item.note : `${item.area} м² · ${item.note}`,
               price: item.id === 'custom' ? 'по запросу' : `от ${formatPrice(item.basePrice)}`,
+              priceNote: item.id === 'custom' ? undefined : `от ${formatPrice(monthlyFor(item.basePrice))}/мес`,
+              // Иконки размеров: дом каждого размера в базовой комплектации, «Другой» — эскиз
+              thumb: { src: sizeIcon(item.id), alt: item.id === 'custom' ? 'Дом по вашему эскизу' : `Дом ${item.label}` },
             }))}
           />
         )
@@ -106,6 +122,7 @@ export function HouseConstructor() {
                 price: isCustom
                   ? 'по проекту'
                   : `${size.piles} свай · ${formatPrice(size.piles * item.pricePerPile)}`,
+                priceNote: isCustom ? undefined : `${formatPrice(monthlyFor(size.piles * item.pricePerPile))}/мес`,
                 thumb: { src: pilesImage(input.size, item.id), alt: item.label },
               }))}
             />
@@ -128,6 +145,7 @@ export function HouseConstructor() {
               label: item.label,
               note: item.note,
               price: priceFor(item.pricePerM2),
+              priceNote: monthlyNote(item.pricePerM2),
             }))}
           />
         )
@@ -143,6 +161,7 @@ export function HouseConstructor() {
               label: item.label,
               note: item.note,
               price: priceFor(item.pricePerM2),
+              priceNote: monthlyNote(item.pricePerM2),
               thumb: { src: roofImage(input.size, item.id), alt: `Кровля: ${item.label.toLowerCase()}` },
             }))}
           />
@@ -159,6 +178,7 @@ export function HouseConstructor() {
               label: item.label,
               note: item.note,
               price: priceFor(item.pricePerM2),
+              priceNote: monthlyNote(item.pricePerM2),
               thumb: { src: houseImage(input.size, { ...input, facade: item.id }), alt: `Фасад: ${item.label.toLowerCase()}` },
             }))}
           />
@@ -184,6 +204,7 @@ export function HouseConstructor() {
                 label: 'Без террасы',
                 note: 'компактнее, крыльцо у входа',
                 price: isCustom ? 'по запросу' : `− ${formatPrice(cfg.terrace.removeDiscount)}`,
+                priceNote: isCustom ? undefined : `− ${formatPrice(monthlyFor(cfg.terrace.removeDiscount))}/мес`,
                 thumb: { src: houseImage(input.size, { ...input, terrace: false }), alt: 'Дом без террасы' },
               },
             ]}
@@ -273,6 +294,7 @@ export function HouseConstructor() {
                   Шаг {stepIndex + 1} из {STEPS.length}
                 </p>
                 <h2 className="text-[clamp(1.25rem,1.05rem+0.8vw,1.6rem)]">{step.title}</h2>
+                <p className="mt-2 max-w-[56ch] text-[13.5px] leading-[1.5] text-ink-soft">{step.hint}</p>
               </div>
 
               <div className="mt-5">{renderStep()}</div>
@@ -285,7 +307,7 @@ export function HouseConstructor() {
                 ) : null}
                 {stepIndex < STEPS.length - 1 ? (
                   <Button onClick={() => goTo(stepIndex + 1, true)} arrow>
-                    Дальше
+                    <span className="whitespace-nowrap">Дальше: {nextStep?.short.toLowerCase()}</span>
                   </Button>
                 ) : (
                   <Button onClick={() => openForm('constructor')} arrow>
