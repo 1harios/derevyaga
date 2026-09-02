@@ -10,11 +10,14 @@ function Row({
   label,
   sub,
   value,
+  valueLabel,
   onEdit,
 }: {
   label: string
   sub: string
   value: number
+  /** Текст вместо суммы, например «укажите км» для доставки без расстояния */
+  valueLabel?: string
   onEdit: () => void
 }) {
   // Внутри <dl> допустимы только группы dt/dd (или div с ними без вложенных обёрток) —
@@ -22,7 +25,9 @@ function Row({
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4">
       <dt className="font-medium text-ink">{label}</dt>
-      <dd className="num row-span-2 self-start text-[15px]">{formatPrice(value)}</dd>
+      <dd className={valueLabel ? 'row-span-2 self-start text-[13px] text-ink-soft' : 'num row-span-2 self-start text-[15px]'}>
+        {valueLabel ?? formatPrice(value)}
+      </dd>
       <dd className="col-start-1 mt-0.5 text-[13px] leading-snug text-ink-soft">
         {sub}
         {' · '}
@@ -71,6 +76,7 @@ export function PriceSummary({
 
   const size = constructorConfig.sizes.find((item) => item.id === input.size) ?? constructorConfig.sizes[0]
   const insulation = constructorConfig.insulation.find((item) => item.id === input.insulation)?.label ?? ''
+  const hasDistance = clampDistance(input.distanceKm) > 0
 
   return (
     <div className="card rounded-xl p-5 md:p-6">
@@ -89,14 +95,19 @@ export function PriceSummary({
         />
         <Row
           label="Доставка"
-          sub={`от ${constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} · ${clampDistance(input.distanceKm)} км`}
+          sub={
+            hasDistance
+              ? `от ${constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} · ${clampDistance(input.distanceKm)} км`
+              : `от ${constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} · расстояние не указано`
+          }
           value={estimate.delivery}
+          valueLabel={hasDistance ? undefined : 'укажите км'}
           onEdit={() => onEdit('delivery')}
         />
       </dl>
 
       <div className="mt-4 flex items-end justify-between gap-4 border-t border-line pt-4">
-        <span className="text-[14px] text-ink-soft">Итого с доставкой</span>
+        <span className="text-[14px] text-ink-soft">{hasDistance ? 'Итого с доставкой' : 'Итого без доставки'}</span>
         <span className="num text-[clamp(1.5rem,1.2rem+1vw,2rem)]">{formatPrice(estimate.total)}</span>
       </div>
 

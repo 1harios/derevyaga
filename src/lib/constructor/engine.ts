@@ -27,7 +27,8 @@ export const defaultConstructorInput: ConstructorInput = {
   roof: 'ondulin',
   facade: 'timber',
   terrace: true,
-  distanceKm: 60,
+  // Как в прайсе: пока расстояние не указано, итог показываем без доставки
+  distanceKm: 0,
 }
 
 export type PriceLine = { label: string; value: number; note?: string }

@@ -205,7 +205,9 @@ export function HouseConstructor() {
             />
             <div className="rounded-xl bg-panel p-5">
               <p className="text-[13px] text-ink-soft">Доставка и подача техники</p>
-              <p className="num mt-1 text-[22px]">{formatPrice(estimate.delivery)}</p>
+              <p className={input.distanceKm > 0 ? 'num mt-1 text-[22px]' : 'mt-1 text-[15px] text-ink-soft'}>
+                {input.distanceKm > 0 ? formatPrice(estimate.delivery) : 'укажите расстояние — пока считаем без доставки'}
+              </p>
               <p className="mt-2 text-[13px] leading-[1.5] text-ink-soft">
                 Сборка входит в цену дома. Расстояние считаем от нашего производства в{' '}
                 {cfg.deliveryOrigin.replace('посёлок ', 'посёлке ')} до участка — маршрут уточним
