@@ -53,7 +53,8 @@ export function OptionCards<Id extends string>({
   const row = variant === 'row'
   return (
     <fieldset className="min-w-0">
-      <legend className="field-label mb-3">{label}</legend>
+      {/* На десктопе подпись группы дублирует заголовок шага — оставляем её только скринридерам */}
+      <legend className="field-label mb-3 lg:sr-only">{label}</legend>
       <div
         className={cn(
           'grid gap-2',
@@ -70,7 +71,7 @@ export function OptionCards<Id extends string>({
               onClick={() => onChange(option.id)}
               className={cn(
                 'group overflow-hidden rounded-xl border text-left transition-[border-color,background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5',
-                row ? 'grid grid-cols-[72px_minmax(0,1fr)] items-center gap-3 p-1.5 pr-3' : 'flex min-h-[72px] flex-col',
+                row ? 'grid grid-cols-[56px_minmax(0,1fr)] items-center gap-2.5 p-1.5 pr-3' : 'flex min-h-[72px] flex-col',
                 selected
                   ? 'border-dark bg-dark text-white shadow-card'
                   : 'border-line bg-surface hover:border-ink/40 hover:shadow-card',
@@ -83,7 +84,7 @@ export function OptionCards<Id extends string>({
                     alt={option.thumb.alt}
                     width={480}
                     height={360}
-                    sizes={row ? '72px' : '(min-width: 1024px) 200px, 45vw'}
+                    sizes={row ? '56px' : '(min-width: 1024px) 200px, 45vw'}
                     className={cn(
                       'w-full object-cover transition-[opacity,transform] duration-300',
                       // Плитки на десктопе чуть ниже (16:10), чтобы шаг помещался в экран без прокрутки
@@ -111,8 +112,8 @@ export function OptionCards<Id extends string>({
                 {option.note ? (
                   <span
                     className={cn(
-                      'text-[12.5px] leading-snug',
-                      row ? 'truncate' : 'lg:line-clamp-2',
+                      'leading-snug',
+                      row ? 'truncate text-[12px]' : 'text-[12.5px] lg:line-clamp-2',
                       selected ? 'text-white/70' : 'text-ink-soft',
                     )}
                   >
@@ -125,7 +126,13 @@ export function OptionCards<Id extends string>({
                       {option.price}
                     </span>
                     {option.priceNote ? (
-                      <span className={cn('text-[11.5px] tabular-nums', selected ? 'text-white/60' : 'text-ink-soft')}>
+                      <span
+                        className={cn(
+                          'tabular-nums whitespace-nowrap',
+                          row ? 'text-[11px]' : 'text-[11.5px]',
+                          selected ? 'text-white/60' : 'text-ink-soft',
+                        )}
+                      >
                         {option.priceNote}
                       </span>
                     ) : null}

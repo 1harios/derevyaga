@@ -105,7 +105,7 @@ export function HouseConstructor() {
               label: item.id === 'custom' ? 'Другой размер' : `Дом ${item.label}`,
               note: item.id === 'custom' ? item.note : `${item.area} м² · ${item.note}`,
               price: item.id === 'custom' ? 'по запросу' : `от ${formatPrice(item.basePrice)}`,
-              priceNote: item.id === 'custom' ? undefined : `от ${formatPrice(monthlyFor(item.basePrice))}/мес`,
+              priceNote: item.id === 'custom' ? undefined : `${formatPrice(monthlyFor(item.basePrice))}/мес`,
               // Иконки размеров: дом каждого размера в базовой комплектации, «Другой» — эскиз
               thumb: { src: sizeIcon(item.id), alt: item.id === 'custom' ? 'Дом по вашему эскизу' : `Дом ${item.label}` },
             }))}
@@ -275,12 +275,12 @@ export function HouseConstructor() {
               <div ref={stepsRef} className="card flex min-h-0 scroll-mt-24 flex-col rounded-xl p-5 md:p-6">
                 <StepProgress current={stepIndex} />
 
-                <div className="mt-4">
+                <div className="mt-3.5">
                   <h2 className="text-[clamp(1.25rem,1.05rem+0.8vw,1.6rem)]">{step.title}</h2>
                   <p className="mt-1.5 max-w-[56ch] text-[13.5px] leading-[1.5] text-ink-soft">{step.hint}</p>
                 </div>
 
-                <div className="mt-4 min-h-0 flex-1 lg:overflow-y-auto lg:pr-1">{renderStep()}</div>
+                <div className="mt-3.5 min-h-0 flex-1 lg:overflow-y-auto lg:pr-1">{renderStep()}</div>
 
                 <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-line pt-4">
                   {stepIndex > 0 ? (
