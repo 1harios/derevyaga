@@ -13,10 +13,15 @@ import { useEffect } from 'react'
  * тут же ставит под наблюдение. Без этого текст на новых страницах
  * оставался скрытым (opacity 0) до перезагрузки.
  *
- * Скрывающие стили включаются только классом js-reveal на <html> (его ставит
- * инлайновый скрипт в layout до первой отрисовки), поэтому без JavaScript
- * контент остаётся видимым. На случай сбоя наблюдателя стоит страховка:
- * каждая партия элементов через 3 секунды проявляется принудительно.
+ * Скрывающие стили включаются только классом js-reveal на <html>. Раньше его
+ * ставил инлайновый скрипт до первой отрисовки — и первый экран (заголовок,
+ * подводка, фото) оставался невидимым до гидрации React: на слабых телефонах
+ * это секунды серой панели и LCP, равный времени интерактивности. Теперь
+ * класс ставит сам наблюдатель, предварительно пометив показанными всё,
+ * что уже в первом экране: оно видно с первой отрисовки, а анимируется
+ * только то, что ниже фолда. Без JavaScript контент виден целиком.
+ * На случай сбоя наблюдателя стоит страховка: каждая партия элементов
+ * через 3 секунды проявляется принудительно.
  */
 export function RevealObserver() {
   useEffect(() => {
@@ -62,6 +67,21 @@ export function RevealObserver() {
       timers.add(failsafe)
     }
 
+    // Первый проход — ДО включения скрывающих стилей: всё, что уже попадает
+    // в первый экран, помечаем показанным без анимации, затем включаем
+    // js-reveal (на один кадр без transition, чтобы элементы ниже фолда
+    // не «гасли» плавно у тех, кто успел прокрутить страницу).
+    const html = document.documentElement
+    document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 1.1) {
+        el.classList.add('is-in')
+      }
+    })
+    html.classList.add('js-reveal', 'js-reveal-init')
+    const initFrame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => html.classList.remove('js-reveal-init'))
+    })
+
     track(document)
 
     // Новые элементы после клиентской навигации или перерисовки
@@ -79,7 +99,9 @@ export function RevealObserver() {
     return () => {
       io.disconnect()
       mo.disconnect()
+      window.cancelAnimationFrame(initFrame)
       timers.forEach((timer) => window.clearTimeout(timer))
+      html.classList.remove('js-reveal', 'js-reveal-init')
     }
   }, [])
 

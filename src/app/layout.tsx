@@ -48,14 +48,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Предзагружаем только начертания первого экрана */}
         <link rel="preload" href="/fonts/onest-500-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/inter-400-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        {/* Класс js-reveal включает скрытие data-reveal-элементов ДО первой
-            отрисовки — иначе контент мигал бы. Без JavaScript класс не ставится
-            и всё остаётся видимым. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js-reveal')",
-          }}
-        />
+        {/* Скрывающий класс js-reveal ставит RevealObserver после гидрации —
+            и только для элементов ниже первого экрана. Первый экран виден
+            с первой отрисовки, а без JavaScript видно вообще всё. */}
       </head>
       <body>
         <RevealObserver />
