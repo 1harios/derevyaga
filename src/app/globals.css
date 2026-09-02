@@ -869,6 +869,21 @@
     .js-reveal.js-reveal-init [data-reveal] {
       transition: none;
     }
+
+    /* Конструктор дома: новый кадр стадии мягко проявляется поверх белого фона */
+    @keyframes constructor-fade {
+      from {
+        opacity: 0;
+        transform: scale(1.01);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    .constructor-fade {
+      animation: constructor-fade 0.45s ease-out both;
+    }
   }
 
   /* Мягкий подъём карточек на ховере */

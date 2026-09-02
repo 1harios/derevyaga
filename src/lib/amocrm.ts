@@ -40,6 +40,8 @@ type SiteLead = {
 const FORM_LABELS: Record<string, string> = {
   'final-cta': 'Заявка на расчёт сметы',
   'quiz-calculator': 'Расчёт в калькуляторе',
+  constructor: 'Расчёт в конструкторе дома',
+  'constructor-mortgage': 'Подбор ипотеки из конструктора',
   'project-page': 'Заявка со страницы проекта',
   'projects-catalog': 'Заявка из каталога проектов',
   complectations: 'Вопрос по комплектациям',
@@ -70,6 +72,8 @@ function leadName(lead: SiteLead): string {
 const TAG_LABELS: Record<string, string> = {
   'final-cta': 'расчёт сметы',
   'quiz-calculator': 'калькулятор',
+  constructor: 'конструктор',
+  'constructor-mortgage': 'конструктор · ипотека',
   'project-page': 'страница проекта',
   'projects-catalog': 'каталог проектов',
   complectations: 'комплектации',
