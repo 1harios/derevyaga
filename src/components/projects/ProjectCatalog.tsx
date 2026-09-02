@@ -23,9 +23,9 @@ const FLOORS = [
 
 const AREAS = [
   { id: 'all', label: 'Любая площадь' },
-  { id: 'small', label: 'До 100 м²', test: (area: number) => area < 100 },
-  { id: 'mid', label: '100–140 м²', test: (area: number) => area >= 100 && area <= 140 },
-  { id: 'large', label: 'От 140 м²', test: (area: number) => area > 140 },
+  { id: 'small', label: 'До 100 м²', test: (area: number) => area < 100 },
+  { id: 'mid', label: '100–140 м²', test: (area: number) => area >= 100 && area <= 140 },
+  { id: 'large', label: 'От 140 м²', test: (area: number) => area > 140 },
 ] as const
 
 const BEDROOMS = [

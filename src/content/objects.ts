@@ -32,7 +32,7 @@ export const builtObjects: BuiltObject[] = [
     photoBefore: '/photos/obekt-ladoga-karkas.webp',
     photoBeforeAlt: 'Каркас двухэтажного дома с лесами на этапе сборки',
     photoAfter: '/photos/proekt-ladoga.webp',
-    photoAfterAlt: 'Готовый двухэтажный дом 132 м² с террасой',
+    photoAfterAlt: 'Готовый двухэтажный дом 132 м² с террасой',
     quote:
       'Считали смету в трёх компаниях, у этих она оказалась не самой дешёвой, но единственной, где расписано до крепежа. Итог совпал с договором до рубля.',
     author: 'Сергей и Наталья, Всеволожский район',
@@ -50,7 +50,7 @@ export const builtObjects: BuiltObject[] = [
     photoBefore: '/photos/obekt-vuoksa-krovlya.webp',
     photoBeforeAlt: 'Дом с мансардой на этапе монтажа кровли',
     photoAfter: '/photos/proekt-vuoksa.webp',
-    photoAfterAlt: 'Готовый дом с мансардой 118 м² и тёмным фасадом',
+    photoAfterAlt: 'Готовый дом с мансардой 118 м² и тёмным фасадом',
     delayNote: 'Задержка 9 дней: две недели дождей на этапе фасада, работы приостанавливали по технологии покраски.',
     quote:
       'Сроки сдвинулись из-за погоды, но нас предупредили заранее и показали в кабинете новый график. Неприятно, но честно — и без доплат.',
@@ -69,7 +69,7 @@ export const builtObjects: BuiltObject[] = [
     photoBefore: '/photos/obekt-kiviniemi-svai.webp',
     photoBeforeAlt: 'Свайное поле и первые стены каркаса на участке у озера',
     photoAfter: '/photos/proekt-kiviniemi.webp',
-    photoAfterAlt: 'Готовый одноэтажный дом 145 м² с панорамными окнами',
+    photoAfterAlt: 'Готовый одноэтажный дом 145 м² с панорамными окнами',
     quote:
       'Участок с валунами, я был уверен, что будут доплаты за фундамент. Пересчитали сваи на этапе проекта, в смете это уже было учтено.',
     author: 'Илья, Лосево',

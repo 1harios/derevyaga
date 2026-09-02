@@ -203,7 +203,9 @@
   --color-surface: #ffffff;
   --color-panel: #f2f1ef;
   --color-ink: #1b211d;
-  --color-ink-soft: #6c736d;
+  /* Чуть темнее исходного #6c736d: на белом даёт ≈4.6:1 и проходит WCAG AA
+     для мелкого текста (было 4.32:1 на белом и 3.87:1 на панели). */
+  --color-ink-soft: #636a64;
   --color-ink-faint: #9aa09a;
   --color-dark: #1e2521;
   --color-dark-soft: #2b332d;

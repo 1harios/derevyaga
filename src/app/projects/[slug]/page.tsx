@@ -61,7 +61,8 @@ export async function generateMetadata({
 
   return {
     title: `${project.name} — каркасный дом ${project.area} м² за ${formatPrice(project.priceFrom)}`,
-    description: `${project.summary} Срок строительства ${project.days} дней, цена фиксируется в договоре.`,
+    // Короткое описание для выдачи (до ~160 символов): факты вместо длинного summary
+    description: `Каркасный дом «${project.name}» ${project.area} м², ${project.floorsLabel.toLowerCase()}, ${pluralized(project.bedrooms, ['спальня', 'спальни', 'спален'])} — от ${formatPrice(project.priceFrom)}. Срок ${pluralized(project.days, ['день', 'дня', 'дней'])}, цена фиксируется в договоре.`,
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: { images: [{ url: project.photo }] },
   }

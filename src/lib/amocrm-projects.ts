@@ -129,6 +129,10 @@ async function getAmoFields(cached = false): Promise<AmoCustomField[]> {
   const path = `/api/v4/catalogs/${catalogId}/custom_fields?limit=250&order%5Bsort%5D=asc`
   const response = cached ? await amoCachedRequest(path) : await amoRequest(path)
 
+  if (response.status === 401) {
+    throw new Error('AUTH_401: amoCRM отклонила токен — проверьте или перевыпустите AMO_TOKEN')
+  }
+
   if (!response.ok) {
     throw new Error(`amoCRM не вернула поля (${response.status}): ${await responseError(response)}`)
   }
@@ -143,6 +147,10 @@ async function getAmoElements(cached = false): Promise<AmoCatalogElement[]> {
   const { catalogId } = amoConfig()
   const path = `/api/v4/catalogs/${catalogId}/elements?limit=250`
   const response = cached ? await amoCachedRequest(path) : await amoRequest(path)
+
+  if (response.status === 401) {
+    throw new Error('AUTH_401: amoCRM отклонила токен — проверьте или перевыпустите AMO_TOKEN')
+  }
 
   if (!response.ok) {
     throw new Error(`amoCRM не вернула проекты (${response.status}): ${await responseError(response)}`)

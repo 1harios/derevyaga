@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { isAmoConfigured, sendLeadToAmo } from '@/lib/amocrm'
+import { normalizePhone } from '@/lib/utils'
 
 /**
  * Единая точка приёма заявок: проверяет входные данные, отсекает простой
@@ -64,12 +65,6 @@ function sanitizeMeta(value: unknown): Record<string, unknown> {
     ...(ymClientId ? { ymClientId } : {}),
     ...(timeOnSiteSec !== undefined ? { timeOnSiteSec } : {}),
   }
-}
-
-function normalizePhone(input: string): string {
-  const digits = input.replace(/\D/g, '')
-  if (!digits) return ''
-  return `+7${digits.replace(/^[78]/, '').slice(0, 10)}`
 }
 
 function clientIp(request: Request): string {

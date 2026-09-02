@@ -92,6 +92,8 @@ export default function MortgagePage() {
       </Section>
 
       <Section compact>
+        {/* Заголовок уровня секции нужен для порядка h2 → h3; визуально карточки говорят сами за себя */}
+        <h2 className="sr-only">Частые вопросы про оплату</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {moneyFaq.map((item) => (
             <div key={item.question} className="rounded-xl bg-panel p-6">

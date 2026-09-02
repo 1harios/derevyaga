@@ -24,6 +24,9 @@ const jsonLd = {
       description:
         'Строительство каркасных домов под ключ в Санкт-Петербурге и Ленинградской области',
       url: siteUrl,
+      logo: `${siteUrl}/brand/logo-full-moss.png`,
+      image: `${siteUrl}/brand/og-default.png`,
+      sameAs: [company.telegram, company.vk],
       telephone: company.phone,
       email: company.email,
       address: {

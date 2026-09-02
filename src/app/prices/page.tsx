@@ -78,7 +78,7 @@ const factors = [
 const examples: { label: string; description: string; input: CalcInput }[] = [
   {
     label: 'Дача на выходные',
-    description: '78 м², один этаж, комплектация «Каркас» — контур закрыт, отделка своими силами',
+    description: '78 м², один этаж, комплектация «Каркас» — контур закрыт, отделка своими силами',
     input: {
       area: 78, floors: '1', foundation: 'piles', completeness: 'frame', roof: 'metal',
       facade: 'imitation', insulation: '200', windows: 'standard', engineering: 'none',
@@ -87,7 +87,7 @@ const examples: { label: string; description: string; input: CalcInput }[] = [
   },
   {
     label: 'Дом под чистовую',
-    description: '118 м² с мансардой, коммуникации разведены — остаются обои и полы',
+    description: '118 м² с мансардой, коммуникации разведены — остаются обои и полы',
     input: {
       area: 118, floors: '1.5', foundation: 'piles', completeness: 'prefinish', roof: 'metal',
       facade: 'imitation', insulation: '200', windows: 'standard', engineering: 'basic',
@@ -96,7 +96,7 @@ const examples: { label: string; description: string; input: CalcInput }[] = [
   },
   {
     label: 'Семейный под ключ',
-    description: '132 м², два этажа, заезжаете с мебелью — всё принято по акту',
+    description: '132 м², два этажа, заезжаете с мебелью — всё принято по акту',
     input: {
       area: 132, floors: '2', foundation: 'piles', completeness: 'turnkey', roof: 'metal',
       facade: 'imitation', insulation: '200', windows: 'standard', engineering: 'basic',

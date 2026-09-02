@@ -36,7 +36,8 @@ export function FeaturedHomes({ projects }: { projects: Project[] }) {
               data-reveal
               style={{ '--reveal-delay': `${index * 100}ms` } as React.CSSProperties}
             >
-              <ProjectCard project={project} priority={index < 4} />
+              {/* Сетка стоит под первым экраном: приоритет загрузки оставляем только фото hero */}
+              <ProjectCard project={project} />
             </li>
           ))}
         </ul>

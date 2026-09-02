@@ -5,8 +5,8 @@ import { Section } from '@/components/ui/Section'
 /**
  * «Почему выбирают нас» — четыре плитки с вырезанными изображениями без фона
  * (холст 690×880, верхние ~180 px прозрачные — это место под заголовок).
- * Плитка ровного цвета #f0efed, при наведении перекрашивается в зелёный
- * #436453, текст переходит в белый, а круглая кнопка-стрелка внизу
+ * Плитка цвета панели (токен bg-panel), при наведении перекрашивается
+ * в фирменный мох (bg-brand), текст переходит в белый, а круглая кнопка-стрелка внизу
  * раскрывается в «Подробнее». Вырезка прижата к низу плитки и центрирована:
  * на широких планшетных плитках по бокам остаётся ровный фон.
  *
@@ -60,7 +60,7 @@ export function WhyUsBlock() {
           <li key={reason.title} data-reveal style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}>
             <Link
               href={reason.href}
-              className="group relative isolate block min-h-[250px] overflow-hidden rounded-xl bg-[#f0efed] transition-colors duration-300 hover:bg-[#436453] sm:min-h-[400px] xl:min-h-[430px]"
+              className="group relative isolate block min-h-[250px] overflow-hidden rounded-xl bg-panel transition-colors duration-300 hover:bg-brand sm:min-h-[400px] xl:min-h-[430px]"
             >
               {/* Вырезка без фона: прижата к низу и центрирована, высота — по плитке */}
               <Image
@@ -68,13 +68,14 @@ export function WhyUsBlock() {
                 alt={reason.alt}
                 width={690}
                 height={880}
+                sizes="(min-width: 1280px) 25vw, 50vw"
                 className="pointer-events-none absolute bottom-0 left-0 -z-10 h-auto w-full max-w-none object-contain object-bottom transition-transform duration-300 ease-out group-hover:scale-[1.02] sm:left-1/2 sm:h-full sm:w-auto sm:-translate-x-1/2"
               />
 
               <div className="pt-[18px] pl-[18px] pr-3 sm:p-6">
-                <h3 className="font-sans text-[13px] font-medium leading-[1.3] text-[#1b211d] transition-colors duration-300 group-hover:text-white sm:text-[18px]">
+                <h3 className="font-sans text-[13px] font-medium leading-[1.3] text-ink transition-colors duration-300 group-hover:text-white sm:text-[18px]">
                   {reason.title}
-                  <span className="block font-normal text-[#6a6a6a] transition-colors duration-300 group-hover:text-white/75">
+                  <span className="block font-normal text-ink-soft transition-colors duration-300 group-hover:text-white/75">
                     {reason.subtitle}
                   </span>
                 </h3>

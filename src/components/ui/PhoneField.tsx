@@ -62,6 +62,7 @@ export function TextField({
   optional,
   type = 'text',
   inputMode,
+  autoComplete,
 }: {
   label: string
   name: string
@@ -71,6 +72,8 @@ export function TextField({
   optional?: boolean
   type?: string
   inputMode?: 'text' | 'numeric' | 'decimal'
+  /** Подсказка браузеру для автозаполнения: given-name, email, off… */
+  autoComplete?: string
 }) {
   const id = useId()
 
@@ -85,6 +88,7 @@ export function TextField({
         name={name}
         type={type}
         inputMode={inputMode}
+        autoComplete={autoComplete}
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}

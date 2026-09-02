@@ -183,6 +183,13 @@ export async function sendLeadToAmo(lead: SiteLead): Promise<boolean> {
       },
     ])
 
+    if (complexResponse.status === 401) {
+      // Долгосрочный токен отозван или истёк: пока AMO_TOKEN не перевыпущен,
+      // ни одна заявка не дойдёт — пишем отдельной строкой, чтобы заметить в логах
+      console.error('[amocrm] AUTH_401: amoCRM отклонила токен — проверьте или перевыпустите AMO_TOKEN')
+      return false
+    }
+
     if (!complexResponse.ok) {
       console.error('[amocrm] complex failed', complexResponse.status, await safeText(complexResponse))
       return false

@@ -17,9 +17,10 @@ import { telHref } from '@/lib/utils'
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
     Как в референсе: просто цифры с тонкими разделителями, без плашек */
 const heroStats = [
-  { value: 94, suffix: '~', label: 'дня средний срок стройки' },
-  { value: 5, suffix: '+', label: 'лет гарантии на конструктив' },
-  { value: 218, suffix: '+', label: 'домов сдано с 2011 года' },
+  // Знак «примерно» стоит ПЕРЕД числом: «~94», а не «94~»
+  { value: 94, prefix: '~', suffix: '', label: 'дня средний срок стройки' },
+  { value: 5, prefix: '', suffix: '+', label: 'лет гарантии на конструктив' },
+  { value: 218, prefix: '', suffix: '+', label: 'домов сдано с 2011 года' },
 ]
 
 export function Hero() {
@@ -45,7 +46,7 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
               >
-                <span className="min-w-0 font-sans text-[12.5px] font-medium text-[#1b211d] sm:shrink-0 sm:text-[13px]">
+                <span className="min-w-0 font-sans text-[12.5px] font-medium text-ink sm:shrink-0 sm:text-[13px]">
                   Строим в Санкт-Петербурге и Ленинградской области
                 </span>
                 <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-black/10 sm:block" />
@@ -58,12 +59,12 @@ export function Hero() {
                 Ниже lg скрыт: на телефоне идёт после фото */}
             <div className="my-auto hidden py-8 lg:block">
               <p
-                className="max-w-[500px] font-sans text-[15px] leading-[1.6] text-[#6a6a6a]"
+                className="max-w-[500px] font-sans text-[15px] leading-[1.6] text-ink-soft"
                 data-reveal
                 style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
               >
-                Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
-                <span className="text-[#1b211d]">
+                Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+                <span className="text-ink">
                   Стоимость и срок фиксируем в договоре до начала работ.
                 </span>
               </p>
@@ -95,8 +96,9 @@ export function Hero() {
                   ) : null}
                   <div>
                     <div className="num text-[clamp(2rem,1.4rem+1.6vw,2.75rem)] leading-none [font-variant-numeric:normal]">
+                      {stat.prefix ? <span className="text-ink-faint">{stat.prefix}</span> : null}
                       <CountUp value={stat.value} duration={1400 + index * 250} />
-                      <span className="text-ink-faint">{stat.suffix}</span>
+                      {stat.suffix ? <span className="text-ink-faint">{stat.suffix}</span> : null}
                     </div>
                     <p className="mt-2 text-[12px] leading-[1.35] whitespace-nowrap muted xl:text-[13.5px]">
                       {stat.label}
@@ -200,9 +202,9 @@ export function Hero() {
 
           {/* Мобильная копия абзаца и кнопки: после фото */}
           <div className="px-1 pt-1 lg:hidden">
-            <p className="font-sans text-[14px] leading-[1.55] text-[#6a6a6a]" data-reveal>
-              Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
-              <span className="text-[#1b211d]">
+            <p className="font-sans text-[14px] leading-[1.55] text-ink-soft" data-reveal>
+              Проектируем и строим дома от 78 до 250 м² — от первого эскиза до готовой отделки.{' '}
+              <span className="text-ink">
                 Стоимость и срок фиксируем в договоре до начала работ.
               </span>
             </p>
@@ -226,8 +228,9 @@ export function Hero() {
                 }`}
               >
                   <div className="num text-[25px] leading-none [font-variant-numeric:normal]">
+                    {stat.prefix ? <span className="text-ink-faint">{stat.prefix}</span> : null}
                     <CountUp value={stat.value} duration={1200 + index * 200} />
-                    <span className="text-ink-faint">{stat.suffix}</span>
+                    {stat.suffix ? <span className="text-ink-faint">{stat.suffix}</span> : null}
                   </div>
                   <p className="text-[12.5px] leading-[1.4] muted">{stat.label}</p>
               </div>

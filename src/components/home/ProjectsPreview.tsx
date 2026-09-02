@@ -117,7 +117,7 @@ export function ProjectsPreview({ projects }: { projects: Project[] }) {
                 style={{ '--reveal-delay': `${index * 90}ms` } as React.CSSProperties}
                 className="w-[78%] shrink-0 snap-start sm:w-[46%] lg:w-[calc(25%-9px)]"
               >
-                <ProjectCard project={project} priority={index < 2} />
+                <ProjectCard project={project} />
               </li>
               ))}
             </ul>

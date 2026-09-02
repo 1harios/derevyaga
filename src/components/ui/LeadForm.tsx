@@ -136,7 +136,15 @@ export function LeadForm({
       <div className={layout === 'inline' ? 'grid gap-4 sm:grid-cols-2' : 'space-y-4'}>
         <PhoneField value={phone} onChange={setPhone} error={phoneError} />
         {withName ? (
-          <TextField label="Имя" name="name" value={name} onChange={setName} optional placeholder="Как к вам обращаться" />
+          <TextField
+            label="Имя"
+            name="name"
+            autoComplete="given-name"
+            value={name}
+            onChange={setName}
+            optional
+            placeholder="Как к вам обращаться"
+          />
         ) : null}
         {withComment ? (
           <TextField
