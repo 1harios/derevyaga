@@ -3,8 +3,9 @@ import { cn, formatNumber } from '@/lib/utils'
 
 function CellValue({ value }: { value: string | boolean }) {
   if (value === true) {
+    // role="img" делает aria-label допустимым на span (иначе axe: aria-prohibited-attr)
     return (
-      <span aria-label="Входит" className="inline-flex size-6 items-center justify-center rounded-full bg-brand-tint text-brand-deep">
+      <span role="img" aria-label="Входит" className="inline-flex size-6 items-center justify-center rounded-full bg-brand-tint text-brand-deep">
         <svg viewBox="0 0 12 12" aria-hidden className="size-3">
           <path d="M2.5 6.4 5 8.8l4.5-5.6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -13,7 +14,7 @@ function CellValue({ value }: { value: string | boolean }) {
   }
   if (value === false) {
     return (
-      <span aria-label="Не входит" className="inline-block h-px w-3.5 bg-ink-faint align-middle" />
+      <span role="img" aria-label="Не входит" className="inline-block h-px w-3.5 bg-ink-faint align-middle" />
     )
   }
   return <span className="text-[13.5px] leading-[1.45]">{value}</span>

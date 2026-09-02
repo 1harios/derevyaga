@@ -38,7 +38,8 @@ export default function ComplectationsPage() {
       </PageHero>
 
       <Section>
-        <ComplectationColumns />
+        {/* Колонки идут сразу после h1 страницы — заголовки карточек должны быть h2 */}
+        <ComplectationColumns headingLevel="h2" />
       </Section>
 
       <Section>

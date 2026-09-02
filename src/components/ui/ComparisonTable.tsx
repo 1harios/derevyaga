@@ -4,8 +4,14 @@ import { Button } from './Button'
 import { Tag } from './Tag'
 import { cn } from '@/lib/utils'
 
-/** Три комплектации: средняя — тёмная, как акцентная карточка в референсе */
-export function ComplectationColumns() {
+/**
+ * Три комплектации: средняя — тёмная, как акцентная карточка в референсе.
+ * Уровень заголовка карточек зависит от места: на странице комплектаций
+ * колонки идут сразу после h1 — там нужен h2, внутри секций с h2 — h3.
+ */
+export function ComplectationColumns({ headingLevel = 'h3' }: { headingLevel?: 'h2' | 'h3' }) {
+  const Heading = headingLevel
+
   return (
     <div className="grid gap-3 md:grid-cols-3">
       {complectations.map((item) => {
@@ -20,7 +26,7 @@ export function ComplectationColumns() {
             )}
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="text-[20px]">{item.name}</h3>
+              <Heading className="text-[20px]">{item.name}</Heading>
               {accent ? <Tag className="bg-white/12 text-white">Чаще всего берут</Tag> : null}
             </div>
 
