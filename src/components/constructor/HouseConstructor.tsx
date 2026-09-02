@@ -250,7 +250,7 @@ export function HouseConstructor() {
       {/* Один экран на десктопе: высота панели привязана к окну, сцена растягивается, варианты прокручиваются внутри */}
       <section id="constructor" className="pt-3 md:pt-4">
         <div className="shell">
-          <div className="panel lg:h-[calc(100svh-10rem)] lg:min-h-[580px]">
+          <div className="panel lg:h-[calc(100svh-9rem)] lg:min-h-[590px]">
             <div className="grid h-full items-stretch gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-6">
               {/* Дом, который собирается, и живой итог */}
               <div className="flex min-h-0 flex-col gap-3 md:gap-4">

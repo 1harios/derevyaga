@@ -71,7 +71,7 @@ export function OptionCards<Id extends string>({
               onClick={() => onChange(option.id)}
               className={cn(
                 'group overflow-hidden rounded-xl border text-left transition-[border-color,background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5',
-                row ? 'grid grid-cols-[56px_minmax(0,1fr)] items-center gap-2.5 p-1.5 pr-3' : 'flex min-h-[72px] flex-col',
+                row ? 'grid grid-cols-[56px_minmax(0,1fr)] items-center gap-2.5 p-1 pr-3' : 'flex min-h-[72px] flex-col',
                 selected
                   ? 'border-dark bg-dark text-white shadow-card'
                   : 'border-line bg-surface hover:border-ink/40 hover:shadow-card',
