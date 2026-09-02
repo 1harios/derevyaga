@@ -106,7 +106,7 @@ export function HouseConstructor() {
                 price: isCustom
                   ? 'по проекту'
                   : `${size.piles} свай · ${formatPrice(size.piles * item.pricePerPile)}`,
-                thumb: { src: pilesImage(item.id), alt: item.label },
+                thumb: { src: pilesImage(input.size, item.id), alt: item.label },
               }))}
             />
             <p className="text-[13px] leading-[1.5] text-ink-soft">
@@ -143,7 +143,7 @@ export function HouseConstructor() {
               label: item.label,
               note: item.note,
               price: priceFor(item.pricePerM2),
-              thumb: { src: roofImage(item.id), alt: `Кровля: ${item.label.toLowerCase()}` },
+              thumb: { src: roofImage(input.size, item.id), alt: `Кровля: ${item.label.toLowerCase()}` },
             }))}
           />
         )
@@ -159,7 +159,7 @@ export function HouseConstructor() {
               label: item.label,
               note: item.note,
               price: priceFor(item.pricePerM2),
-              thumb: { src: houseImage({ ...input, facade: item.id }), alt: `Фасад: ${item.label.toLowerCase()}` },
+              thumb: { src: houseImage(input.size, { ...input, facade: item.id }), alt: `Фасад: ${item.label.toLowerCase()}` },
             }))}
           />
         )
@@ -177,14 +177,14 @@ export function HouseConstructor() {
                 label: 'С террасой',
                 note: 'открытая, вдоль фасада, под общей кровлей',
                 price: isCustom ? 'по запросу' : 'в цене',
-                thumb: { src: houseImage({ ...input, terrace: true }), alt: 'Дом с террасой' },
+                thumb: { src: houseImage(input.size, { ...input, terrace: true }), alt: 'Дом с террасой' },
               },
               {
                 id: 'no',
                 label: 'Без террасы',
                 note: 'компактнее, крыльцо у входа',
                 price: isCustom ? 'по запросу' : `− ${formatPrice(cfg.terrace.removeDiscount)}`,
-                thumb: { src: houseImage({ ...input, terrace: false }), alt: 'Дом без террасы' },
+                thumb: { src: houseImage(input.size, { ...input, terrace: false }), alt: 'Дом без террасы' },
               },
             ]}
           />
