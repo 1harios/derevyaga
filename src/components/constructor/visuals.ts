@@ -23,8 +23,12 @@ const BASE = '/constructor'
 
 export const stageImage = {
   plot: `${BASE}/stage-plot.webp`,
-  piles: `${BASE}/stage-piles.webp`,
   frame: `${BASE}/stage-frame.webp`,
+}
+
+/** Свайное поле: винтовые или железобетонные сваи */
+export function pilesImage(foundation: ConstructorInput['foundation']): string {
+  return `${BASE}/stage-piles-${foundation}.webp`
 }
 
 export function roofImage(roof: ConstructorInput['roof']): string {
@@ -54,15 +58,18 @@ export function visualFor(step: StepId, input: ConstructorInput): Visual {
         alt: 'Ровный участок с разметкой под дом',
         caption: size.id === 'custom' ? 'Участок под дом вашего размера' : `Участок размечен под дом ${size.label}`,
       }
-    case 'foundation':
+    case 'foundation': {
+      const foundation =
+        constructorConfig.foundations.find((item) => item.id === input.foundation) ?? constructorConfig.foundations[0]
       return {
-        src: stageImage.piles,
-        alt: 'Винтовые сваи, закрученные в грунт по разметке дома',
+        src: pilesImage(input.foundation),
+        alt: `${foundation.label} по разметке дома`,
         caption:
           size.id === 'custom'
-            ? 'Винтовые сваи — количество посчитаем после замера'
-            : `${size.piles} винтовых свай — фундамент за один день`,
+            ? `${foundation.label} — количество посчитаем после замера`
+            : `${size.piles} свай · ${foundation.short}`,
       }
+    }
     case 'insulation':
       return {
         src: stageImage.frame,
@@ -103,7 +110,7 @@ export function imagesForStep(step: StepId, input: ConstructorInput): string[] {
     case 'size':
       return [stageImage.plot]
     case 'foundation':
-      return [stageImage.piles]
+      return constructorConfig.foundations.map((item) => pilesImage(item.id))
     case 'insulation':
       return [stageImage.frame]
     case 'roof':

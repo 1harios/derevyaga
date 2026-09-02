@@ -13,6 +13,7 @@ export type SizeId = '6x6' | '6x8' | '6x10' | '8x8' | '8x10' | 'custom'
 export type InsulationId = '100' | '150' | '200'
 export type RoofId = 'ondulin' | 'metal' | 'shingles'
 export type FacadeId = 'timber' | 'painted' | 'planken'
+export type FoundationId = 'screw' | 'concrete'
 export type MortgageProgramId = 'family' | 'standard'
 
 export type SizeOption = {
@@ -49,8 +50,26 @@ export const constructorConfig = {
     { id: 'custom', label: 'Другой', area: 0, basePrice: 0, piles: 0, note: 'посчитаем индивидуально' },
   ] satisfies SizeOption[],
 
-  /** Цена одной винтовой сваи с монтажом: 72 000 ₽ / 16 свай */
-  pilePrice: 4_500,
+  /**
+   * Типы свай: цена за одну сваю с монтажом, количество зависит от размера дома.
+   * Винтовые 108 мм — из прайса (72 000 ₽ / 16 свай), железобетонные — ЗАМЕНИТЬ.
+   */
+  foundations: [
+    {
+      id: 'screw',
+      label: 'Винтовые сваи 108 мм',
+      short: 'винтовые 108 мм',
+      note: 'в базовой цене · монтаж за день, без земляных работ',
+      pricePerPile: 4_500,
+    },
+    {
+      id: 'concrete',
+      label: 'Железобетонные сваи',
+      short: 'железобетонные',
+      note: 'для слабых грунтов и тяжёлой отделки · служат дольше',
+      pricePerPile: 6_500, // ЗАМЕНИТЬ
+    },
+  ] as Array<{ id: FoundationId; label: string; short: string; note: string; pricePerPile: number }>,
 
   insulation: [
     { id: '100', label: '100 мм', note: 'в базовой цене · дача, лето и межсезонье', pricePerM2: 0 },

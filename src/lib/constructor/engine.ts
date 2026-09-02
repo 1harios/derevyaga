@@ -2,6 +2,7 @@ import { formatPrice } from '@/lib/utils'
 import {
   constructorConfig,
   type FacadeId,
+  type FoundationId,
   type InsulationId,
   type MortgageProgramId,
   type RoofId,
@@ -10,6 +11,7 @@ import {
 
 export type ConstructorInput = {
   size: SizeId
+  foundation: FoundationId
   insulation: InsulationId
   roof: RoofId
   facade: FacadeId
@@ -20,6 +22,7 @@ export type ConstructorInput = {
 
 export const defaultConstructorInput: ConstructorInput = {
   size: '6x6',
+  foundation: 'screw',
   insulation: '100',
   roof: 'ondulin',
   facade: 'timber',
@@ -32,7 +35,7 @@ export type PriceLine = { label: string; value: number; note?: string }
 export type HouseEstimate = {
   /** Дом со сборкой с учётом выбранных опций (без свай и доставки) */
   house: number
-  piles: { count: number; price: number }
+  piles: { count: number; price: number; label: string; short: string }
   delivery: number
   total: number
   area: number
@@ -42,7 +45,7 @@ export type HouseEstimate = {
   custom: boolean
 }
 
-const { sizes, pilePrice, insulation, roofs, facades, terrace, delivery } = constructorConfig
+const { sizes, foundations, insulation, roofs, facades, terrace, delivery } = constructorConfig
 
 function option<T extends { id: string }>(list: readonly T[], id: string): T {
   return list.find((item) => item.id === id) ?? list[0]
@@ -60,9 +63,18 @@ export function deliveryPrice(km: number): number {
 export function estimateHouse(input: ConstructorInput): HouseEstimate {
   const size = option(sizes, input.size)
   if (size.id === 'custom') {
-    return { house: 0, piles: { count: 0, price: 0 }, delivery: 0, total: 0, area: 0, lines: [], custom: true }
+    return {
+      house: 0,
+      piles: { count: 0, price: 0, label: '', short: '' },
+      delivery: 0,
+      total: 0,
+      area: 0,
+      lines: [],
+      custom: true,
+    }
   }
 
+  const foundation = option(foundations, input.foundation)
   const ins = option(insulation, input.insulation)
   const roof = option(roofs, input.roof)
   const facade = option(facades, input.facade)
@@ -76,7 +88,12 @@ export function estimateHouse(input: ConstructorInput): HouseEstimate {
   if (!input.terrace) lines.push({ label: 'Без террасы', value: -terrace.removeDiscount })
 
   const house = lines.reduce((sum, line) => sum + line.value, 0)
-  const piles = { count: size.piles, price: size.piles * pilePrice }
+  const piles = {
+    count: size.piles,
+    price: size.piles * foundation.pricePerPile,
+    label: foundation.label,
+    short: foundation.short,
+  }
   const deliveryCost = deliveryPrice(input.distanceKm)
 
   return {
@@ -133,7 +150,7 @@ export function describeInput(input: ConstructorInput, estimate: HouseEstimate):
     `утепл. ${option(insulation, input.insulation).label}`,
     option(roofs, input.roof).label.toLowerCase(),
     option(facades, input.facade).label.toLowerCase(),
-    estimate.custom ? '' : `${estimate.piles.count} свай`,
+    estimate.custom ? '' : `${estimate.piles.count} свай (${estimate.piles.short})`,
     `${clampDistance(input.distanceKm)} км`,
     estimate.custom ? 'индивидуально' : formatPrice(estimate.total),
   ].filter(Boolean)

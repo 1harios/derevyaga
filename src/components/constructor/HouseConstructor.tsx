@@ -17,7 +17,7 @@ import { HouseVisual } from './HouseVisual'
 import { MortgagePanel } from './MortgagePanel'
 import { OptionCards } from './OptionCards'
 import { PriceSummary } from './PriceSummary'
-import { STEPS, houseImage, imagesForStep, roofImage, visualFor } from './visuals'
+import { STEPS, houseImage, imagesForStep, pilesImage, roofImage, visualFor } from './visuals'
 
 const cfg = constructorConfig
 
@@ -93,20 +93,26 @@ export function HouseConstructor() {
 
       case 'foundation':
         return (
-          <div className="rounded-xl bg-panel p-5 md:p-6">
-            <p className="font-heading text-[16px] font-medium">Винтовые сваи</p>
-            <p className="mt-2 text-[14px] leading-[1.55] text-ink-soft">
-              Стальные винтовые сваи закручиваем за один день, без земляных работ и ожидания
-              усадки — подходят для большинства участков Ленобласти. Количество зависит от размера
-              дома, в цене — сваи с монтажом.
-            </p>
-            <p className="num mt-4 text-[22px]">
-              {isCustom
-                ? 'по проекту'
-                : `${estimate.piles.count} свай · ${formatPrice(estimate.piles.price)}`}
-            </p>
-            <p className="mt-1 text-[13px] text-ink-soft">
-              {formatPrice(cfg.pilePrice)} за сваю. Ленточный или плитный фундамент — по запросу.
+          <div className="space-y-4">
+            <OptionCards
+              label="Тип свай"
+              value={input.foundation}
+              onChange={(id) => patch({ foundation: id })}
+              columns={2}
+              options={cfg.foundations.map((item) => ({
+                id: item.id,
+                label: item.label,
+                note: item.note,
+                price: isCustom
+                  ? 'по проекту'
+                  : `${size.piles} свай · ${formatPrice(size.piles * item.pricePerPile)}`,
+                thumb: { src: pilesImage(item.id), alt: item.label },
+              }))}
+            />
+            <p className="text-[13px] leading-[1.5] text-ink-soft">
+              Количество свай зависит от размера дома
+              {isCustom ? ' — посчитаем после замера' : `: ${size.piles} шт для ${size.label}`}. Цена
+              указана за сваи с монтажом. Ленточный или плитный фундамент — по запросу.
             </p>
           </div>
         )

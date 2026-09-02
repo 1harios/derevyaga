@@ -83,7 +83,7 @@ export function PriceSummary({
         />
         <Row
           label="Свайное поле"
-          sub={`винтовые · ${estimate.piles.count} свай`}
+          sub={`${estimate.piles.short} · ${estimate.piles.count} свай`}
           value={estimate.piles.price}
           onEdit={() => onEdit('foundation')}
         />
