@@ -4,6 +4,7 @@ import { useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent
 import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import { cta } from '@/content/company'
 import type { Project } from '@/content/projects'
 
 export function ProjectsPreview({ projects }: { projects: Project[] }) {
@@ -125,7 +126,7 @@ export function ProjectsPreview({ projects }: { projects: Project[] }) {
 
           <div className="mt-6 flex items-center justify-between gap-4">
             <Button href="/projects" arrow>
-              В каталог
+              {cta.secondary}
             </Button>
 
             <div className="flex gap-2">

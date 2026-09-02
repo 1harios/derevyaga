@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import { cta } from '@/content/company'
 import type { Project } from '@/content/projects'
 import { formatPrice } from '@/lib/utils'
 
@@ -44,7 +45,7 @@ export function FeaturedHomes({ projects }: { projects: Project[] }) {
 
         <div className="mt-5 flex justify-end">
           <Button href="/projects" variant="outline" arrow>
-            Смотреть все дома
+            {cta.secondary}
           </Button>
         </div>
       </div>

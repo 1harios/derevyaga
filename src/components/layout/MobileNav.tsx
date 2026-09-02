@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/Button'
-import { company } from '@/content/company'
+import { company, cta } from '@/content/company'
 import { mainNav, secondaryNav } from '@/content/nav'
 import { cn, telHref } from '@/lib/utils'
 
@@ -171,7 +171,7 @@ export function MobileNav({ className }: { className?: string }) {
                 </a>
                 <p className="text-[14px] muted">{company.workHours}</p>
                 <Button href="/#final-form" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1} wide arrow>
-                  Оставить заявку
+                  {cta.primary}
                 </Button>
                 <Button href="/lk" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1} variant="outline" wide>
                   Личный кабинет

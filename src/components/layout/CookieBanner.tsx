@@ -46,12 +46,14 @@ export function CookieBanner() {
     <div
       role="region"
       aria-label="Использование cookie"
-      // На десктопе уводим вправо (слева в первом экране карточки с цифрами),
-      // а от нижнего края поднимаем: в правом нижнем углу живёт кнопка чата
-      className="fixed inset-x-3 bottom-24 z-45 md:inset-x-auto md:right-5 md:max-w-sm"
+      // На телефоне баннер поднят над липкой панелью действий. На десктопе —
+      // компактная карточка в самом нижнем правом углу: кнопка чата монтируется
+      // только после согласия, поэтому угол свободен, а дом на фото первого
+      // экрана остаётся открытым (раньше баннер стоял выше и закрывал крыльцо).
+      className="fixed inset-x-3 bottom-24 z-45 md:inset-x-auto md:right-5 md:bottom-5 md:max-w-xs"
     >
-      <div className="card rounded-xl p-5">
-        <p className="text-[14px] leading-[1.55]">
+      <div className="card rounded-xl p-4 md:p-5">
+        <p className="text-[13.5px] leading-[1.5]">
           Мы используем cookie: обязательные — чтобы сайт работал, аналитические — чтобы понимать,
           какие страницы полезны. Аналитику не включаем без вашего согласия.{' '}
           <Link href="/legal/cookie" className="link-underline">

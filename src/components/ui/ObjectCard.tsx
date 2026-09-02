@@ -46,7 +46,7 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
         <span
           className={cn(
             'absolute top-3 left-3 rounded-full px-3 py-1.5 font-sans text-[12px] font-medium text-white',
-            delayed ? 'bg-[#8a4b38]' : 'bg-[#436453]',
+            delayed ? 'bg-warn' : 'bg-brand',
           )}
         >
           {statusLabel}
@@ -66,7 +66,7 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
               aria-pressed={showAfter === value}
               className={cn(
                 'min-h-11 rounded-full px-4 font-sans text-[13px] transition-colors duration-200 ease-out',
-                showAfter === value ? 'bg-[#436453] text-white' : 'text-[#1b211d] hover:bg-black/[0.04]',
+                showAfter === value ? 'bg-brand text-white' : 'text-ink hover:bg-black/[0.04]',
               )}
             >
               {label}
@@ -78,43 +78,43 @@ export function ObjectCard({ object }: { object: BuiltObject }) {
       <div className="flex flex-1 flex-col p-5 md:p-6">
         {/* Название и цена в одну строку, мета — второй строкой */}
         <div className="flex items-start justify-between gap-4">
-          <h3 className="font-sans text-[17px] leading-snug font-medium text-[#1b211d]">
+          <h3 className="font-sans text-[17px] leading-snug font-medium text-ink">
             {object.name}
           </h3>
-          <span className="shrink-0 font-sans text-[17px] leading-snug font-medium tabular-nums text-[#1b211d]">
+          <span className="shrink-0 font-sans text-[17px] leading-snug font-medium tabular-nums text-ink">
             {formatPrice(object.price)}
           </span>
         </div>
-        <p className="mt-1 font-sans text-[13px] text-[#6a6a6a]">
+        <p className="mt-1 font-sans text-[13px] text-ink-soft">
           {object.location}, {object.year} · {object.area} м² · {object.completeness}
         </p>
 
         {/* План-факт срока: подписи и визуальная полоска */}
         <div className="mt-5 mb-5">
           <div className="flex items-baseline justify-between font-sans text-[12.5px]">
-            <span className="text-[#6a6a6a]">План {object.plannedDays} дн.</span>
-            <span className={cn('font-medium', delayed ? 'text-[#8a4b38]' : 'text-[#436453]')}>
+            <span className="text-ink-soft">План {object.plannedDays} дн.</span>
+            <span className={cn('font-medium', delayed ? 'text-warn' : 'text-brand')}>
               Факт {object.actualDays} дн.
             </span>
           </div>
-          <div className="mt-2 flex h-1.5 gap-px overflow-hidden rounded-full bg-[#edece9]">
-            <span className="h-full rounded-full bg-[#436453]" style={{ width: `${greenShare}%` }} />
+          <div className="mt-2 flex h-1.5 gap-px overflow-hidden rounded-full bg-line">
+            <span className="h-full rounded-full bg-brand" style={{ width: `${greenShare}%` }} />
             {overShare > 0 && (
-              <span className="h-full rounded-full bg-[#8a4b38]" style={{ width: `${overShare}%` }} />
+              <span className="h-full rounded-full bg-warn" style={{ width: `${overShare}%` }} />
             )}
           </div>
-          <p className="mt-2 font-sans text-[12.5px] leading-[1.55] text-[#6a6a6a]">
+          <p className="mt-2 font-sans text-[12.5px] leading-[1.55] text-ink-soft">
             {object.delayNote ??
               `Сдан на ${pluralized(object.plannedDays - object.actualDays, ['день', 'дня', 'дней'])} раньше срока.`}
           </p>
         </div>
 
         {/* Цитата владельца: компактно, максимум две строки */}
-        <blockquote className="mt-auto border-t border-black/[0.06] pt-4 font-sans text-[14px] leading-[1.55] text-[#1b211d]">
+        <blockquote className="mt-auto border-t border-black/[0.06] pt-4 font-sans text-[14px] leading-[1.55] text-ink">
           <span className="line-clamp-2" title={object.quote}>
             «{object.quote}»
           </span>
-          <footer className="mt-1.5 text-[12.5px] text-[#6a6a6a]">{object.author}</footer>
+          <footer className="mt-1.5 text-[12.5px] text-ink-soft">{object.author}</footer>
         </blockquote>
       </div>
     </article>

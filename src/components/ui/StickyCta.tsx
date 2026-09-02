@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { company } from '@/content/company'
+import { company, cta } from '@/content/company'
 import { track } from '@/lib/analytics'
 import { telHref } from '@/lib/utils'
 
@@ -59,7 +59,7 @@ export function StickyCta() {
           tabIndex={visible ? 0 : -1}
           className="btn btn--dark flex-1 shadow-float"
         >
-          Рассчитать дом
+          {cta.primary}
         </Link>
       </div>
     </div>

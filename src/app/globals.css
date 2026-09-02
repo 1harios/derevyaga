@@ -220,6 +220,9 @@
 
   --color-ok: #2f6b45;
   --color-err: #8c3f24;
+  /* Статус сроков в карточках объектов: «в срок» — фирменный мох (brand),
+     «с задержкой» — тёплая терракота, мягче цвета ошибки формы */
+  --color-warn: #8a4b38;
 
   --font-heading: 'Onest', 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;

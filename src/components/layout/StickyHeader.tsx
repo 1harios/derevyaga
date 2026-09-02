@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
-import { company } from '@/content/company'
+import { company, cta } from '@/content/company'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { headerNav } from '@/content/nav'
 import { track } from '@/lib/analytics'
@@ -112,7 +112,7 @@ export function StickyHeader() {
                 </svg>
               </a>
               <Button href="/#final-form" size="sm" arrow className="hidden sm:inline-flex">
-                Оставить заявку
+                {cta.primary}
               </Button>
               <MobileNav className="lg:hidden" />
             </div>

@@ -1,17 +1,18 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { HeaderInline } from '@/components/layout/HeaderInline'
 import { Button } from '@/components/ui/Button'
 import { CountUp } from '@/components/ui/CountUp'
-import { company } from '@/content/company'
+import { company, cta } from '@/content/company'
 import { telHref } from '@/lib/utils'
 
 /**
  * Первый экран: серая панель-ячейка слева и фото справа, как в исходной
  * компоновке — дом-вырезка выходит за рамку фотоблока (двухслойный приём).
- * Внутри панели: крупный заголовок, теглайн с линией, абзац с кнопкой
- * «Рассчитать проект» и строка цифр с разделителями. На фото — пилюли
- * «Оставить заявку», телефон и личный кабинет.
+ * Внутри панели: крупный заголовок, теглайн с линией, абзац с единой парой
+ * кнопок (смета → форма заявки, каталог проектов) и строка цифр
+ * с разделителями. На фото — пилюли «Калькулятор стоимости», телефон и кабинет.
  */
 
 /** ЗАМЕНИТЬ: цифры доверия — заглушки из брифа.
@@ -73,11 +74,11 @@ export function Hero() {
                 data-reveal
                 style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
               >
-                <Button href="/calculator" arrow>
-                  Рассчитать проект
+                <Button href="#final-form" arrow>
+                  {cta.primary}
                 </Button>
                 <Button href="/projects" variant="outline">
-                  Каталог объектов
+                  {cta.secondary}
                 </Button>
               </div>
             </div>
@@ -147,10 +148,12 @@ export function Hero() {
               />
             </div>
 
-            {/* Пилюли: «Оставить заявку» слева, телефон и кабинет справа */}
+            {/* Пилюли: «Калькулятор стоимости» слева, телефон и кабинет справа */}
             <div className="absolute inset-x-4 top-6 z-[2] flex flex-wrap items-center justify-between gap-2">
-              <a href="#final-form" className="btn btn--light btn--sm hidden sm:inline-flex">
-                Оставить заявку
+              {/* Пилюля на фото ведёт в калькулятор — второй путь к смете,
+                  чтобы не дублировать первичную кнопку панели слева */}
+              <Link href="/calculator" className="btn btn--light btn--sm hidden sm:inline-flex">
+                Калькулятор стоимости
                 <svg viewBox="0 0 14 14" aria-hidden className="icon-arrow size-3.5">
                   <path
                     d="M3 3h8v8M11 3 3 11"
@@ -160,7 +163,7 @@ export function Hero() {
                     strokeLinecap="round"
                   />
                 </svg>
-              </a>
+              </Link>
 
               <span className="ml-auto flex items-center gap-2">
                 <a
@@ -209,11 +212,11 @@ export function Hero() {
               </span>
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
-              <Button href="/calculator" arrow className="max-sm:w-full">
-                Рассчитать проект
+              <Button href="#final-form" arrow className="max-sm:w-full">
+                {cta.primary}
               </Button>
               <Button href="/projects" variant="outline" className="max-sm:w-full">
-                Каталог объектов
+                {cta.secondary}
               </Button>
             </div>
           </div>

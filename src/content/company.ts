@@ -1,3 +1,5 @@
+import { plural } from '@/lib/utils'
+
 /**
  * Данные компании. Всё, что помечено ЗАМЕНИТЬ, — заглушка из брифа.
  * Полный список незаполненного лежит в DATA_TODO.md в корне проекта.
@@ -52,6 +54,16 @@ export const promises = {
   insulationMm: 200, // ЗАМЕНИТЬ
   startingPrice: 4_850_000, // ЗАМЕНИТЬ
   startingArea: 132, // ЗАМЕНИТЬ
+} as const
+
+/**
+ * Единая пара призывов к действию по всему сайту: первичный ведёт к форме
+ * заявки (#final-form), вторичный — в каталог. Раньше одно действие называлось
+ * по-разному («Рассчитать проект», «Оставить заявку», «Рассчитать дом»).
+ */
+export const cta = {
+  primary: `Получить смету за ${promises.estimateDays} ${plural(promises.estimateDays, ['день', 'дня', 'дней'])}`,
+  secondary: 'Каталог проектов',
 } as const
 
 export const legalLinks = [
