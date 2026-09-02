@@ -36,10 +36,10 @@ UA = {
 KEEP_SUBSETS = {"cyrillic", "cyrillic-ext", "latin", "latin-ext"}
 
 # Onest — заголовки и интерфейс обычным регистром, Inter — основной текст.
-# Начертания Inter 300, 400 и 500 из брифа сохранены. Оба с кириллицей.
+# Inter 300 и Onest 400 убраны (грузились ради одного класса и заголовков футера): Inter 400/500, Onest 500/600. Оба с кириллицей.
 FAMILIES = [
-    ("Onest", "Onest:wght@400;500;600", "onest"),
-    ("Inter", "Inter:wght@300;400;500", "inter"),
+    ("Onest", "Onest:wght@500;600", "onest"),
+    ("Inter", "Inter:wght@400;500", "inter"),
 ]
 
 HEADER = (

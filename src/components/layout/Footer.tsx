@@ -49,7 +49,8 @@ export function Footer() {
             <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
               {footerColumns.map((column) => (
                 <nav key={column.title} aria-label={column.title}>
-                  <h3 className="mb-4 text-[14px] font-normal muted">{column.title}</h3>
+                  {/* font-sans: единственное место, где заголовку нужен был Onest 400 — теперь Inter, и начертание не грузится */}
+                  <h3 className="mb-4 font-sans text-[14px] font-normal muted">{column.title}</h3>
                   <ul className="space-y-2.5">
                     {column.items.map((item) => (
                       <li key={item.href}>
