@@ -70,7 +70,7 @@ export function OptionCards<Id extends string>({
               onClick={() => onChange(option.id)}
               className={cn(
                 'group overflow-hidden rounded-xl border text-left transition-[border-color,background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5',
-                row ? 'grid grid-cols-[92px_minmax(0,1fr)] items-center gap-3 p-2 pr-3.5' : 'flex min-h-[72px] flex-col',
+                row ? 'grid grid-cols-[72px_minmax(0,1fr)] items-center gap-3 p-1.5 pr-3' : 'flex min-h-[72px] flex-col',
                 selected
                   ? 'border-dark bg-dark text-white shadow-card'
                   : 'border-line bg-surface hover:border-ink/40 hover:shadow-card',
@@ -83,9 +83,11 @@ export function OptionCards<Id extends string>({
                     alt={option.thumb.alt}
                     width={480}
                     height={360}
-                    sizes={row ? '92px' : '(min-width: 1024px) 200px, 45vw'}
+                    sizes={row ? '72px' : '(min-width: 1024px) 200px, 45vw'}
                     className={cn(
-                      'aspect-[4/3] w-full object-cover transition-[opacity,transform] duration-300',
+                      'w-full object-cover transition-[opacity,transform] duration-300',
+                      // Плитки на десктопе чуть ниже (16:10), чтобы шаг помещался в экран без прокрутки
+                      row ? 'aspect-[4/3]' : 'aspect-[4/3] lg:aspect-[16/10]',
                       selected ? 'opacity-100' : 'opacity-90 group-hover:scale-[1.03] group-hover:opacity-100',
                     )}
                   />
@@ -101,18 +103,24 @@ export function OptionCards<Id extends string>({
                   ) : null}
                 </span>
               ) : null}
-              <span className={cn('flex flex-1 flex-col gap-1', row ? 'min-w-0 py-1' : 'p-3.5')}>
+              <span className={cn('flex flex-1 flex-col', row ? 'min-w-0 gap-0.5 py-0.5' : 'gap-1 p-3')}>
                 {/* Длинные названия («Металлочерепица») на узкой карточке переносятся по слогам */}
                 <span className="font-heading text-[14px] leading-tight font-medium break-words hyphens-auto sm:text-[15px]">
                   {option.label}
                 </span>
                 {option.note ? (
-                  <span className={cn('text-[12.5px] leading-snug', selected ? 'text-white/70' : 'text-ink-soft')}>
+                  <span
+                    className={cn(
+                      'text-[12.5px] leading-snug',
+                      row ? 'truncate' : 'lg:line-clamp-2',
+                      selected ? 'text-white/70' : 'text-ink-soft',
+                    )}
+                  >
                     {option.note}
                   </span>
                 ) : null}
                 {option.price ? (
-                  <span className={cn('flex flex-wrap items-baseline gap-x-2', row ? 'pt-0.5' : 'mt-auto pt-1')}>
+                  <span className={cn('flex flex-wrap items-baseline gap-x-2', row ? '' : 'mt-auto pt-1')}>
                     <span className={cn('text-[13px] font-medium tabular-nums', selected ? 'text-white' : 'text-ink')}>
                       {option.price}
                     </span>

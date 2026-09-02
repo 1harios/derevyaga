@@ -38,11 +38,11 @@ export function PriceSummary({
         hasDistance ? `доставка ${formatPrice(estimate.delivery)}` : 'доставка — укажите км',
       ].join(' · ')
 
-  const figure = 'num mt-1 text-[clamp(1.55rem,1.15rem+1.2vw,2.1rem)] leading-none tracking-tight whitespace-nowrap'
+  const figure = 'num mt-1 text-[clamp(1.5rem,1.05rem+1.2vw,1.9rem)] leading-none tracking-tight whitespace-nowrap'
 
   return (
     <div className={cn('card rounded-xl p-4 md:p-5', className)}>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] lg:items-center">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="min-w-0">
           <p className="text-[12.5px] text-ink-soft">
             {estimate.custom ? 'Другой размер' : hasDistance ? 'Цена с доставкой' : 'Цена без доставки'}
@@ -64,11 +64,15 @@ export function PriceSummary({
           </p>
         </div>
 
-        <div className="sm:col-span-2 lg:col-span-1">
-          <Button onClick={onSave} arrow className="w-full justify-center lg:w-auto">
-            <span className="whitespace-nowrap">{estimate.custom ? 'Отправить размеры' : 'Сохранить расчёт'}</span>
-          </Button>
-        </div>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line pt-3">
+        <span className="max-w-[40ch] text-[12px] leading-snug text-ink-soft">
+          Расчёт предварительный: цену фиксируем в договоре после бесплатного замера
+        </span>
+        <Button onClick={onSave} arrow size="sm">
+          <span className="whitespace-nowrap">{estimate.custom ? 'Отправить размеры' : 'Сохранить расчёт'}</span>
+        </Button>
       </div>
     </div>
   )

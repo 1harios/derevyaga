@@ -36,7 +36,7 @@ export default function CalculatorPage() {
       {/* Компактная шапка страницы: конструктор должен помещаться в один экран на десктопе */}
       <div className="shell pt-4 md:pt-5">
         <div className="flex flex-col gap-1.5 md:flex-row md:items-baseline md:justify-between md:gap-8">
-          <h1 className="text-[clamp(1.45rem,1.15rem+1.1vw,2rem)] leading-tight">Соберите свой дом за две минуты</h1>
+          <h1 className="text-[clamp(1.35rem,1.1rem+0.9vw,1.75rem)] leading-tight">Соберите свой дом за две минуты</h1>
           <p className="max-w-[64ch] text-[14px] leading-snug text-ink-soft">
             Семь шагов — дом собирается на экране, а цена со сборкой, свайным полем и доставкой от{' '}
             {constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} считается сразу.

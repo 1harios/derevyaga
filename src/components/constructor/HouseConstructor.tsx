@@ -250,7 +250,7 @@ export function HouseConstructor() {
       {/* Один экран на десктопе: высота панели привязана к окну, сцена растягивается, варианты прокручиваются внутри */}
       <section id="constructor" className="pt-3 md:pt-4">
         <div className="shell">
-          <div className="panel lg:h-[calc(100svh-11.5rem)] lg:min-h-[560px]">
+          <div className="panel lg:h-[calc(100svh-10rem)] lg:min-h-[580px]">
             <div className="grid h-full items-stretch gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-6">
               {/* Дом, который собирается, и живой итог */}
               <div className="flex min-h-0 flex-col gap-3 md:gap-4">
@@ -275,14 +275,14 @@ export function HouseConstructor() {
               <div ref={stepsRef} className="card flex min-h-0 scroll-mt-24 flex-col rounded-xl p-5 md:p-6">
                 <StepProgress current={stepIndex} />
 
-                <div className="mt-5">
+                <div className="mt-4">
                   <h2 className="text-[clamp(1.25rem,1.05rem+0.8vw,1.6rem)]">{step.title}</h2>
                   <p className="mt-1.5 max-w-[56ch] text-[13.5px] leading-[1.5] text-ink-soft">{step.hint}</p>
                 </div>
 
                 <div className="mt-4 min-h-0 flex-1 lg:overflow-y-auto lg:pr-1">{renderStep()}</div>
 
-                <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-line pt-4">
+                <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-line pt-4">
                   {stepIndex > 0 ? (
                     <Button variant="outline" onClick={() => goTo(stepIndex - 1)}>
                       Назад
@@ -297,7 +297,7 @@ export function HouseConstructor() {
                       Сохранить расчёт
                     </Button>
                   )}
-                  <span className="text-[12.5px] leading-snug text-ink-soft">
+                  <span className="max-w-[26ch] text-[12px] leading-snug text-ink-soft sm:ml-auto sm:text-right">
                     Цена пересчитывается сразу — телефон нужен только чтобы сохранить расчёт
                   </span>
                 </div>
