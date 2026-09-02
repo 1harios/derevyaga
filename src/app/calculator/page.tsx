@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
 import { QuizCalculator } from '@/components/home/QuizCalculator'
 import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
@@ -51,12 +50,13 @@ export default function CalculatorPage() {
         </div>
       </PageHero>
 
-      {/* Suspense обязателен: внутри квиза useSearchParams (предзаполнение из героя) */}
-      <Suspense fallback={null}>
-        <QuizCalculator showIntro={false} />
-      </Suspense>
+      {/* Квиз рендерится на сервере целиком: параметры предзаполнения он читает
+          после монтирования, поэтому Suspense-заглушка (и сдвиг страницы) не нужны */}
+      <QuizCalculator showIntro={false} />
 
       <Section compact>
+        {/* Заголовок уровня секции для порядка h2 → h3; карточки говорят сами за себя */}
+        <h2 className="sr-only">Как устроен расчёт</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {notes.map((note) => (
             <div key={note.title} className="card rounded-xl p-6">

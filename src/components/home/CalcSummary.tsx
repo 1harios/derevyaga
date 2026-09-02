@@ -13,14 +13,18 @@ export function CalcSummary({ result, compact }: { result: CalcResult; compact?:
         до {formatPrice(result.priceTo)} · {Math.round(result.pricePerM2 / 1000)} тыс ₽ за м²
       </div>
 
-      <dl className="mt-6 space-y-2 border-t border-white/12 pt-5 text-[15px]">
+      {/* Два отдельных списка: внутри <dl> допустимы только группы dt/dd,
+          поэтому подзаголовок стоит между ними, а не внутри */}
+      <dl className="mt-6 border-t border-white/12 pt-5 text-[15px]">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
           <dt className="min-w-0 muted">Срок стройки</dt>
           <dd className="tabular-nums">{pluralized(result.days, ['день', 'дня', 'дней'])}</dd>
         </div>
+      </dl>
 
-        <p className="muted pt-3 text-[13px]">Из чего складывается середина диапазона</p>
+      <p className="muted mt-5 text-[13px]">Из чего складывается середина диапазона</p>
 
+      <dl className="mt-2 space-y-2 text-[15px]">
         {result.breakdown.map((row) => (
           <div key={row.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
             <dt className="min-w-0 muted">{row.label}</dt>

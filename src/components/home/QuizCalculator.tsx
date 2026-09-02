@@ -1,7 +1,6 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { CalcSummary } from '@/components/home/CalcSummary'
 import { Button } from '@/components/ui/Button'
 import { LeadForm } from '@/components/ui/LeadForm'
@@ -14,27 +13,40 @@ import { formatNumber } from '@/lib/utils'
 
 const STEPS = ['Дом', 'Комплектация', 'Основание и кровля', 'Участок'] as const
 
+/* Строка запроса как внешнее хранилище: на сервере пустая, на клиенте — реальная.
+   Так калькулятор рендерится на сервере целиком (без useSearchParams и
+   Suspense-заглушки, которая давала CLS 0,3+ на /calculator), а предзаполнение
+   из ссылок вида ?completeness=turnkey&floors=2 подхватывается без ошибок гидрации. */
+const subscribeNoop = () => () => undefined
+const getQuery = () => window.location.search
+const getServerQuery = () => ''
+
+function prefillFromQuery(query: string): Partial<CalcInput> {
+  const params = new URLSearchParams(query)
+  const completeness = params.get('completeness')
+  const floors = params.get('floors')
+  return {
+    ...(completeness === 'frame' || completeness === 'prefinish' || completeness === 'turnkey'
+      ? { completeness }
+      : null),
+    ...(floors === '1' || floors === '1.5' || floors === '2' ? { floors } : null),
+  }
+}
+
 export function QuizCalculator({ showIntro = true }: { showIntro?: boolean } = {}) {
-  const search = useSearchParams()
   const [step, setStep] = useState(0)
-  // Предзаполнение из query-параметров: селекты в герое главной ведут сюда
-  // со своей комплектацией и этажностью (?completeness=turnkey&floors=2)
-  const [input, setInput] = useState<CalcInput>(() => {
-    const completeness = search.get('completeness')
-    const floors = search.get('floors')
-    return {
-      ...defaultCalcInput,
-      ...(completeness === 'frame' || completeness === 'prefinish' || completeness === 'turnkey'
-        ? { completeness }
-        : null),
-      ...(floors === '1' || floors === '1.5' || floors === '2' ? { floors } : null),
-    }
-  })
+  const query = useSyncExternalStore(subscribeNoop, getQuery, getServerQuery)
+  // Ввод пользователя храним как переопределения поверх дефолтов и предзаполнения
+  const [overrides, setOverrides] = useState<Partial<CalcInput>>({})
+  const input = useMemo<CalcInput>(
+    () => ({ ...defaultCalcInput, ...prefillFromQuery(query), ...overrides }),
+    [query, overrides],
+  )
   const [showForm, setShowForm] = useState(false)
   const summaryRef = useRef<HTMLDivElement>(null)
 
   const result = useMemo(() => calculate(input), [input])
-  const patch = (next: Partial<CalcInput>) => setInput((prev) => ({ ...prev, ...next }))
+  const patch = (next: Partial<CalcInput>) => setOverrides((prev) => ({ ...prev, ...next }))
   const isLast = step === STEPS.length - 1
 
   function goNext() {

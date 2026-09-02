@@ -133,7 +133,14 @@ export function OptionGroup<T extends string>({
                 <span
                   className={cn(
                     'mt-1 block text-[13px] leading-tight',
-                    selected ? 'opacity-65' : 'opacity-55',
+                    // Без opacity: подпись должна проходить контраст 4.5:1 на своём фоне
+                    selected
+                      ? isDark
+                        ? 'text-ink-soft'
+                        : 'text-white/75'
+                      : isDark
+                        ? 'text-white/70'
+                        : 'text-ink-soft',
                   )}
                 >
                   {option.note}
