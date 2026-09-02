@@ -118,9 +118,10 @@ export function PriceSummary({
       </dl>
 
       <div className="mt-4 border-t border-line pt-4">
-        <div className="flex items-end justify-between gap-4">
+        {/* На узком экране подпись над суммой, чтобы сумма не переносилась */}
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
           <span className="text-[14px] text-ink-soft">{hasDistance ? 'Итого с доставкой' : 'Итого без доставки'}</span>
-          <span className="num text-[clamp(1.9rem,1.35rem+1.7vw,2.6rem)] leading-none tracking-tight">
+          <span className="num text-[clamp(1.75rem,1.3rem+1.7vw,2.6rem)] leading-none tracking-tight whitespace-nowrap">
             {formatPrice(estimate.total)}
           </span>
         </div>
@@ -129,17 +130,17 @@ export function PriceSummary({
         <button
           type="button"
           onClick={onMortgage}
-          className="mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-brand-tint px-4 py-3 text-left transition-colors hover:bg-brand-tint/70"
+          className="mt-4 flex w-full flex-col items-start gap-2 rounded-lg bg-brand-tint px-4 py-3 text-left transition-colors hover:bg-brand-tint/70 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
         >
           <span>
-            <span className="block text-[12px] leading-none text-brand-deep/80">
+            <span className="block text-[12px] leading-none whitespace-nowrap text-brand-deep/80">
               {family.label} {family.rate} %
             </span>
-            <span className="num mt-1.5 block text-[20px] leading-none text-brand-deep">
+            <span className="num mt-1.5 block text-[20px] leading-none whitespace-nowrap text-brand-deep">
               от {formatPrice(monthlyFor(family.id))}/мес
             </span>
           </span>
-          <span className="text-right text-[11.5px] leading-snug text-brand-deep/80">
+          <span className="text-[11.5px] leading-snug text-brand-deep/80 sm:text-right">
             взнос {mortgage.downPaymentDefaultPct} % · {mortgage.defaultTermYears} лет
             {standard ? (
               <>

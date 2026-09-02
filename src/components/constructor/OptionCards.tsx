@@ -87,7 +87,10 @@ export function OptionCards<Id extends string>({
                 </span>
               ) : null}
               <span className="flex flex-1 flex-col gap-1 p-3.5">
-                <span className="font-heading text-[15px] leading-tight font-medium">{option.label}</span>
+                {/* Длинные названия («Металлочерепица») на узкой карточке переносятся по слогам */}
+                <span className="font-heading text-[14px] leading-tight font-medium break-words hyphens-auto sm:text-[15px]">
+                  {option.label}
+                </span>
                 {option.note ? (
                   <span className={cn('text-[12.5px] leading-snug', selected ? 'text-white/70' : 'text-ink-soft')}>
                     {option.note}
