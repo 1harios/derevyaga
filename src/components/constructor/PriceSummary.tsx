@@ -3,166 +3,73 @@
 import { Button } from '@/components/ui/Button'
 import { constructorConfig } from '@/lib/constructor/config'
 import { clampDistance, estimateMortgage, type ConstructorInput, type HouseEstimate } from '@/lib/constructor/engine'
-import { formatPrice } from '@/lib/utils'
-import type { StepId } from './visuals'
+import { cn, formatPrice } from '@/lib/utils'
 
-function Row({
-  label,
-  sub,
-  value,
-  valueLabel,
-  onEdit,
-}: {
-  label: string
-  sub: string
-  value: number
-  /** Текст вместо суммы, например «укажите км» для доставки без расстояния */
-  valueLabel?: string
-  onEdit: () => void
-}) {
-  // Внутри <dl> допустимы только группы dt/dd (или div с ними без вложенных обёрток) —
-  // поэтому строка сводки собрана сеткой: название, под ним пояснение, справа сумма
-  return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4">
-      <dt className="font-medium text-ink">{label}</dt>
-      <dd className={valueLabel ? 'row-span-2 self-start text-[13px] text-ink-soft' : 'num row-span-2 self-start text-[15px]'}>
-        {valueLabel ?? formatPrice(value)}
-      </dd>
-      <dd className="col-start-1 mt-0.5 text-[13px] leading-snug text-ink-soft">
-        {sub}
-        {' · '}
-        <button type="button" onClick={onEdit} className="link-underline text-ink-soft hover:text-ink">
-          изменить
-        </button>
-      </dd>
-    </div>
-  )
-}
-
-/** Живой итог: три строки как в прайсе + «Итого с доставкой» и два действия */
+/**
+ * Живой итог под сценой: две цифры одинакового веса — цена дома и платёж по
+ * семейной ипотеке — плюс кнопка «Сохранить расчёт». Состав цены — одной строкой.
+ */
 export function PriceSummary({
   input,
   estimate,
-  onEdit,
   onSave,
   onMortgage,
+  className,
 }: {
   input: ConstructorInput
   estimate: HouseEstimate
-  onEdit: (step: StepId) => void
   onSave: () => void
   onMortgage: () => void
+  className?: string
 }) {
-  if (estimate.custom) {
-    return (
-      <div className="card rounded-xl p-5 md:p-6">
-        <p className="eyebrow mb-2">Другой размер</p>
-        <h3 className="text-[18px]">Посчитаем индивидуально</h3>
-        <p className="mt-2 text-[14px] leading-[1.55] text-ink-soft">
-          Нестандартные размеры и планировки считаем по вашему эскизу за два рабочих дня — те же
-          материалы и та же сборка за {constructorConfig.buildDays} дней.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button onClick={onSave} arrow>
-            Отправить размеры
-          </Button>
-          <Button variant="outline" onClick={() => onEdit('size')}>
-            Выбрать из линейки
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
-  const size = constructorConfig.sizes.find((item) => item.id === input.size) ?? constructorConfig.sizes[0]
-  const insulation = constructorConfig.insulation.find((item) => item.id === input.insulation)?.label ?? ''
-  const hasDistance = clampDistance(input.distanceKm) > 0
-
-  // Платёж по программам с параметрами по умолчанию — семейная выделена, обычная для сравнения
   const { mortgage } = constructorConfig
   const family = mortgage.programs.find((item) => item.highlight) ?? mortgage.programs[0]
-  const standard = mortgage.programs.find((item) => !item.highlight)
-  const monthlyFor = (programId: (typeof mortgage.programs)[number]['id']) =>
-    estimateMortgage(estimate.total, {
-      program: programId,
-      downPaymentPct: mortgage.downPaymentDefaultPct,
-      termYears: mortgage.defaultTermYears,
-    }).monthly
+  const monthly = estimateMortgage(estimate.total, {
+    program: family.id,
+    downPaymentPct: mortgage.downPaymentDefaultPct,
+    termYears: mortgage.defaultTermYears,
+  }).monthly
+  const hasDistance = clampDistance(input.distanceKm) > 0
+  const breakdown = estimate.custom
+    ? `посчитаем по вашему эскизу за два рабочих дня — та же сборка за ${constructorConfig.buildDays} дней`
+    : [
+        `дом ${formatPrice(estimate.house)}`,
+        `сваи ${formatPrice(estimate.piles.price)}`,
+        hasDistance ? `доставка ${formatPrice(estimate.delivery)}` : 'доставка — укажите км',
+      ].join(' · ')
+
+  const figure = 'num mt-1 text-[clamp(1.55rem,1.15rem+1.2vw,2.1rem)] leading-none tracking-tight whitespace-nowrap'
 
   return (
-    <div className="card rounded-xl p-5 md:p-6">
-      <dl className="space-y-3.5 text-[14px]">
-        <Row
-          label={`Дом ${size.label} со сборкой`}
-          sub={`${input.terrace ? 'терраса, ' : 'без террасы, '}утепление ${insulation}`}
-          value={estimate.house}
-          onEdit={() => onEdit('size')}
-        />
-        <Row
-          label="Свайное поле"
-          sub={`${estimate.piles.short} · ${estimate.piles.count} свай`}
-          value={estimate.piles.price}
-          onEdit={() => onEdit('foundation')}
-        />
-        <Row
-          label="Доставка"
-          sub={
-            hasDistance
-              ? `от ${constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} · ${clampDistance(input.distanceKm)} км`
-              : `от ${constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} · расстояние не указано`
-          }
-          value={estimate.delivery}
-          valueLabel={hasDistance ? undefined : 'укажите км'}
-          onEdit={() => onEdit('delivery')}
-        />
-      </dl>
-
-      <div className="mt-4 border-t border-line pt-4">
-        {/* На узком экране подпись над суммой, чтобы сумма не переносилась */}
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-          <span className="text-[14px] text-ink-soft">{hasDistance ? 'Итого с доставкой' : 'Итого без доставки'}</span>
-          <span className="num text-[clamp(1.75rem,1.3rem+1.7vw,2.6rem)] leading-none tracking-tight whitespace-nowrap">
-            {formatPrice(estimate.total)}
-          </span>
+    <div className={cn('card rounded-xl p-4 md:p-5', className)}>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] lg:items-center">
+        <div className="min-w-0">
+          <p className="text-[12.5px] text-ink-soft">
+            {estimate.custom ? 'Другой размер' : hasDistance ? 'Цена с доставкой' : 'Цена без доставки'}
+          </p>
+          <p className={figure}>{estimate.custom ? 'по запросу' : formatPrice(estimate.total)}</p>
+          <p className="mt-1.5 text-[12px] leading-snug text-ink-soft">{breakdown}</p>
         </div>
 
-        {/* Платёж по ипотеке — сразу под итогом, нажатие ведёт к подбору программы */}
-        <button
-          type="button"
-          onClick={onMortgage}
-          className="mt-4 flex w-full flex-col items-start gap-2 rounded-lg bg-brand-tint px-4 py-3 text-left transition-colors hover:bg-brand-tint/70 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
-        >
-          <span>
-            <span className="block text-[12px] leading-none whitespace-nowrap text-brand-deep/80">
-              {family.label} {family.rate} %
-            </span>
-            <span className="num mt-1.5 block text-[20px] leading-none whitespace-nowrap text-brand-deep">
-              от {formatPrice(monthlyFor(family.id))}/мес
-            </span>
-          </span>
-          <span className="text-[11.5px] leading-snug text-brand-deep/80 sm:text-right">
-            взнос {mortgage.downPaymentDefaultPct} % · {mortgage.defaultTermYears} лет
-            {standard ? (
-              <>
-                <br />
-                обычная {standard.rate} % — {formatPrice(monthlyFor(standard.id))}/мес
-              </>
-            ) : null}
-          </span>
-        </button>
-      </div>
+        <div className="min-w-0 sm:border-l sm:border-line sm:pl-4">
+          <p className="text-[12.5px] text-ink-soft">
+            {family.label} {family.rate} %
+          </p>
+          <p className={cn(figure, 'text-brand-deep')}>{estimate.custom ? '—' : `от ${formatPrice(monthly)}/мес`}</p>
+          <p className="mt-1.5 text-[12px] leading-snug text-ink-soft">
+            взнос {mortgage.downPaymentDefaultPct} % · {mortgage.defaultTermYears} лет ·{' '}
+            <button type="button" onClick={onMortgage} className="link-underline text-ink-soft hover:text-ink">
+              подобрать программу
+            </button>
+          </p>
+        </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Button onClick={onSave} arrow>
-          Сохранить расчёт
-        </Button>
-        <Button variant="outline" onClick={onMortgage}>
-          Купить в ипотеку
-        </Button>
+        <div className="sm:col-span-2 lg:col-span-1">
+          <Button onClick={onSave} arrow className="w-full justify-center lg:w-auto">
+            <span className="whitespace-nowrap">{estimate.custom ? 'Отправить размеры' : 'Сохранить расчёт'}</span>
+          </Button>
+        </div>
       </div>
-      <p className="mt-3 text-[12px] leading-[1.5] text-ink-soft">
-        Расчёт предварительный: точную цену фиксируем в договоре после бесплатного замера.
-      </p>
     </div>
   )
 }

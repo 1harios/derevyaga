@@ -8,6 +8,8 @@ const SIZES = '(min-width: 1024px) 50vw, 100vw'
 
 /**
  * Дом, который «собирается» по мере выбора: текущий кадр стадии с подписью.
+ * На телефоне кадр держит пропорцию 4:3, на десктопе растягивается на всю
+ * высоту левой колонки (кадр обрезается по краям, дом в центре остаётся целым).
  * Новый кадр грузится поверх предыдущего и проявляется, когда готов, — дом
  * перестраивается, а не моргает белым. Кадры следующего шага подгружаются
  * скрытыми после того, как загрузился текущий, чтобы не спорить с ним за сеть.
@@ -19,6 +21,7 @@ export function HouseVisual({
   stepIndex,
   stepsTotal,
   prefetch,
+  className,
 }: {
   src: string
   alt: string
@@ -26,6 +29,7 @@ export function HouseVisual({
   stepIndex: number
   stepsTotal: number
   prefetch: string[]
+  className?: string
 }) {
   // loaded — последний загрузившийся кадр, under — тот, что был на экране до него
   const [frames, setFrames] = useState<{ loaded: string | null; under: string | null }>({
@@ -37,8 +41,8 @@ export function HouseVisual({
   const under = frames.loaded !== null && !ready ? frames.loaded : frames.under
 
   return (
-    <figure className="relative overflow-hidden rounded-xl bg-white shadow-card">
-      <div className="relative aspect-[4/3] w-full">
+    <figure className={cn('relative overflow-hidden rounded-xl bg-white shadow-card', className)}>
+      <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:h-full">
         {under && under !== src ? (
           <Image
             src={under}

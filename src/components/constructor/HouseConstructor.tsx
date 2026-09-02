@@ -13,11 +13,12 @@ import {
   type ConstructorInput,
 } from '@/lib/constructor/engine'
 import { track } from '@/lib/analytics'
-import { cn, formatPrice } from '@/lib/utils'
+import { formatPrice } from '@/lib/utils'
 import { HouseVisual } from './HouseVisual'
 import { MortgagePanel } from './MortgagePanel'
 import { OptionCards } from './OptionCards'
 import { PriceSummary } from './PriceSummary'
+import { StepProgress } from './StepProgress'
 import { STEPS, houseImage, imagesForStep, pilesImage, roofImage, sizeIcon, visualFor } from './visuals'
 
 const cfg = constructorConfig
@@ -25,10 +26,11 @@ const cfg = constructorConfig
 type FormKind = 'constructor' | 'constructor-mortgage'
 
 /**
- * Конструктор дома: слева дом, который собирается по мере выбора, и живой итог;
- * справа семь шагов с карточками вариантов. Ниже — ипотека с выбором программы,
- * плашки доверия и форма «Сохранить расчёт» (уходит в amoCRM как обычная заявка,
- * строка расчёта — в поле calculationId).
+ * Конструктор дома в один экран на десктопе: слева дом, который собирается по мере
+ * выбора, под ним цена и платёж по ипотеке; справа индикатор шагов, карточки
+ * вариантов и кнопки «Назад» / «Дальше» — шаги идут строго по порядку. Ниже —
+ * состав базовой комплектации, ипотека с выбором программы, плашки доверия и форма
+ * «Сохранить расчёт» (уходит в amoCRM как обычная заявка, строка расчёта — в calculationId).
  */
 export function HouseConstructor() {
   const [input, setInput] = useState<ConstructorInput>(defaultConstructorInput)
@@ -48,12 +50,12 @@ export function HouseConstructor() {
 
   const patch = (next: Partial<ConstructorInput>) => setInput((prev) => ({ ...prev, ...next }))
 
-  const goTo = (index: number, scrollToSteps = false) => {
+  const goTo = (index: number) => {
     const clamped = Math.min(Math.max(index, 0), STEPS.length - 1)
     setStepIndex(clamped)
     track('constructor_step', { step: STEPS[clamped].id })
     // На телефоне шаги стоят под картинкой — подводим к ним, чтобы не терять место
-    if (scrollToSteps && window.matchMedia('(max-width: 1023px)').matches) {
+    if (window.matchMedia('(max-width: 1023px)').matches) {
       window.requestAnimationFrame(() =>
         stepsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
       )
@@ -70,6 +72,8 @@ export function HouseConstructor() {
       formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
     )
   }
+
+  const openMortgage = () => mortgageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
   /** Подпись цены опции: надбавка за м² × площадь выбранного дома */
   const priceFor = (pricePerM2: number) =>
@@ -93,11 +97,12 @@ export function HouseConstructor() {
         return (
           <OptionCards
             label="Выберите размер по внешнему контуру"
+            variant="row"
             value={input.size}
             onChange={(id) => patch({ size: id })}
             options={cfg.sizes.map((item) => ({
               id: item.id,
-              label: item.label,
+              label: item.id === 'custom' ? 'Другой размер' : `Дом ${item.label}`,
               note: item.id === 'custom' ? item.note : `${item.area} м² · ${item.note}`,
               price: item.id === 'custom' ? 'по запросу' : `от ${formatPrice(item.basePrice)}`,
               priceNote: item.id === 'custom' ? undefined : `от ${formatPrice(monthlyFor(item.basePrice))}/мес`,
@@ -241,115 +246,97 @@ export function HouseConstructor() {
   }
 
   return (
-    <section id="constructor" className="py-6 md:py-10">
-      <div className="shell">
-        <div className="panel">
-          <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-6">
-            {/* Дом, который собирается, и живой итог */}
-            <div className="stack lg:sticky lg:top-24">
-              <HouseVisual
-                src={visual.src}
-                alt={visual.alt}
-                caption={visual.caption}
-                stepIndex={stepIndex}
-                stepsTotal={STEPS.length}
-                prefetch={prefetch}
-              />
-              <PriceSummary
-                input={input}
-                estimate={estimate}
-                onEdit={(id) => goTo(STEPS.findIndex((item) => item.id === id), true)}
-                onSave={() => openForm('constructor')}
-                onMortgage={() => mortgageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              />
-            </div>
-
-            {/* Шаги */}
-            <div ref={stepsRef} className="card scroll-mt-24 rounded-xl p-5 md:p-7">
-              <ol className="flex flex-wrap gap-1.5" aria-label="Шаги конструктора">
-                {STEPS.map((item, index) => (
-                  <li key={item.id}>
-                    <button
-                      type="button"
-                      onClick={() => goTo(index)}
-                      aria-current={index === stepIndex ? 'step' : undefined}
-                      className={cn(
-                        'chip min-h-9 gap-1.5 px-3 text-[13px] transition-colors',
-                        index === stepIndex
-                          ? 'bg-dark text-white'
-                          : index < stepIndex
-                            ? 'bg-brand-tint text-brand-deep hover:bg-brand-tint/70'
-                            : 'bg-panel text-ink-soft hover:text-ink',
-                      )}
-                    >
-                      <span className="num text-[11px] opacity-70">{index + 1}</span>
-                      {item.short}
-                    </button>
-                  </li>
-                ))}
-              </ol>
-
-              <div className="mt-6">
-                <p className="eyebrow mb-2">
-                  Шаг {stepIndex + 1} из {STEPS.length}
-                </p>
-                <h2 className="text-[clamp(1.25rem,1.05rem+0.8vw,1.6rem)]">{step.title}</h2>
-                <p className="mt-2 max-w-[56ch] text-[13.5px] leading-[1.5] text-ink-soft">{step.hint}</p>
+    <>
+      {/* Один экран на десктопе: высота панели привязана к окну, сцена растягивается, варианты прокручиваются внутри */}
+      <section id="constructor" className="pt-3 md:pt-4">
+        <div className="shell">
+          <div className="panel lg:h-[calc(100svh-11.5rem)] lg:min-h-[560px]">
+            <div className="grid h-full items-stretch gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-6">
+              {/* Дом, который собирается, и живой итог */}
+              <div className="flex min-h-0 flex-col gap-3 md:gap-4">
+                <HouseVisual
+                  src={visual.src}
+                  alt={visual.alt}
+                  caption={visual.caption}
+                  stepIndex={stepIndex}
+                  stepsTotal={STEPS.length}
+                  prefetch={prefetch}
+                  className="lg:min-h-0 lg:flex-1"
+                />
+                <PriceSummary
+                  input={input}
+                  estimate={estimate}
+                  onSave={() => openForm('constructor')}
+                  onMortgage={openMortgage}
+                />
               </div>
 
-              <div className="mt-5">{renderStep()}</div>
+              {/* Шаги */}
+              <div ref={stepsRef} className="card flex min-h-0 scroll-mt-24 flex-col rounded-xl p-5 md:p-6">
+                <StepProgress current={stepIndex} />
 
-              <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-line pt-5">
-                {stepIndex > 0 ? (
-                  <Button variant="outline" onClick={() => goTo(stepIndex - 1, true)}>
-                    Назад
-                  </Button>
-                ) : null}
-                {stepIndex < STEPS.length - 1 ? (
-                  <Button onClick={() => goTo(stepIndex + 1, true)} arrow>
-                    <span className="whitespace-nowrap">Дальше: {nextStep?.short.toLowerCase()}</span>
-                  </Button>
-                ) : (
-                  <Button onClick={() => openForm('constructor')} arrow>
-                    Сохранить расчёт
-                  </Button>
-                )}
-                <span className="text-[13px] leading-snug text-ink-soft">
-                  Цена пересчитывается сразу — телефон нужен только чтобы сохранить расчёт
-                </span>
-              </div>
+                <div className="mt-5">
+                  <h2 className="text-[clamp(1.25rem,1.05rem+0.8vw,1.6rem)]">{step.title}</h2>
+                  <p className="mt-1.5 max-w-[56ch] text-[13.5px] leading-[1.5] text-ink-soft">{step.hint}</p>
+                </div>
 
-              <details className="group mt-6 rounded-xl bg-panel p-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-heading text-[15px] font-medium">
-                  Что входит в базовую комплектацию
-                  <span aria-hidden className="text-[20px] leading-none text-ink-soft transition-transform group-open:rotate-45">
-                    +
+                <div className="mt-4 min-h-0 flex-1 lg:overflow-y-auto lg:pr-1">{renderStep()}</div>
+
+                <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-line pt-4">
+                  {stepIndex > 0 ? (
+                    <Button variant="outline" onClick={() => goTo(stepIndex - 1)}>
+                      Назад
+                    </Button>
+                  ) : null}
+                  {stepIndex < STEPS.length - 1 ? (
+                    <Button onClick={() => goTo(stepIndex + 1)} arrow>
+                      <span className="whitespace-nowrap">Дальше: {nextStep?.short.toLowerCase()}</span>
+                    </Button>
+                  ) : (
+                    <Button onClick={() => openForm('constructor')} arrow>
+                      Сохранить расчёт
+                    </Button>
+                  )}
+                  <span className="text-[12.5px] leading-snug text-ink-soft">
+                    Цена пересчитывается сразу — телефон нужен только чтобы сохранить расчёт
                   </span>
-                </summary>
-                <dl className="mt-4 grid gap-x-6 gap-y-2.5 text-[14px] sm:grid-cols-2">
-                  {cfg.baseSpec.map((item) => (
-                    <div key={item.label} className="border-b border-black/[0.06] pb-2">
-                      <dt className="text-[12.5px] text-ink-soft">{item.label}</dt>
-                      <dd className="mt-0.5">{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </details>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="py-4 md:py-6">
+        <div className="shell space-y-4 lg:space-y-6">
+          {/* Состав базовой комплектации */}
+          <details className="group rounded-xl bg-panel p-5 md:p-6">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-heading text-[15px] font-medium">
+              Что входит в базовую комплектацию
+              <span aria-hidden className="text-[20px] leading-none text-ink-soft transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <dl className="mt-4 grid gap-x-6 gap-y-2.5 text-[14px] sm:grid-cols-2 lg:grid-cols-3">
+              {cfg.baseSpec.map((item) => (
+                <div key={item.label} className="border-b border-black/[0.06] pb-2">
+                  <dt className="text-[12.5px] text-ink-soft">{item.label}</dt>
+                  <dd className="mt-0.5">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </details>
 
           {/* Ипотека */}
-          <div className="mt-4 lg:mt-6">
-            <MortgagePanel
-              ref={mortgageRef}
-              price={estimate.total}
-              disabled={isCustom}
-              onRequest={() => openForm('constructor-mortgage')}
-            />
-          </div>
+          <MortgagePanel
+            ref={mortgageRef}
+            price={estimate.total}
+            disabled={isCustom}
+            onRequest={() => openForm('constructor-mortgage')}
+          />
 
           {/* Доверие */}
-          <ul className="mt-4 grid gap-3 sm:grid-cols-3 lg:mt-6">
+          <ul className="grid gap-3 sm:grid-cols-3">
             {cfg.trust.map((item) => (
               <li key={item.title} className="rounded-xl bg-surface p-5 shadow-card">
                 <p className="font-heading text-[17px] font-medium">{item.title}</p>
@@ -360,7 +347,7 @@ export function HouseConstructor() {
 
           {/* Форма: сохранить расчёт или подобрать ипотеку */}
           {form ? (
-            <div ref={formRef} className="mt-4 scroll-mt-24 lg:mt-6">
+            <div ref={formRef} className="scroll-mt-24">
               <div className="card rounded-xl p-6 md:p-8">
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
                   <div>
@@ -395,7 +382,7 @@ export function HouseConstructor() {
             </div>
           ) : null}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
