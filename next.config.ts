@@ -37,7 +37,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // Только WebP: AVIF на этих битрейтах «замыливает» мелкую фактуру (трава, доски),
+    // и Next кодирует его с пониженным качеством — кадры конструктора выглядели мыльными.
+    formats: ['image/webp'],
+    // Разрешённые значения quality у <Image>: 75 по умолчанию, 90 — для кадров конструктора
+    qualities: [75, 90],
     // В статическом экспорте оптимизатор изображений недоступен:
     // отдаём заранее сжатые webp как есть.
     unoptimized: isStaticPreview,
