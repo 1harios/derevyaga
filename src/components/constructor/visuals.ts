@@ -57,8 +57,8 @@ export const STEPS: ReadonlyArray<{ id: StepId; title: string; short: string; hi
 
 const BASE = '/constructor'
 
-/** Размеры, для которых набор кадров уже отрисован; остальные пока показывают дом 6×6 */
-export const READY_SIZES: ReadonlyArray<SizeId> = ['6x6']
+/** Размеры, для которых набор кадров отрисован; «Другой» показывает дом 6×6 */
+export const READY_SIZES: ReadonlyArray<SizeId> = ['6x6', '6x8', '6x10', '8x8', '8x10']
 
 export function hasOwnFrames(size: SizeId): boolean {
   return READY_SIZES.includes(size)

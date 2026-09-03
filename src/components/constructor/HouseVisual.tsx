@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const SIZES = '(min-width: 1024px) 50vw, 100vw'
+// Кадры лежат в 1600×1200; чуть выше стандартных 75, чтобы фактура досок и травы не замыливалась
+const QUALITY = 85
 
 /**
  * Дом, который «собирается» по мере выбора: текущий кадр стадии с подписью.
@@ -48,8 +50,9 @@ export function HouseVisual({
             src={under}
             alt=""
             aria-hidden
-            width={1200}
-            height={900}
+            width={1600}
+            height={1200}
+            quality={QUALITY}
             sizes={SIZES}
             className="absolute inset-0 h-full w-full object-cover"
           />
@@ -58,9 +61,10 @@ export function HouseVisual({
           key={src}
           src={src}
           alt={alt}
-          width={1200}
-          height={900}
+          width={1600}
+          height={1200}
           priority
+          quality={QUALITY}
           sizes={SIZES}
           onLoad={() => setFrames((prev) => ({ loaded: src, under: prev.loaded }))}
           className={cn(
@@ -86,9 +90,10 @@ export function HouseVisual({
                 key={item}
                 src={item}
                 alt=""
-                width={1200}
-                height={900}
+                width={1600}
+                height={1200}
                 loading="eager"
+                quality={QUALITY}
                 sizes={SIZES}
                 className="hidden"
               />
