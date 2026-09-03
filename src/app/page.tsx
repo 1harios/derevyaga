@@ -2,6 +2,7 @@ import { FaqBlock } from '@/components/home/FaqBlock'
 import { FinalCta } from '@/components/home/FinalCta'
 import { FeaturedHomes } from '@/components/home/FeaturedHomes'
 import { Hero } from '@/components/home/Hero'
+import { MortgageBanner } from '@/components/home/MortgageBanner'
 import { WhyUsBlock } from '@/components/home/WhyUsBlock'
 import { ProjectsPreview } from '@/components/home/ProjectsPreview'
 import { TechnologyBlock } from '@/components/home/TechnologyBlock'
@@ -62,6 +63,7 @@ export default async function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <Hero />
+      <MortgageBanner />
       <FeaturedHomes projects={homeProjects} />
       <WhyUsBlock />
       <TechnologyBlock />
