@@ -9,8 +9,7 @@ import { plural } from '@/lib/utils'
 /**
  * Плашка про ипотеку сразу под первым экраном. Компоновка по референсу:
  * слева заголовок, короткая подводка, три цифры и одна кнопка; справа —
- * предметное фото (макет дома и ключи), которое уходит под скруглённый край
- * панели. Фон фото подогнан под цвет панели, стык прикрыт градиентом.
+ * фото семьи с ключами на террасе дома, заполняющее правую половину панели.
  * Ставка берётся из конфига конструктора — цифра на главной и в калькуляторе одна.
  */
 
@@ -96,20 +95,17 @@ export function MortgageBanner() {
             </div>
           </div>
 
-          {/* Фото: на десктопе занимает правую половину и уходит под скруглённый
-              край панели, на телефоне встаёт под текстом */}
+          {/* Фото: на десктопе заполняет правую половину панели до её скруглённого
+              края, на телефоне встаёт под текстом */}
           <div className="relative min-h-[240px] max-lg:aspect-[16/10] lg:min-h-0">
             <Image
-              src="/photos/mortgage-keys.webp"
-              alt="Макет каркасного дома цвета мха и ключи от нового дома на светлом столе"
+              src="/photos/mortgage-banner.webp"
+              alt="Семья с ключами от нового дома на террасе каркасного дома цвета мха"
               width={1600}
               height={1067}
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="absolute inset-0 h-full w-full object-cover object-[60%_50%]"
+              className="absolute inset-0 h-full w-full object-cover object-[62%_50%]"
             />
-            {/* Стык фото с панелью: сверху на телефоне, слева на десктопе */}
-            <div aria-hidden className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-panel to-transparent lg:hidden" />
-            <div aria-hidden className="absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-panel to-transparent lg:block" />
           </div>
         </div>
       </div>
