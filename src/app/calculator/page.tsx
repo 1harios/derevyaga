@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { HouseConstructor } from '@/components/constructor/HouseConstructor'
+import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
 import { promises } from '@/content/company'
@@ -33,17 +34,18 @@ const notes = [
 export default function CalculatorPage() {
   return (
     <>
-      {/* Компактная шапка страницы: конструктор должен помещаться в один экран на десктопе */}
-      <div className="shell pt-4 md:pt-5">
-        <div className="flex flex-col gap-1.5 md:flex-row md:items-baseline md:justify-between md:gap-8">
-          <h1 className="text-[clamp(1.35rem,1.1rem+0.9vw,1.75rem)] leading-tight">Соберите свой дом за две минуты</h1>
-          <p className="max-w-[64ch] text-[14px] leading-snug text-ink-soft">
+      {/* Первый экран — как на остальных внутренних страницах: панель с шапкой, крошками и заголовком */}
+      <PageHero
+        crumbs={[{ label: 'Калькулятор' }]}
+        title="Соберите свой дом за две минуты"
+        lead={
+          <>
             Семь шагов — дом собирается на экране, а цена со сборкой, свайным полем и доставкой от{' '}
             {constructorConfig.deliveryOrigin.replace('посёлок ', 'п. ')} считается сразу.
-            {family ? ` Семейная ипотека ${family.rate} %.` : ''}
-          </p>
-        </div>
-      </div>
+            {family ? <> Семейная ипотека {family.rate} %.</> : null}
+          </>
+        }
+      />
 
       {/* Конструктор рендерится на сервере целиком — без Suspense-заглушки и сдвига страницы */}
       <HouseConstructor />

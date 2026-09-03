@@ -25,10 +25,6 @@ export function CabinetBlock() {
       <div className="panel panel--dark on-dark">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12">
           <div>
-            <p className="eyebrow mb-4">
-              <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-              Личный кабинет
-            </p>
             <h2>Видно, что происходит на вашей стройке</h2>
             <p className="lead mt-5">
               Не отчёты «когда попросите», а <strong>постоянный доступ</strong> к статусам,

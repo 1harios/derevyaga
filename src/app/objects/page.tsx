@@ -5,7 +5,6 @@ import { ObjectCard } from '@/components/ui/ObjectCard'
 import { Section } from '@/components/ui/Section'
 import { promises } from '@/content/company'
 import { builtObjects } from '@/content/objects'
-import { plural } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Построенные дома: план-факт сроков и отзывы владельцев',
@@ -15,9 +14,6 @@ export const metadata: Metadata = {
 }
 
 export default function ObjectsPage() {
-  const onTime = builtObjects.filter((object) => object.actualDays <= object.plannedDays).length
-  const delayed = builtObjects.length - onTime
-
   return (
     <>
       <PageHero
@@ -30,19 +26,7 @@ export default function ObjectsPage() {
             Задержки не прячем: где сорвали срок — написано, почему и на сколько.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          <span className="chip bg-surface">{promises.objectsBuilt}+ домов с 2011 года</span>
-          <span className="chip bg-surface">
-            {onTime} из {builtObjects.length} на этой странице — в срок или раньше
-          </span>
-          {delayed > 0 ? (
-            <span className="chip bg-surface">
-              {delayed} {plural(delayed, ['задержка', 'задержки', 'задержек'])} — с причиной и без доплат
-            </span>
-          ) : null}
-        </div>
-      </PageHero>
+      />
 
       <Section>
         <ul className="grid gap-3 lg:grid-cols-2">

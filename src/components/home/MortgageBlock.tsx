@@ -50,7 +50,7 @@ export function MortgageBlock() {
 
   return (
     <Section id="mortgage">
-      <SectionHeader align="center" eyebrow="Деньги" title="Мы предлагаем способы оплаты" />
+      <SectionHeader align="center" title="Мы предлагаем способы оплаты" />
 
       <div className="mb-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {METHODS.map((method, index) => {

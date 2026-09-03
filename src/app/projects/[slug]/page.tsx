@@ -244,7 +244,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="panel">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12">
               <div>
-                <p className="eyebrow mb-3">О проекте</p>
                 <h2 className="text-pretty">Дом, в котором удобно каждый день</h2>
                 <div className="mt-5 space-y-4 text-[14.5px] leading-[1.65] text-ink-soft">
                   {(project.description ?? [project.summary]).map((paragraph) => (
@@ -282,7 +281,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="panel">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-12">
             <div>
-              <p className="eyebrow mb-3">В базовой цене</p>
               <h2 className="text-pretty">Что входит и из чего строим</h2>
               <p className="mt-4 max-w-sm text-[14px] leading-[1.55] text-ink-soft">
                 Основные материалы уже учтены в стоимости проекта. Точный объём и марки закрепляем в смете до договора.
@@ -309,7 +307,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="panel">
           <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12">
             <div className="min-w-0">
-              <p className="eyebrow mb-3">Планировка</p>
               <h2>Что внутри и почему так</h2>
               <p className="lead mt-4">
                 Планировка — не догма: двигаем перегородки, меняем окна и состав комнат
@@ -355,7 +352,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <Section>
         <SectionHeader
           align="center"
-          eyebrow="Комплектации"
           title={`Что входит в цену «${project.name}»`}
           description="Конструктив одинаковый во всех вариантах. Выберите уровень готовности: каркас, под чистовую или под ключ."
         />
@@ -365,7 +361,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Сроки: этапы под этот проект */}
       <Section>
         <SectionHeader
-          eyebrow="Сроки"
           title={`${project.name} строится ${pluralized(project.days, ['день', 'дня', 'дней'])}`}
           description={
             <>
@@ -393,7 +388,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Похожие проекты — по площади */}
       <Section>
         <SectionHeader
-          eyebrow="Похожие проекты"
           title="Посмотрите рядом по площади"
           action={
             <Button href="/projects" variant="outline" size="sm" arrow>

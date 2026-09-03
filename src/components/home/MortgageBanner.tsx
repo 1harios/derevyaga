@@ -32,12 +32,11 @@ export function MortgageBanner() {
   return (
     <section className="pt-3 lg:pt-4" aria-labelledby="mortgage-banner-title">
       <div className="shell">
-        <div className="relative grid overflow-hidden rounded-2xl bg-panel lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
+        {/* Колонки и промежуток — как у сетки первого экрана (1.15fr / 16 px / 1fr):
+            фото начинается ровно под фото первого экрана */}
+        <div className="relative grid overflow-hidden rounded-2xl bg-panel lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-4">
           {/* Текст: вертикально по центру панели, как в референсе */}
           <div className="relative z-[1] flex flex-col justify-center px-6 pb-8 pt-7 md:px-10 md:py-11 lg:px-12 lg:py-14">
-            <p className="eyebrow mb-4" data-reveal>
-              Ипотека и маткапитал
-            </p>
             <h2
               id="mortgage-banner-title"
               className="text-pretty"

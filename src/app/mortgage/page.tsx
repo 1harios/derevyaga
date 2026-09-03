@@ -71,7 +71,6 @@ export default function MortgagePage() {
 
       <Section>
         <SectionHeader
-          eyebrow="Порядок"
           title="Как проходит стройка в ипотеку"
           description="От заявки до сдачи — те же этапы, что и при обычной оплате, плюс банк в роли плательщика."
         />

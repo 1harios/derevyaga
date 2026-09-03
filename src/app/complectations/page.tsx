@@ -27,15 +27,7 @@ export default function ComplectationsPage() {
             и подробная таблица, по которой видно каждую строку сметы.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          {complectations.map((item) => (
-            <span key={item.id} className="chip bg-surface">
-              {item.name} — от {formatNumber(item.pricePerM2)} ₽/м²
-            </span>
-          ))}
-        </div>
-      </PageHero>
+      />
 
       <Section>
         {/* Колонки идут сразу после h1 страницы — заголовки карточек должны быть h2 */}
@@ -44,7 +36,6 @@ export default function ComplectationsPage() {
 
       <Section>
         <SectionHeader
-          eyebrow="Подробное сравнение"
           title="Каждая строка сметы — в таблице"
           description={
             <>

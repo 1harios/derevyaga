@@ -72,24 +72,13 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
             гарантия {promises.guaranteeYears} лет на конструктив.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          <span className="chip bg-surface">~{city.distanceKm} км от КАД</span>
-          {extraKm === 0 ? (
-            <span className="chip bg-surface">доставка включена в цену</span>
-          ) : (
-            <span className="chip bg-surface">логистика {formatPrice(logisticsCost)} — уже в смете</span>
-          )}
-          <span className="chip bg-surface">срок от {Math.min(...projects.map((p) => p.days))} дней</span>
-        </div>
-      </PageHero>
+      />
 
       {/* Особенности направления: грунты, подъезд, локальная специфика */}
       <Section compact>
         <div className="panel">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-12">
             <div>
-              <p className="eyebrow mb-3">Что важно знать про направление</p>
               <h2 className="text-[clamp(1.3rem,1.1rem+0.8vw,1.75rem)]">
                 Как строится {city.name} и окрестности
               </h2>
@@ -131,7 +120,6 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
       {cityObjects.length > 0 ? (
         <Section>
           <SectionHeader
-            eyebrow="Построено рядом"
             title="Сданные дома в этом направлении"
             description="План-факт сроков и слова владельцев — как есть, включая задержки."
             action={
@@ -153,7 +141,6 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
       {/* Каталог проектов */}
       <Section>
         <SectionHeader
-          eyebrow="Проекты"
           title={`Что можно построить ${city.inCity}`}
           description="Любой проект из каталога адаптируем под участок: планировку меняем бесплатно, смету пересчитываем до подписания."
           action={

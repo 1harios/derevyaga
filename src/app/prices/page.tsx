@@ -3,7 +3,6 @@ import { FinalCta } from '@/components/home/FinalCta'
 import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
 import { Section, SectionHeader } from '@/components/ui/Section'
-import { complectations } from '@/content/complectations'
 import { calculate, optionLabels, type CalcInput } from '@/lib/pricing/engine'
 import { pricing } from '@/lib/pricing/pricing.config'
 import { formatNumber, formatPrice, formatPriceShort, pluralized } from '@/lib/utils'
@@ -118,22 +117,13 @@ export default function PricesPage() {
             по которому считает и калькулятор, и наш сметчик.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          {complectations.map((item) => (
-            <span key={item.id} className="chip bg-surface">
-              {item.name} — от {formatNumber(item.pricePerM2)} ₽/м²
-            </span>
-          ))}
-        </div>
-      </PageHero>
+      />
 
       {/* Формула: как из ставки получается итог */}
       <Section>
         <div className="panel">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-12">
             <div>
-              <p className="eyebrow mb-3">Формула</p>
               <h2>Ставка × коэффициенты + надбавки</h2>
               <p className="lead mt-4">
                 База — цена за м² выбранной комплектации. Дальше её двигают коэффициенты
@@ -175,7 +165,6 @@ export default function PricesPage() {
       <Section>
         <SectionHeader
           align="center"
-          eyebrow="Примеры"
           title="Три сметы для ориентира"
           description="Посчитаны тем же движком, что и калькулятор. Ваша цифра будет другой — она зависит от площади, комплектации и участка."
         />
@@ -226,10 +215,6 @@ export default function PricesPage() {
         <div className="panel panel--dark on-dark">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-12">
             <div>
-              <p className="eyebrow mb-3">
-                <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-                Платежи
-              </p>
               <h2>Платите за принятые этапы, не вперёд</h2>
               <p className="lead mt-4">
                 Аванс — только {Math.round(pricing.paymentSchedule[0].share * 100)}% на проект

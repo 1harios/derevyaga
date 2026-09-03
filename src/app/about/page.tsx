@@ -103,7 +103,6 @@ export default function AboutPage() {
       {/* Принципы со следствиями: убеждают следствия, а не декларации */}
       <Section>
         <SectionHeader
-          eyebrow="Принципы"
           title="Четыре решения, которые всё определяют"
           description={
             <>
@@ -130,10 +129,6 @@ export default function AboutPage() {
         <div className="panel panel--dark on-dark">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-16">
             <div>
-              <p className="eyebrow mb-3">
-                <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-                Юридическая сторона
-              </p>
               <h2>Договор — с компанией, не с бригадиром</h2>
               <p className="lead mt-4">
                 Договор подряда со сметой приложением, акты по этапам, все платежи —

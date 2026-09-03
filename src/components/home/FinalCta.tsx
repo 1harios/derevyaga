@@ -27,10 +27,6 @@ export function FinalCta({
       <div className="panel panel--dark on-dark">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:gap-16">
           <div>
-            <p className="eyebrow mb-4">
-              <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-              Последний шаг
-            </p>
             <h2>{title ?? <>Рассчитаем ваш дом за {promises.estimateDays} дня</>}</h2>
             <p className="lead mt-5 max-w-xl">
               {lead ?? (

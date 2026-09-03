@@ -5,7 +5,6 @@ import { ProjectCatalog } from '@/components/projects/ProjectCatalog'
 import { Section } from '@/components/ui/Section'
 import { promises } from '@/content/company'
 import { getProjects } from '@/lib/amocrm-projects'
-import { formatPriceShort } from '@/lib/utils'
 import { siteUrl } from '@/lib/site-url'
 
 export const revalidate = 300
@@ -21,7 +20,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ProjectsPage() {
   const projects = await getProjects()
-  const minPrice = Math.min(...projects.map((p) => p.priceFrom))
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -48,14 +46,7 @@ export default async function ProjectsPage() {
             под ваш участок и пересчитываем цену до подписания — бесплатно.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          <span className="chip bg-surface">от {formatPriceShort(minPrice)}</span>
-          <span className="chip bg-surface">срок от {Math.min(...projects.map((p) => p.days))} дней</span>
-          <span className="chip bg-surface">гарантия {promises.guaranteeYears} лет</span>
-          <span className="chip bg-surface">смета фиксируется в договоре</span>
-        </div>
-      </PageHero>
+      />
 
       <Section>
         <ProjectCatalog projects={projects} />

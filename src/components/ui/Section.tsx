@@ -24,14 +24,12 @@ export function Section({
 }
 
 export function SectionHeader({
-  eyebrow,
   title,
   description,
   action,
   align = 'split',
   className,
 }: {
-  eyebrow?: string
   title: ReactNode
   description?: ReactNode
   action?: ReactNode
@@ -41,11 +39,6 @@ export function SectionHeader({
   if (align === 'center') {
     return (
       <div className={cn('mx-auto mb-7 max-w-2xl text-center md:mb-10', className)}>
-        {eyebrow ? (
-          <p className="eyebrow mb-3 justify-center" data-reveal>
-            {eyebrow}
-          </p>
-        ) : null}
         <h2 data-reveal>{title}</h2>
         {description ? (
           <p
@@ -68,11 +61,6 @@ export function SectionHeader({
       )}
     >
       <div className="max-w-2xl">
-        {eyebrow ? (
-          <p className="eyebrow mb-3" data-reveal>
-            {eyebrow}
-          </p>
-        ) : null}
         <h2 data-reveal>{title}</h2>
         {description ? (
           <p

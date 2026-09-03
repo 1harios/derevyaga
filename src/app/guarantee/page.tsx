@@ -78,13 +78,7 @@ export default function GuaranteePage() {
             <strong>теми же словами, что и в договоре</strong>.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          <span className="chip bg-surface">{promises.guaranteeYears} лет на конструктив</span>
-          <span className="chip bg-surface">2 года на инженерию и отделку</span>
-          <span className="chip bg-surface">пеня 0,1% за день просрочки</span>
-        </div>
-      </PageHero>
+      />
 
       {/* Что покрывает и что нет — рядом, а не мелким шрифтом */}
       <Section>
@@ -132,7 +126,6 @@ export default function GuaranteePage() {
       {/* Договор: четыре пункта, которые решают всё */}
       <Section>
         <SectionHeader
-          eyebrow="Договор"
           title="Четыре пункта, которые стоит проверять у любого подрядчика"
           description={
             <>
@@ -155,7 +148,6 @@ export default function GuaranteePage() {
       <Section>
         <div className="panel">
           <div className="mb-8 max-w-2xl">
-            <p className="eyebrow mb-3">Гарантийный случай</p>
             <h2>Как это работает после сдачи</h2>
           </div>
           <ol className="grid gap-3 md:grid-cols-3">

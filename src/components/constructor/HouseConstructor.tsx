@@ -351,9 +351,6 @@ export function HouseConstructor() {
               <div className="card rounded-xl p-6 md:p-8">
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
                   <div>
-                    <p className="eyebrow mb-3">
-                      {form === 'constructor' ? 'Сохранить расчёт' : 'Подбор ипотеки'}
-                    </p>
                     <h2 className="text-[clamp(1.35rem,1.1rem+1vw,1.75rem)]">
                       {form === 'constructor'
                         ? 'Пришлём расчёт и смету в PDF'

@@ -12,7 +12,6 @@ export function FeaturedHomes({ projects }: { projects: Project[] }) {
       <div className="shell">
         <div className="mb-7 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow mb-3">Доступные проекты</p>
             <h2 className="text-pretty" data-reveal>
               Проекты домов{' '}
               <span className="block text-ink-soft">от {formatPrice(minimumPrice)}</span>

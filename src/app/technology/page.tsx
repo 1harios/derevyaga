@@ -66,21 +66,13 @@ export default function TechnologyPage() {
             и как мы доказываем качество, а не просим верить на слово.
           </>
         }
-      >
-        <div className="flex flex-wrap gap-2">
-          <span className="chip bg-surface">брус камерной сушки до 18%</span>
-          <span className="chip bg-surface">утепление {promises.insulationMm} мм</span>
-          <span className="chip bg-surface">вентзазор 45 мм</span>
-          <span className="chip bg-surface">пароизоляция с проклейкой стыков</span>
-        </div>
-      </PageHero>
+      />
 
       {/* Разрез стены: схема + пояснение, почему слои именно такие */}
       <Section>
         <div className="panel">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:gap-12">
             <div>
-              <p className="eyebrow mb-3">Разрез стены</p>
               <h2>Семь слоёв, у каждого своя работа</h2>
               <p className="lead mt-4">
                 Снаружи внутрь: фасад защищает от осадков, вентзазор выводит влагу,
@@ -111,7 +103,6 @@ export default function TechnologyPage() {
       {/* Параметры узлов — цифры, за которые отвечаем */}
       <Section>
         <SectionHeader
-          eyebrow="Параметры"
           title="Цифры, за которые отвечаем договором"
           description={
             <>
@@ -136,7 +127,6 @@ export default function TechnologyPage() {
       {/* Предметные образцы: фото на белом, как на встрече в офисе */}
       <Section>
         <SectionHeader
-          eyebrow="Образцы"
           title="То, что даём потрогать на встрече"
           description="Фрагменты реальных конструкций, а не рендеры. Приезжайте в офис — соберём и разберём узел при вас."
         />
@@ -166,10 +156,6 @@ export default function TechnologyPage() {
       <Section>
         <div className="panel panel--dark on-dark">
           <div className="mb-8 max-w-2xl">
-            <p className="eyebrow mb-3">
-              <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-              Контроль
-            </p>
             <h2>Качество, которое можно проверить</h2>
           </div>
           <div className="grid gap-3 md:grid-cols-3">

@@ -125,10 +125,6 @@ export default function ContactsPage() {
         <div className="panel panel--dark on-dark">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16">
             <div>
-              <p className="eyebrow mb-3">
-                <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-                Реквизиты
-              </p>
               <h2 className="text-[clamp(1.2rem,1.05rem+0.6vw,1.5rem)]">
                 Договор — с юридическим лицом
               </h2>

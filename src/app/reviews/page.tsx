@@ -95,7 +95,6 @@ export default function ReviewsPage() {
 
       <Section>
         <SectionHeader
-          eyebrow="Видео"
           title="Видеоотзывы с объектов"
           description="Снимаем через несколько месяцев после сдачи, когда дом пережил сезон — так честнее, чем в день вручения ключей."
         />
@@ -131,7 +130,6 @@ export default function ReviewsPage() {
       <Section>
         <div className="panel">
           <div className="mb-7 max-w-2xl">
-            <p className="eyebrow mb-3">Правила</p>
             <h2>Как отзывы попадают на эту страницу</h2>
           </div>
           <div className="grid gap-3 md:grid-cols-3">

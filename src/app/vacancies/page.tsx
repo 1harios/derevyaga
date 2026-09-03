@@ -52,7 +52,6 @@ export default function VacanciesPage() {
 
       <Section>
         <SectionHeader
-          eyebrow="Открытые вакансии"
           title="Кого ждём сейчас"
           description="Если вашей специальности нет в списке, всё равно напишите — сильных людей записываем в резерв и зовём первыми."
         />
@@ -108,10 +107,6 @@ export default function VacanciesPage() {
         <div className="panel panel--dark on-dark">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:gap-16">
             <div>
-              <p className="eyebrow mb-4">
-                <span aria-hidden className="size-1.5 rounded-full bg-white/60" />
-                Отклик
-              </p>
               <h2>Расскажите о себе — перезвоним за день</h2>
               <p className="lead mt-5 max-w-xl">
                 Телефон и пара слов: специальность, опыт, какие объекты делали.

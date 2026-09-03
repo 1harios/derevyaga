@@ -37,7 +37,6 @@ export const MortgagePanel = forwardRef<
     <div ref={ref} className="card scroll-mt-24 rounded-xl p-6 md:p-8">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
         <div>
-          <p className="eyebrow mb-3">Купить в ипотеку</p>
           <h2 className="text-[clamp(1.35rem,1.1rem+1vw,1.75rem)]">
             {disabled ? 'Ипотека на дом любого размера' : `Этот дом в ипотеку — от ${formatPrice(mortgage.monthly)} в месяц`}
           </h2>
