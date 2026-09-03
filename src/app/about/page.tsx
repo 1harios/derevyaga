@@ -152,8 +152,8 @@ export default function AboutPage() {
                 <dd className="tabular-nums">{company.legal.inn}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="muted">ОГРН</dt>
-                <dd className="tabular-nums">{company.legal.ogrn}</dd>
+                <dt className="muted">КПП</dt>
+                <dd className="tabular-nums">{company.legal.kpp}</dd>
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="muted">Офис</dt>

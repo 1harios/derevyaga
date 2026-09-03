@@ -55,6 +55,12 @@ export default function ContactsPage() {
               >
                 {company.phone}
               </a>
+              <a
+                href={telHref(company.phoneMobile)}
+                className="mt-2 block text-[17px] tabular-nums transition-opacity duration-200 hover:opacity-70"
+              >
+                {company.phoneMobile} <span className="muted">— мобильный, есть WhatsApp</span>
+              </a>
               <p className="mt-2 text-[15px] muted">{company.workHours}</p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -143,12 +149,29 @@ export default function ContactsPage() {
                 <dd className="tabular-nums">{company.legal.inn}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="muted">ОГРН</dt>
-                <dd className="tabular-nums">{company.legal.ogrn}</dd>
+                <dt className="muted">КПП</dt>
+                <dd className="tabular-nums">{company.legal.kpp}</dd>
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="muted">Юридический адрес</dt>
                 <dd className="text-right">{company.legal.legalAddress}</dd>
+              </div>
+              {/* Банковские реквизиты — для оплаты по договору со счёта */}
+              <div className="flex justify-between gap-4 border-t border-white/12 pt-3">
+                <dt className="muted">Расчётный счёт</dt>
+                <dd className="tabular-nums">{company.legal.bank.account}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="muted">Банк</dt>
+                <dd className="text-right">{company.legal.bank.name}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="muted">БИК</dt>
+                <dd className="tabular-nums">{company.legal.bank.bik}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="muted">Корр. счёт</dt>
+                <dd className="tabular-nums">{company.legal.bank.corrAccount}</dd>
               </div>
             </dl>
           </div>

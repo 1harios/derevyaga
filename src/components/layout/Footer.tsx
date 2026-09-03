@@ -71,7 +71,7 @@ export function Footer() {
             <div className="space-y-1.5 text-[14px] leading-[1.6] muted">
               <p>{company.legal.fullName}</p>
               <p>
-                ИНН {company.legal.inn} · ОГРН {company.legal.ogrn}
+                ИНН {company.legal.inn} · КПП {company.legal.kpp}
               </p>
               <p>{company.legal.legalAddress}</p>
               <p>Офис: {company.address}</p>
