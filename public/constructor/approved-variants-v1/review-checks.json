@@ -1,0 +1,24 @@
+{
+  "imagesChecked": 43,
+  "widths": [
+    {
+      "width": 360,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "overflow": false
+    }
+  ],
+  "comparison": "passed",
+  "download": "passed",
+  "pageErrors": []
+}

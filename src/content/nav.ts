@@ -7,30 +7,25 @@ export type NavItem = {
 /** Шапка по референсу: четыре ссылки, остальное — в бургере и футере */
 export const headerNav: NavItem[] = [
   { href: '/projects', label: 'Наши проекты' },
-  { href: '/technology', label: 'Технология' },
-  { href: '/objects', label: 'Объекты' },
+  { href: '/promotions', label: 'Акции' },
+  { href: '/calculator', label: 'Калькулятор' },
   { href: '/contacts', label: 'Контакты' },
 ]
 
 /** Полное меню: используется в бургере и футере */
 export const mainNav: NavItem[] = [
   { href: '/projects', label: 'Проекты' },
-  { href: '/complectations', label: 'Комплектации' },
-  { href: '/technology', label: 'Технология' },
-  { href: '/objects', label: 'Объекты' },
-  { href: '/prices', label: 'Цены' },
+  { href: '/promotions', label: 'Акции' },
+  { href: '/calculator', label: 'Калькулятор' },
   { href: '/about', label: 'О компании' },
 ]
 
 /** Остальные разделы — в бургер-меню и футер */
 export const secondaryNav: NavItem[] = [
-  { href: '/calculator', label: 'Калькулятор' },
   { href: '/mortgage', label: 'Ипотека и рассрочка' },
   { href: '/guarantee', label: 'Гарантия и договор' },
   { href: '/reviews', label: 'Отзывы' },
   { href: '/faq', label: 'Вопросы и ответы' },
-  { href: '/blog', label: 'Блог' },
-  { href: '/vacancies', label: 'Вакансии для бригад' },
   { href: '/contacts', label: 'Контакты' },
 ]
 
@@ -41,20 +36,15 @@ export const footerColumns: { title: string; items: NavItem[] }[] = [
     title: 'Дома',
     items: [
       { href: '/projects', label: 'Каталог проектов' },
-      { href: '/complectations', label: 'Комплектации' },
-      { href: '/technology', label: 'Технология' },
-      { href: '/prices', label: 'Цены' },
+      { href: '/promotions', label: 'Акции' },
       { href: '/calculator', label: 'Калькулятор' },
     ],
   },
   {
     title: 'Компания',
     items: [
-      { href: '/about', label: 'О компании и бригаде' },
-      { href: '/objects', label: 'Построенные объекты' },
+      { href: '/about', label: 'О компании' },
       { href: '/reviews', label: 'Отзывы' },
-      { href: '/blog', label: 'Блог' },
-      { href: '/vacancies', label: 'Вакансии' },
     ],
   },
   {

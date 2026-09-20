@@ -1,0 +1,106 @@
+[
+  {
+    "size": "6x8",
+    "material": "painted",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-faaebfb9-80d3-404b-b887-2b609440e983.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/6x8/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to muted dark moss-green painted horizontal timber siding, realistic wood grain (approximately #526252). Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 6 м and 8 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/6x8/facade-painted-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/6x8/facade-painted-entry.webp"
+  },
+  {
+    "size": "6x8",
+    "material": "planken",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-0270b5df-3bb0-4928-a54b-1295aa70d44e.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/6x8/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to natural honey-colored VERTICAL planken boards with narrow dark vertical joints, realistic timber texture. Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 6 м and 8 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/6x8/facade-planken-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/6x8/facade-planken-entry.webp"
+  },
+  {
+    "size": "6x10",
+    "material": "painted",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-951c7fd8-ef4b-4104-9963-cd60ecbcef84.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/6x10/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to muted dark moss-green painted horizontal timber siding, realistic wood grain (approximately #526252). Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 6 м and 10 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/6x10/facade-painted-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/6x10/facade-painted-entry.webp"
+  },
+  {
+    "size": "6x10",
+    "material": "planken",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-6c14ae5a-64f9-44e5-b1e3-1eee5ee0993c.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/6x10/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to natural honey-colored VERTICAL planken boards with narrow dark vertical joints, realistic timber texture. Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 6 м and 10 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/6x10/facade-planken-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/6x10/facade-planken-entry.webp"
+  },
+  {
+    "size": "8x8",
+    "material": "painted",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-b47096fd-facc-40a2-b138-6891300683eb.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/8x8/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to muted dark moss-green painted horizontal timber siding, realistic wood grain (approximately #526252). Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 8 м and 8 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/8x8/facade-painted-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/8x8/facade-painted-entry.webp"
+  },
+  {
+    "size": "8x8",
+    "material": "planken",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-90cffcd3-46e4-4fb1-addc-d77d4ea3f07c.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/8x8/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to natural honey-colored VERTICAL planken boards with narrow dark vertical joints, realistic timber texture. Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 8 м and 8 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/8x8/facade-planken-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/8x8/facade-planken-entry.webp"
+  },
+  {
+    "size": "8x10",
+    "material": "painted",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-b6bb1a90-b6c0-42c7-8547-bf304df123d7.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/8x10/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to muted dark moss-green painted horizontal timber siding, realistic wood grain (approximately #526252). Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 8 м and 10 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/8x10/facade-painted-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/8x10/facade-painted-entry.webp"
+  },
+  {
+    "size": "8x10",
+    "material": "planken",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a0a5bd-36e8-7e93-8460-8013bdabe84d\\exec-a39e37c0-4e1b-452f-a543-ab16df38ffa5.png",
+    "request": {
+      "referenced_image_paths": [
+        "D:/derevyaga/public/constructor/approved-variants-v1/8x10/terrace-no.png"
+      ],
+      "prompt": "Precise architectural image edit for an existing house configurator. Image 1 is the EDIT TARGET. Keep exactly its 1536x1024 canvas, camera, house position and silhouette. Change ONLY all exterior wall and front gable cladding to natural honey-colored VERTICAL planken boards with narrow dark vertical joints, realistic timber texture. Preserve original front door and every window at EXACTLY the original positions, white window and door trim, roof shape and standing seam covering, black gutters, black piles, small entrance landing and stairs, lights, vegetation, ground and dimension labels. This house has NO TERRACE: do not add posts, railings or veranda. Do not move the facade or alter architecture. Preserve the width/depth labels 8 м and 10 м exactly. Clean high-quality photorealistic result with crisp detail. No new text."
+    },
+    "savedPng": "public/constructor/approved-variants-v1/8x10/facade-planken-entry.png",
+    "savedWebp": "public/constructor/approved-variants-v1/8x10/facade-planken-entry.webp"
+  }
+]

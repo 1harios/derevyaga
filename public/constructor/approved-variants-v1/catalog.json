@@ -1,0 +1,389 @@
+[
+  {
+    "size": "6x6",
+    "kind": "base",
+    "label": "Исходный дом",
+    "png": "6x6/base.png",
+    "webp": "6x6/base.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "facade-painted",
+    "label": "Фасад: мох",
+    "png": "6x6/facade-painted.png",
+    "webp": "6x6/facade-painted.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "facade-planken",
+    "label": "Вертикальный планкен",
+    "png": "6x6/facade-planken.png",
+    "webp": "6x6/facade-planken.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "foundation-concrete",
+    "label": "Железобетонные сваи",
+    "png": "6x6/foundation-concrete.png",
+    "webp": "6x6/foundation-concrete.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-metal",
+    "label": "Металлочерепица",
+    "png": "6x6/roof-metal.png",
+    "webp": "6x6/roof-metal.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-ondulin",
+    "label": "Ондулин",
+    "png": "6x6/roof-ondulin.png",
+    "webp": "6x6/roof-ondulin.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-shingles",
+    "label": "Мягкая черепица",
+    "png": "6x6/roof-shingles.png",
+    "webp": "6x6/roof-shingles.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x6",
+    "kind": "terrace-no",
+    "label": "Без террасы",
+    "png": "6x6/terrace-no.png",
+    "webp": "6x6/terrace-no.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "base",
+    "label": "Исходный дом",
+    "png": "6x8/base.png",
+    "webp": "6x8/base.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "facade-painted",
+    "label": "Фасад: мох",
+    "png": "6x8/facade-painted.png",
+    "webp": "6x8/facade-painted.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "facade-planken",
+    "label": "Вертикальный планкен",
+    "png": "6x8/facade-planken.png",
+    "webp": "6x8/facade-planken.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "foundation-concrete",
+    "label": "Железобетонные сваи",
+    "png": "6x8/foundation-concrete.png",
+    "webp": "6x8/foundation-concrete.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-metal",
+    "label": "Металлочерепица",
+    "png": "6x8/roof-metal.png",
+    "webp": "6x8/roof-metal.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-ondulin",
+    "label": "Ондулин",
+    "png": "6x8/roof-ondulin.png",
+    "webp": "6x8/roof-ondulin.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-shingles",
+    "label": "Мягкая черепица",
+    "png": "6x8/roof-shingles.png",
+    "webp": "6x8/roof-shingles.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x8",
+    "kind": "terrace-no",
+    "label": "Без террасы",
+    "png": "6x8/terrace-no.png",
+    "webp": "6x8/terrace-no.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "base",
+    "label": "Исходный дом",
+    "png": "6x10/base.png",
+    "webp": "6x10/base.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "facade-painted",
+    "label": "Фасад: мох",
+    "png": "6x10/facade-painted.png",
+    "webp": "6x10/facade-painted.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "facade-planken",
+    "label": "Вертикальный планкен",
+    "png": "6x10/facade-planken.png",
+    "webp": "6x10/facade-planken.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "foundation-concrete",
+    "label": "Железобетонные сваи",
+    "png": "6x10/foundation-concrete.png",
+    "webp": "6x10/foundation-concrete.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-metal",
+    "label": "Металлочерепица",
+    "png": "6x10/roof-metal.png",
+    "webp": "6x10/roof-metal.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-ondulin",
+    "label": "Ондулин",
+    "png": "6x10/roof-ondulin.png",
+    "webp": "6x10/roof-ondulin.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-shingles",
+    "label": "Мягкая черепица",
+    "png": "6x10/roof-shingles.png",
+    "webp": "6x10/roof-shingles.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "6x10",
+    "kind": "terrace-no",
+    "label": "Без террасы",
+    "png": "6x10/terrace-no.png",
+    "webp": "6x10/terrace-no.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "base",
+    "label": "Исходный дом",
+    "png": "8x8/base.png",
+    "webp": "8x8/base.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "facade-painted",
+    "label": "Фасад: мох",
+    "png": "8x8/facade-painted.png",
+    "webp": "8x8/facade-painted.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "facade-planken",
+    "label": "Вертикальный планкен",
+    "png": "8x8/facade-planken.png",
+    "webp": "8x8/facade-planken.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "foundation-concrete",
+    "label": "Железобетонные сваи",
+    "png": "8x8/foundation-concrete.png",
+    "webp": "8x8/foundation-concrete.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-metal",
+    "label": "Металлочерепица",
+    "png": "8x8/roof-metal.png",
+    "webp": "8x8/roof-metal.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-ondulin",
+    "label": "Ондулин",
+    "png": "8x8/roof-ondulin.png",
+    "webp": "8x8/roof-ondulin.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-shingles",
+    "label": "Мягкая черепица",
+    "png": "8x8/roof-shingles.png",
+    "webp": "8x8/roof-shingles.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x8",
+    "kind": "terrace-no",
+    "label": "Без террасы",
+    "png": "8x8/terrace-no.png",
+    "webp": "8x8/terrace-no.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "base",
+    "label": "Исходный дом",
+    "png": "8x10/base.png",
+    "webp": "8x10/base.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "facade-painted",
+    "label": "Фасад: мох",
+    "png": "8x10/facade-painted.png",
+    "webp": "8x10/facade-painted.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "facade-planken",
+    "label": "Вертикальный планкен",
+    "png": "8x10/facade-planken.png",
+    "webp": "8x10/facade-planken.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "foundation-concrete",
+    "label": "Железобетонные сваи",
+    "png": "8x10/foundation-concrete.png",
+    "webp": "8x10/foundation-concrete.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-metal",
+    "label": "Металлочерепица",
+    "png": "8x10/roof-metal.png",
+    "webp": "8x10/roof-metal.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-ondulin",
+    "label": "Ондулин",
+    "png": "8x10/roof-ondulin.png",
+    "webp": "8x10/roof-ondulin.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-shingles",
+    "label": "Мягкая черепица",
+    "png": "8x10/roof-shingles.png",
+    "webp": "8x10/roof-shingles.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "8x10",
+    "kind": "terrace-no",
+    "label": "Без террасы",
+    "png": "8x10/terrace-no.png",
+    "webp": "8x10/terrace-no.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "size": "details",
+    "kind": "insulation-100",
+    "label": "Утепление 100 мм",
+    "png": "details/insulation-100.png",
+    "webp": "details/insulation-100.webp",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "size": "details",
+    "kind": "insulation-150",
+    "label": "Утепление 150 мм",
+    "png": "details/insulation-150.png",
+    "webp": "details/insulation-150.webp",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "size": "details",
+    "kind": "insulation-200",
+    "label": "Утепление 200 мм",
+    "png": "details/insulation-200.png",
+    "webp": "details/insulation-200.webp",
+    "width": 1254,
+    "height": 1254
+  }
+]

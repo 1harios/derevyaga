@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Загружает Roboto и Inter в проект и пересобирает блок @font-face.
+Загружает Manrope и Inter в проект и пересобирает блок @font-face.
 
 Зачем скрипт: бриф запрещает подключать шрифты со стороннего CDN, поэтому файлы
 woff2 лежат в public/fonts, а правила @font-face вписаны прямо в globals.css —
@@ -28,17 +28,16 @@ GLOBALS_CSS = os.path.join(ROOT, "src", "app", "globals.css")
 UA = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     )
 }
 
 # Подмножества, которые оставляем. Остальные (греческий, вьетнамский) не нужны.
 KEEP_SUBSETS = {"cyrillic", "cyrillic-ext", "latin", "latin-ext"}
 
-# Onest — заголовки и интерфейс обычным регистром, Inter — основной текст.
-# Inter 300 и Onest 400 убраны (грузились ради одного класса и заголовков футера): Inter 400/500, Onest 500/600. Оба с кириллицей.
+# Manrope variable — заголовки, Inter — основной текст. Оба с кириллицей.
 FAMILIES = [
-    ("Onest", "Onest:wght@500;600", "onest"),
+    ("Manrope", "Manrope:wght@200..800", "manrope"),
     ("Inter", "Inter:wght@400;500", "inter"),
 ]
 
@@ -63,11 +62,11 @@ def build_rules() -> list[str]:
             if subset not in KEEP_SUBSETS:
                 continue
 
-            weight = re.search(r"font-weight:\s*(\d+)", body).group(1)
+            weight = re.search(r"font-weight:\s*([\d ]+);", body).group(1).strip()
             source = re.search(r"url\((https://fonts\.gstatic\.com/[^)]+\.woff2)\)", body).group(1)
             unicode_range = re.search(r"unicode-range:\s*([^;]+);", body).group(1).strip()
 
-            filename = f"{slug}-{weight}-{subset}.woff2"
+            filename = f"{slug}-{weight.replace(' ', '-')}-{subset}.woff2"
             path = os.path.join(FONTS_DIR, filename)
             if not os.path.exists(path):
                 with open(path, "wb") as handle:

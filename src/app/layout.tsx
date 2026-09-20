@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru">
       <head>
         {/* Предзагружаем только начертания первого экрана */}
-        <link rel="preload" href="/fonts/onest-500-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/manrope-200-800-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/inter-400-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         {/* Скрывающий класс js-reveal ставит RevealObserver после гидрации —
             и только для элементов ниже первого экрана. Первый экран виден

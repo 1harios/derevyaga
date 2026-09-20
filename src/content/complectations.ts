@@ -69,6 +69,23 @@ export const neverIncluded = [
   'Разрешительная документация и регистрация дома',
 ]
 
+/** Category membership references the shared package lists; no duplicate specifications or prices. */
+export const materialCategories = [
+  { id: 'foundation', name: 'Фундамент', indices: [[0], [], []], note: 'Тип основания уточняем с учётом участка и проекта.' },
+  { id: 'frame', name: 'Каркас и фасад', indices: [[1, 5], [5], []], note: 'Конструктив и наружная отделка входят во все три варианта.' },
+  { id: 'roof', name: 'Кровля', indices: [[4], [], []], note: 'Состав кровли и узлы примыканий закрепляем в смете.' },
+  { id: 'insulation', name: 'Утепление', indices: [[2, 3], [], []], note: 'Утепление и защитные слои образуют общий тёплый контур дома.' },
+  { id: 'windows', name: 'Окна и двери', indices: [[6], [], [4]], note: 'Размеры, открывание и отделку согласовываем по вашему проекту.' },
+  { id: 'engineering', name: 'Инженерия и отделка', indices: [[], [1, 2, 3, 4, 6], [1, 2, 3, 5, 6]], note: 'Состав зависит от уровня готовности. Мебель и внешние подключения считаются отдельно.' },
+] as const
+
+export function getCategoryIncludes(packageId: Complectation['id'], categoryId: typeof materialCategories[number]['id'], singleFloor = false) {
+  const level = complectations.findIndex((item) => item.id === packageId)
+  const category = materialCategories.find((item) => item.id === categoryId)!
+  return category.indices.flatMap((indices, index) => index <= level ? indices.map((item) => complectations[index].includes[item]) : [])
+    .filter((item) => !singleFloor || !item.startsWith('Лестница'))
+}
+
 export type ComparisonRow = {
   name: string
   /** Значения по трём комплектациям: строка — текст в ячейке, true — «входит», false — «нет» */

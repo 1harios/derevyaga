@@ -1,0 +1,9 @@
+{
+  "size": "8x8",
+  "kind": "terrace-no",
+  "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+  "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+  "mode": "built-in imagegen",
+  "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-0330a61f-1167-4b87-b3aa-db1d12020332.png",
+  "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/terrace-no.png"
+}

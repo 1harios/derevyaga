@@ -76,12 +76,12 @@ export function ComplectationColumns({ headingLevel = 'h3' }: { headingLevel?: '
 
             <div className="mt-auto pt-7">
               <Button
-                href="/complectations"
+                href="/calculator"
                 variant={accent ? 'light' : 'outline'}
                 wide
                 arrow
               >
-                Сравнить подробно
+                Рассчитать стоимость
               </Button>
             </div>
           </div>

@@ -1,0 +1,9 @@
+{
+  "size": "6x6",
+  "kind": "roof-shingles",
+  "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+  "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+  "mode": "built-in imagegen",
+  "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-a6b64f5e-e896-4d76-8549-8c95439fbd4b.png",
+  "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/roof-shingles.png"
+}

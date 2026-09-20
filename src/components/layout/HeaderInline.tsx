@@ -19,10 +19,10 @@ export function HeaderInline() {
         className="shrink-0 transition-opacity duration-200 ease-out hover:opacity-80"
       >
         <Image
-          src="/brand/logo-derevyaga.webp"
+          src="/brand/derevyaga-horizontal-green.svg"
           alt="Деревяга"
-          width={836}
-          height={306}
+          width={840}
+          height={300}
           priority
           className="h-9 w-auto"
         />

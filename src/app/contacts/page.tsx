@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
 import { LeadForm } from '@/components/ui/LeadForm'
-import { AssetPlaceholder } from '@/components/ui/Placeholder'
 import { Section } from '@/components/ui/Section'
 import { company } from '@/content/company'
 import { telHref } from '@/lib/utils'
@@ -117,13 +116,12 @@ export default function ContactsPage() {
           </div>
         </div>
 
-        {/* ЗАМЕНИТЬ: интерактивная карта с точкой офиса — после выбора тарифа карт */}
-        <div className="mt-3">
-          <AssetPlaceholder
-            what="Карта с точкой офиса и подписью, как пройти от парковки"
-            size="Виджет Яндекс.Карт или статичная подложка 2000×600"
-            ratio="10 / 3"
-          />
+        <div className="mt-3 overflow-hidden rounded-2xl border border-line">
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-panel p-5 md:p-7">
+            <h2 className="text-2xl">Деревяга на карте</h2>
+            <Button href={company.mapUrl} variant="outline" arrow>Открыть Яндекс Карты</Button>
+          </div>
+          <iframe title="Деревяга — Яндекс Карты" src="https://yandex.ru/map-widget/v1/?mode=search&oid=134077346014&ol=biz&z=15" className="block h-[360px] w-full border-0 md:h-[440px]" loading="lazy" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
         </div>
       </Section>
 

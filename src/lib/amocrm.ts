@@ -38,6 +38,11 @@ type SiteLead = {
 
 /** Человеческие названия сделок по типу формы — видны менеджеру в воронке */
 const FORM_LABELS: Record<string, string> = {
+  'promotion-cash-discount': 'Акция: скидка 10% за наличный расчёт',
+  'promotion-metal-door': 'Акция: металлическая дверь в подарок',
+  'promotion-family-mortgage': 'Акция: семейная ипотека 6%',
+  'promotion-delivery': 'Акция: бесплатная доставка',
+  'promotion-planning': 'Акция: адаптация планировки',
   'final-cta': 'Заявка на расчёт сметы',
   'quiz-calculator': 'Расчёт в калькуляторе',
   constructor: 'Расчёт в конструкторе дома',
@@ -70,6 +75,11 @@ function leadName(lead: SiteLead): string {
 
 /** Короткие русские метки по типу формы — для фильтров в списке сделок */
 const TAG_LABELS: Record<string, string> = {
+  'promotion-cash-discount': 'акция · наличный расчёт',
+  'promotion-metal-door': 'акция · дверь в подарок',
+  'promotion-family-mortgage': 'акция · семейная ипотека',
+  'promotion-delivery': 'акция · доставка',
+  'promotion-planning': 'акция · планировка',
   'final-cta': 'расчёт сметы',
   'quiz-calculator': 'калькулятор',
   constructor: 'конструктор',

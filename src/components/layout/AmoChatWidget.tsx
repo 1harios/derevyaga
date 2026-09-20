@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { FaTelegram, FaVk } from 'react-icons/fa6'
-import { LuMessageCircleMore } from 'react-icons/lu'
-import { ArrowIcon } from '@/components/ui/Button'
+import { FaTelegram, FaWhatsapp } from 'react-icons/fa6'
+import { LuArrowUp, LuMessageCircleMore, LuPhone, LuX } from 'react-icons/lu'
+import Image from 'next/image'
+import { telHref } from '@/lib/utils'
+import styles from './AmoChatWidget.module.css'
 import { company } from '@/content/company'
 import { amoChatSnippet } from '@/content/integrations'
 import { track } from '@/lib/analytics'
@@ -19,39 +21,34 @@ declare global {
  * Онлайн-чат amoCRM («Кнопка на сайт»). Диалоги падают прямо в amoCRM:
  * менеджер отвечает из карточки, переписка сохраняется у сделки.
  *
- * Компонент исполняет код кнопки из src/content/integrations.ts как есть —
- * формат сниппета у amoCRM свой у каждого аккаунта, поэтому мы не собираем
- * его по кусочкам, а вставляем скопированный из кабинета целиком.
- * Пустой сниппет и режим статического превью — чат выключен.
+ * Внешний чат загружается после согласия на cookie. Собственная кнопка
+ * связи и прямые ссылки доступны сразу, независимо от загрузки amoCRM.
  */
 export function AmoChatWidget() {
   const [isReady, setIsReady] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
-  // Лончер показываем не в момент загрузки, а после первой прокрутки или через
-  // несколько секунд — иначе он ложится на кнопки первого экрана
-  const [isRevealed, setIsRevealed] = useState(false)
+  // При прокрутке освобождаем место под кнопку возврата наверх.
+  const [showTop, setShowTop] = useState(false)
   const launcherRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const reveal = () => setIsRevealed(true)
     const onScroll = () => {
-      if (window.scrollY > 120) reveal()
+      setShowTop(window.scrollY > 160)
     }
-    const timer = window.setTimeout(reveal, 4000)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => {
-      window.clearTimeout(timer)
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
 
-  // Класс нужен плавающей панели CTA, чтобы отступить от лончера, — ставим его
-  // только когда лончер действительно виден
+  // Сохраняем совместимость с позиционированием внешнего окна amoCRM.
   useEffect(() => {
-    if (isReady && isRevealed) document.documentElement.classList.add('contact-launcher-ready')
-  }, [isReady, isRevealed])
+    document.documentElement.classList.add('contact-launcher-ready')
+    return () => document.documentElement.classList.remove('contact-launcher-ready')
+  }, [])
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEMO_MODE === '1') return
@@ -125,7 +122,10 @@ export function AmoChatWidget() {
       if (!launcherRef.current?.contains(event.target as Node)) setIsOpen(false)
     }
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false)
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+        triggerRef.current?.focus()
+      }
     }
 
     document.addEventListener('pointerdown', closeOnOutsideClick)
@@ -135,8 +135,6 @@ export function AmoChatWidget() {
       document.removeEventListener('keydown', closeOnEscape)
     }
   }, [isOpen])
-
-  if (!isReady || !isRevealed) return null
 
   const openOnlineChat = () => {
     setIsOpen(false)
@@ -165,74 +163,26 @@ export function AmoChatWidget() {
   }
 
   return (
-    <div
-      ref={launcherRef}
-      className={`contact-launcher${isOpen ? ' contact-launcher--menu-open' : ''}${
-        isChatOpen ? ' contact-launcher--chat-open' : ''
-      }`}
-    >
-      <div id="contact-launcher-menu" className={`contact-launcher__menu${isOpen ? ' is-open' : ''}`}>
-        <div className="contact-launcher__heading">
-          <strong>Связаться с нами</strong>
-          <span>Выберите удобный способ</span>
+    <div ref={launcherRef} className={`${styles.launcher} ${showTop ? styles.scrolled : ''}`} data-contact-launcher>
+      <div className={styles.controls}>
+        <div id="contact-launcher-menu" className={`${styles.menu} ${isOpen ? styles.open : ''}`} inert={!isOpen} aria-hidden={!isOpen}>
+          {isReady && <button type="button" className={styles.circle} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden /></button>}
+          <a className={styles.circle} href={company.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" title="MAX" onClick={() => track('messenger_click', { service: 'max' })}><Image src="/brand/max-white.svg" alt="" width={26} height={26} /></a>
+          <a className={styles.circle} href={company.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp" title="WhatsApp" onClick={() => track('messenger_click', { service: 'whatsapp' })}><FaWhatsapp aria-hidden /></a>
+          <a className={styles.circle} href={company.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" title="Telegram" onClick={() => track('messenger_click', { service: 'telegram' })}><FaTelegram aria-hidden /></a>
+          <a className={styles.circle} href={telHref(company.phone)} aria-label="Позвонить в Деревягу" title="Позвонить" onClick={() => track('phone_click', { place: 'contact-launcher' })}><LuPhone aria-hidden /></a>
         </div>
-
-        <div className="contact-launcher__options">
-          <a
-            href={company.vk}
-            target="_blank"
-            rel="noreferrer"
-            className="contact-launcher__option"
-            onClick={() => track('messenger_click', { service: 'vk' })}
-          >
-            <span className="contact-launcher__service-icon" aria-hidden><FaVk /></span>
-            <span className="contact-launcher__option-copy">
-              <strong>ВКонтакте</strong>
-              <small>Сообщения сообщества</small>
-            </span>
-            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
-          </a>
-          <a
-            href={company.telegram}
-            target="_blank"
-            rel="noreferrer"
-            className="contact-launcher__option"
-            onClick={() => track('messenger_click', { service: 'telegram' })}
-          >
-            <span className="contact-launcher__service-icon" aria-hidden><FaTelegram /></span>
-            <span className="contact-launcher__option-copy">
-              <strong>Телеграм</strong>
-              <small>Перейти в мессенджер</small>
-            </span>
-            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
-          </a>
-          <button type="button" className="contact-launcher__option" onClick={openOnlineChat}>
-            <span className="contact-launcher__service-icon" aria-hidden><LuMessageCircleMore /></span>
-            <span className="contact-launcher__option-copy">
-              <strong>Онлайн-чат</strong>
-              <small>Ответим прямо на сайте</small>
-            </span>
-            <span className="contact-launcher__option-arrow" aria-hidden><ArrowIcon /></span>
-          </button>
-        </div>
+        <button ref={triggerRef} type="button" className={`${styles.circle} ${isOpen || isChatOpen ? styles.light : ''}`} aria-label={isChatOpen ? 'Закрыть онлайн-чат' : isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'} aria-expanded={isOpen} aria-controls="contact-launcher-menu" onClick={() => {
+          if (isChatOpen) { closeOnlineChat(); return }
+          setIsOpen(open => !open)
+        }}>
+          {isOpen || isChatOpen ? <LuX aria-hidden /> : <LuMessageCircleMore aria-hidden />}
+        </button>
       </div>
-
-      <button
-        type="button"
-        className={`contact-launcher__trigger${isOpen || isChatOpen ? ' is-open' : ''}`}
-        aria-label={isChatOpen ? 'Закрыть онлайн-чат' : isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'}
-        aria-expanded={isOpen}
-        aria-controls="contact-launcher-menu"
-        onClick={() => {
-          if (isChatOpen) {
-            closeOnlineChat()
-            return
-          }
-          setIsOpen((open) => !open)
-        }}
-      >
-        <span className="contact-launcher__bubble" aria-hidden><i /><i /><i /></span>
-      </button>
+      <button type="button" className={`${styles.circle} ${styles.light} ${styles.top}`} aria-label="Наверх страницы" aria-hidden={!showTop} tabIndex={showTop ? 0 : -1} onClick={() => {
+        setIsOpen(false)
+        window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+      }}><LuArrowUp aria-hidden /></button>
     </div>
   )
 }

@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "eslint .",
+    "test:constructor": "tsx --test tests/constructor-model.test.ts",
+    "test:cabinet": "tsx --test tests/cabinet.test.ts",
+    "test:cabinet:http": "tsx --test tests/cabinet-http.test.ts",
     "preview:static": "BUILD_TARGET=export next build"
   },
   "dependencies": {
@@ -14,18 +17,21 @@
     "next": "16.3.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-icons": "5.7.0"
+    "react-icons": "5.7.0",
+    "three": "0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24.3.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/three": "0.185.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.1",
     "playwright-core": "^1.62.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.3.3",
+    "tsx": "4.23.13",
     "typescript": "^5.9.2"
   }
 }

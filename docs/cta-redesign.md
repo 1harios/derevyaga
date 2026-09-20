@@ -1,0 +1,9 @@
+# Финальная форма: новый дизайн
+
+Секция `#final-form`, общий компонент `FinalCta`: фотография и логотип слева, светлая форма справа. На телефоне — вертикальная композиция. Контекст заявки, отдельные согласия и существующий обработчик формы сохранены. Имена и комментарии можно уточнить при обратном звонке: в форме оставлен только телефон.
+
+Изображение создано встроенным imagegen и сохранено в `public/photos/cta-forest-home-v2.webp`. Это архитектурная иллюстрация, не фотография реализованного объекта. Оригинал сохранён в `C:/Users/kkkar/.codex/generated_images/01a07bf9-6f28-7533-9d96-2e1e57d2b17d/exec-c6cd845d-fe23-41a9-bfc0-74bac9a506f6.png`. Для сайта выполнено кодирование в WebP без изменения композиции. Логотип — существующий `public/brand/logo-derevyaga.webp`, отдельно в HTML.
+
+Промпт:
+
+> Use case: photorealistic-natural. Asset type: premium architectural photograph for the left half of a Russian timber-house builder website contact section. Create a new photorealistic finished Scandinavian timber-frame house in a quiet pine forest near Saint Petersburg, muted dark moss green vertical timber cladding, natural honey oak terrace and recessed entry, graphite standing seam gable roof, generous glazing with warm amber interior light. Refined understated realistic architecture, modest attainable one-storey 100 sqm home, no mansion. Front three-quarter view from garden, straight verticals, house fully visible in lower 65 percent of frame, not cropped. Foreground soft grasses and gravel path. Upper 35 percent is dark soft pine canopy and twilight sky with low detail, suitable for white headline overlay added later in HTML. Late blue-hour dusk, soft atmospheric natural light, sophisticated deep forest green and warm cream palette, photographic materials with real detail, no artificial HDR. Portrait 4:5 composition. No people, no text, no watermarks, no drawn logos, no UI elements. The existing brand logo will be added separately in code.

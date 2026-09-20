@@ -8,7 +8,7 @@ export function FaqBlock() {
     <Section id="faq">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12">
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <h2>В том числе неудобные</h2>
+          <h2>Отвечаем на вопросы{' '}<span className="block text-ink-soft">в том числе неудобные</span></h2>
           <p className="lead mt-4">
             Если вопрос звучит неприятно для подрядчика, это не повод его прятать. Здесь ответы
             на те, которые чаще всего задают после третьей встречи.

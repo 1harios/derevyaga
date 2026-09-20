@@ -2,78 +2,21 @@
 
 import { Button } from '@/components/ui/Button'
 import { constructorConfig } from '@/lib/constructor/config'
-import { clampDistance, estimateMortgage, type ConstructorInput, type HouseEstimate } from '@/lib/constructor/engine'
-import { cn, formatPrice } from '@/lib/utils'
+import { estimateMortgage, type ConstructorInput, type HouseEstimate, type MortgageInput } from '@/lib/constructor/engine'
+import { cn } from '@/lib/utils'
+import { AnimatedPrice } from './AnimatedPrice'
 
-/**
- * Живой итог под сценой: две цифры одинакового веса — цена дома и платёж по
- * семейной ипотеке — плюс кнопка «Сохранить расчёт». Состав цены — одной строкой.
- */
-export function PriceSummary({
-  input,
-  estimate,
-  onSave,
-  onMortgage,
-  className,
-}: {
-  input: ConstructorInput
-  estimate: HouseEstimate
-  onSave: () => void
-  onMortgage: () => void
-  className?: string
+export function PriceSummary({ input, estimate, mortgageInput, onSave, onMortgage, className }: {
+  input: ConstructorInput; estimate: HouseEstimate; mortgageInput: MortgageInput
+  onSave: () => void; onMortgage: () => void; className?: string
 }) {
-  const { mortgage } = constructorConfig
-  const family = mortgage.programs.find((item) => item.highlight) ?? mortgage.programs[0]
-  const monthly = estimateMortgage(estimate.total, {
-    program: family.id,
-    downPaymentPct: mortgage.downPaymentDefaultPct,
-    termYears: mortgage.defaultTermYears,
-  }).monthly
-  const hasDistance = clampDistance(input.distanceKm) > 0
-  const breakdown = estimate.custom
-    ? `посчитаем по вашему эскизу за два рабочих дня — та же сборка за ${constructorConfig.buildDays} дней`
-    : [
-        `дом ${formatPrice(estimate.house)}`,
-        `сваи ${formatPrice(estimate.piles.price)}`,
-        hasDistance ? `доставка ${formatPrice(estimate.delivery)}` : 'доставка — укажите км',
-      ].join(' · ')
-
-  const figure = 'num mt-1 text-[clamp(1.5rem,1.05rem+1.2vw,1.9rem)] leading-none tracking-tight whitespace-nowrap'
-
-  return (
-    <div className={cn('card rounded-xl p-4 md:p-5', className)}>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="min-w-0">
-          <p className="text-[12.5px] text-ink-soft">
-            {estimate.custom ? 'Другой размер' : hasDistance ? 'Цена с доставкой' : 'Цена без доставки'}
-          </p>
-          <p className={figure}>{estimate.custom ? 'по запросу' : formatPrice(estimate.total)}</p>
-          <p className="mt-1.5 text-[12px] leading-snug text-ink-soft">{breakdown}</p>
-        </div>
-
-        <div className="min-w-0 sm:border-l sm:border-line sm:pl-4">
-          <p className="text-[12.5px] text-ink-soft">
-            {family.label} {family.rate} %
-          </p>
-          <p className={cn(figure, 'text-brand-deep')}>{estimate.custom ? '—' : `от ${formatPrice(monthly)}/мес`}</p>
-          <p className="mt-1.5 text-[12px] leading-snug text-ink-soft">
-            взнос {mortgage.downPaymentDefaultPct} % · {mortgage.defaultTermYears} лет ·{' '}
-            <button type="button" onClick={onMortgage} className="link-underline text-ink-soft hover:text-ink">
-              подобрать программу
-            </button>
-          </p>
-        </div>
-
-      </div>
-
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line pt-3">
-        <span className="max-w-[40ch] text-[12px] leading-snug text-ink-soft">
-          Расчёт предварительный: цену фиксируем в договоре после бесплатного замера
-        </span>
-        <Button onClick={onSave} arrow size="sm">
-          <span className="whitespace-nowrap">{estimate.custom ? 'Отправить размеры' : 'Сохранить расчёт'}</span>
-        </Button>
-      </div>
+  const mortgage = estimateMortgage(estimate.total, mortgageInput)
+  const program = constructorConfig.mortgage.programs.find((item) => item.id === mortgageInput.program)!
+  return <div className={cn('constructor-total', className)} aria-live="polite" aria-atomic="true">
+    <div className="constructor-total-figures">
+      <div><span className="constructor-total-label">Предварительная цена</span><strong>{estimate.custom ? 'По запросу' : <AnimatedPrice value={estimate.total} />}</strong><span className="constructor-total-note">{input.distanceKm ? 'Сборка, сваи и доставка' : 'Со сборкой и сваями · без доставки'}</span></div>
+      <button type="button" className="constructor-monthly" onClick={onMortgage}><span className="constructor-total-label">В ипотеку · {String(program.rate).replace('.', ',')} % ↗</span><strong>{estimate.custom ? '—' : <AnimatedPrice value={mortgage.monthly} />}<small>/мес</small></strong><span className="constructor-total-note">{mortgageInput.downPaymentPct} % взнос · {mortgageInput.termYears} лет</span></button>
     </div>
-  )
+    <Button wide arrow onClick={onSave}>{estimate.custom ? 'Рассчитать мой размер' : 'Получить расчёт'}</Button>
+  </div>
 }

@@ -1,0 +1,70 @@
+.launcher {
+  --size: 60px;
+  --step: 70px;
+  position: fixed;
+  z-index: 50;
+  right: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  width: var(--size);
+  height: var(--size);
+}
+.controls { position: relative; transition: transform .28s ease; }
+.scrolled .controls { transform: translateY(calc(-1 * var(--step))); }
+.circle {
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: #fff;
+  box-shadow: 0 5px 20px #1e252118;
+  cursor: pointer;
+  transition: background .2s, transform .2s, opacity .25s;
+}
+.circle svg { width: 25px; height: 25px; }
+.circle:hover { background: var(--color-brand-deep); transform: translateY(-2px); }
+.circle:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+.light { background: #edf0eb; color: var(--color-brand); }
+.light:hover { background: #dfe6dc; }
+.menu {
+  position: absolute;
+  bottom: calc(var(--size) + 10px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100dvh - 2 * var(--step) - 48px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .2s, transform .2s, visibility .2s;
+}
+.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.top { position: absolute; bottom: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px); }
+.scrolled .top { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+@media (max-width: 1023px) {
+  .launcher { --size: 52px; --step: 62px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .launcher { display: none; }
+  :global(html.sticky-cta-visible) .launcher { display: block; animation: mobile-launcher-in .2s ease-out; }
+  :global(body:has(#constructor)) .launcher { display: none; }
+  .scrolled .controls { transform: none; }
+  .top { display: none; }
+  .circle svg { width: 23px; height: 23px; }
+}
+@media (max-width: 639px) {
+  :global(html:has([data-cookie-banner])) .launcher { display: none; }
+}
+@keyframes mobile-launcher-in {
+  from { transform: translateY(140%); }
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html.sticky-cta-visible) .launcher { animation: none; }
+  .controls, .circle, .menu { transition: none; }
+}

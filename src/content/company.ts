@@ -1,4 +1,3 @@
-import { plural } from '@/lib/utils'
 
 /**
  * Данные компании. Всё, что помечено ЗАМЕНИТЬ, — заглушка из брифа.
@@ -16,13 +15,15 @@ export const company = {
   phone: '+7 (812) 385-01-00',
   phoneMobile: '+7 (993) 077-78-08',
   email: 'ooombk88@mail.ru',
-  // ЗАМЕНИТЬ: ссылки на мессенджеры и соцсети компании (в реквизитах их не было)
+  // Подтверждённые ссылки на мессенджеры и площадки компании.
   telegram: 'https://t.me/derevyaga',
-  vk: 'https://vk.com/derevyaga',
+  vk: 'https://vk.ru/skrusi',
+  max: 'https://max.ru/join/4Fr75hQgcYNks7rPrwEPtl6BL8SEbaHj6CJdb-SpsHo',
+  avito: 'https://www.avito.ru/brands/4da0042cc3569967f507966354df2602/all/predlozheniya_uslug?gdlkerfdnwq=101&page_from=from_item_card&iid=8237957822&sellerId=023842933550c54cfa820e68b43abbaf',
   whatsapp: 'https://wa.me/79930777808',
   address: 'Санкт-Петербург, ул. Разъезжая, д. 44, литера И, офис 11Н',
   workHours: 'Пн–Сб, 9:00–20:00',
-  mapUrl: 'https://yandex.ru/maps/?text=Санкт-Петербург,+Разъезжая+улица,+44',
+  mapUrl: 'https://yandex.by/maps/-/CTtWeQPD',
 
   // Реквизиты юридического лица — из раздела «Реквизиты сторон» договора подряда
   legal: {
@@ -71,7 +72,7 @@ export const promises = {
  * по-разному («Рассчитать проект», «Оставить заявку», «Рассчитать дом»).
  */
 export const cta = {
-  primary: `Получить смету за ${promises.estimateDays} ${plural(promises.estimateDays, ['день', 'дня', 'дней'])}`,
+  primary: 'Заказать звонок',
   secondary: 'Каталог проектов',
 } as const
 

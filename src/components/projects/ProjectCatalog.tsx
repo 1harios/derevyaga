@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import cardStyles from '@/components/home/FeaturedHomeCard.module.css'
 import type { Project } from '@/content/projects'
 import { track } from '@/lib/analytics'
 import { cn, plural } from '@/lib/utils'
@@ -72,6 +73,8 @@ function FilterChip({
 }
 
 export function ProjectCatalog({ projects }: { projects: Project[] }) {
+  const filterId = useId()
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [floors, setFloors] = useState<FloorsId>('all')
   const [area, setArea] = useState<AreaId>('all')
   const [bedrooms, setBedrooms] = useState<BedroomsId>(0)
@@ -94,6 +97,7 @@ export function ProjectCatalog({ projects }: { projects: Project[] }) {
     return list
   }, [floors, area, bedrooms, sort, projects])
 
+  const filterCount = Number(floors !== 'all') + Number(area !== 'all') + Number(bedrooms !== 0)
   const isFiltered = floors !== 'all' || area !== 'all' || bedrooms !== 0
 
   function reset() {
@@ -110,34 +114,40 @@ export function ProjectCatalog({ projects }: { projects: Project[] }) {
   return (
     <div>
       {/* Панель фильтров: группы чипов + сортировка справа */}
-      <div className="card rounded-xl p-4 md:p-5">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="card catalog-filter-panel rounded-xl p-4 md:p-5">
+        <button type="button" className="catalog-filter-toggle" aria-expanded={filtersOpen} aria-controls={filterId} onClick={() => setFiltersOpen(!filtersOpen)}>
+          <span>Фильтры{filterCount ? ` · ${filterCount}` : ''}</span><span aria-hidden>{filtersOpen ? '−' : '+'}</span>
+        </button>
+        <div id={filterId} className="catalog-filter-groups" data-open={filtersOpen}>
+          <fieldset className="catalog-filter-group"><legend>Этажность</legend>
           {FLOORS.map((item) => (
             <FilterChip key={item.id} active={floors === item.id} onClick={() => pick(setFloors, 'floors', item.id)}>
               {item.label}
             </FilterChip>
           ))}
-          <span aria-hidden className="mx-1 hidden h-5 w-px bg-line sm:block" />
+          </fieldset><fieldset className="catalog-filter-group"><legend>Площадь</legend>
           {AREAS.map((item) => (
             <FilterChip key={item.id} active={area === item.id} onClick={() => pick(setArea, 'area', item.id)}>
               {item.label}
             </FilterChip>
           ))}
-          <span aria-hidden className="mx-1 hidden h-5 w-px bg-line sm:block" />
+          </fieldset><fieldset className="catalog-filter-group"><legend>Спальни</legend>
           {BEDROOMS.map((item) => (
             <FilterChip key={item.id} active={bedrooms === item.id} onClick={() => pick(setBedrooms, 'bedrooms', item.id)}>
               {item.label}
             </FilterChip>
           ))}
+          </fieldset>
+          <button type="button" className="catalog-filter-apply" onClick={() => setFiltersOpen(false)}>Показать проекты · {filtered.length}</button>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+        <div className="catalog-filter-footer mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
           <p className="text-[14px] muted" aria-live="polite">
             {filtered.length > 0 ? (
               <>
                 {filtered.length} {plural(filtered.length, ['проект', 'проекта', 'проектов'])}
                 {isFiltered ? <> из {projects.length}</> : null}
-                {' · '}по каждому есть сданный дом и смета из договора
+                <span className="catalog-filter-proof"> · по каждому есть сданный дом и смета из договора</span>
               </>
             ) : (
               <>Под эти условия готового проекта нет</>
@@ -169,7 +179,7 @@ export function ProjectCatalog({ projects }: { projects: Project[] }) {
       </div>
 
       {filtered.length > 0 ? (
-        <ul className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className={`${cardStyles.grid} mt-3`}>
           {filtered.map((project, index) => (
             <li key={project.slug}>
               <ProjectCard project={project} priority={index < 3} />

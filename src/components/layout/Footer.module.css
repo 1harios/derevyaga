@@ -1,0 +1,74 @@
+.footer { padding:32px 0 16px; }
+.panel { padding:48px 36px 16px; border-radius:24px; background:#203027; color:#f3f0e5; overflow:hidden; }
+.panel a,.panel button,.details summary { outline-offset:4px; }
+.panel a:focus-visible,.panel button:focus-visible,.details summary:focus-visible { outline:2px solid #f3f0e5; }
+.top { display:flex; justify-content:space-between; align-items:center; gap:36px; padding:0 24px 38px; }
+.brand { display:flex; align-items:center; gap:38px; min-width:0; }
+.logo { flex-shrink:0; }
+.logoImage { width:98px; height:auto; }
+.tagline { font-size:clamp(28px,2.7vw,40px); line-height:1.15; letter-spacing:-.025em; font-weight:650; }
+.region { margin-top:12px; font-size:16px; line-height:1.5; color:#b8c6ba; }
+.contact { flex-shrink:0; display:flex; flex-direction:column; align-items:center; }
+.phone { display:flex; align-items:center; gap:14px; font-size:clamp(20px,1.8vw,24px); font-weight:400; letter-spacing:-.025em; min-height:44px; }
+.phone svg { width:23px; height:23px; }
+.hours { color:#d0d8ce; font-size:14px; }
+
+
+
+
+.navigation { position:relative; isolation:isolate; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:32px; padding:32px 8px 26px; border-block:1px solid #c2ccba60; overflow:hidden; }
+.watermark { position:absolute; z-index:-1; right:28px; bottom:-80px; width:340px; height:auto; opacity:.07; pointer-events:none; }
+.navigation h3 { font-size:17px; font-weight:600; margin-bottom:12px; }
+.navigation a { display:flex; align-items:center; min-height:36px; width:fit-content; font-size:15px; line-height:1.45; color:#e5e9e2; }
+.navigation a:hover,.addresses a:hover,.legal a:hover,.details a:hover { color:#fff; text-decoration:underline; text-underline-offset:4px; }
+.connections { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px 8px; }
+.addresses { display:flex; align-items:center; gap:28px; }
+.addresses a { display:flex; align-items:center; gap:12px; font-size:13px; line-height:1.5; min-height:44px; }
+.addresses svg { width:21px; height:21px; flex-shrink:0; }
+.social { flex-shrink:0; }
+.social nav { margin-top:0; }
+.social nav ul { gap:10px; }
+.social nav a { width:38px; height:38px; background:transparent; border-color:#c2ccba80; }
+.bottom { display:flex; align-items:flex-start; gap:24px; border-top:1px solid #c2ccba60; padding:10px 8px 0; color:#bbc8bd; font-size:11px; line-height:1.6; }
+.details { margin-right:auto; min-width:160px; }
+.details summary { display:flex; align-items:center; gap:12px; cursor:pointer; min-height:44px; width:fit-content; list-style:none; }
+.details summary::-webkit-details-marker { display:none; }
+.details summary svg { width:15px; height:15px; }
+.details[open] summary svg { transform:rotate(45deg); }
+.details>div { max-width:460px; padding:4px 0 18px; line-height:1.8; }
+.details ul { margin-top:12px; }
+.details a { display:inline-flex; align-items:center; min-height:44px; }
+.disclaimer { margin-top:12px; }
+.legal { display:flex; align-items:center; flex-wrap:wrap; gap:0 18px; }
+.legal a { display:flex; align-items:center; min-height:44px; }
+.legal li+li { position:relative; }
+.legal li+li::before { content:''; position:absolute; left:-9px; top:16px; height:12px; border-left:1px solid #c2ccba60; }
+.copyright { display:flex; align-items:center; min-height:44px; white-space:nowrap; }
+@media(max-width:1199px) { .panel { padding:32px 28px 16px; } .top { padding:0 0 30px; gap:24px; } .brand { gap:24px; } .logoImage { width:76px; } .region { font-size:14px; } .desktopBreak { display:none; } .navigation { gap:24px; } .navigation h3 { font-size:15px; } .navigation a { font-size:14px; } .addresses { flex-direction:column; align-items:flex-start; gap:0; } .bottom { gap:16px; } }
+@media(min-width:768px) and (max-width:1000px) { .tagline { font-size:26px; } .brand { gap:16px; } .logoImage { width:64px; } .phone { font-size:21px; } .bottom { flex-wrap:wrap; } }
+@media(max-width:767px) { .footer { padding:16px 0 12px; } .panel { padding:22px 20px 14px; border-radius:20px; } .top { flex-direction:column; align-items:stretch; gap:8px; padding-bottom:20px; } .brand { justify-content:center; } .brandCopy { display:none; } .logoImage { width:62px; } .contact { align-items:center; } .phone { font-size:21px; gap:10px; min-height:36px; } .phone svg { width:18px; height:18px; } .hours { font-size:12px; }    .navigation { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 22px; padding:20px 0; } .watermark { display:none; } .navigation h3 { font-size:14px; margin-bottom:6px; } .navigation a { min-height:40px; font-size:13px; } .connections { flex-direction:column; align-items:stretch; gap:10px; padding:16px 0; } .addresses { gap:0; } .addresses a { font-size:12px; gap:10px; min-height:36px; } .addresses svg { width:17px; height:17px; } .social nav ul { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; } .social nav a { width:100%; height:auto; aspect-ratio:1; max-width:44px; } .bottom { flex-direction:column; gap:0; padding:8px 0 0; font-size:11px; } .details { margin:0; width:100%; } .legal { gap:0 16px; } .legal li+li::before { display:none; } .copyright { min-height:32px; } }
+@media(max-width:360px) { .panel { padding-inline:18px; } .phone { font-size:19px; } .navigation { gap:18px 14px; } .navigation h3 { font-size:13px; } .navigation a { font-size:12px; } .social nav ul { gap:6px; } }
+
+.callback { margin-top:18px; width:100%; justify-content:space-between; }
+.brandCopy { display:flex; flex-direction:column; justify-content:space-between; min-width:0; }
+@media(min-width:768px) {
+ .logoImage { width:112px; }
+ .brandCopy { height:134px; }
+ .tagline { font-size:clamp(24px,2.3vw,32px); line-height:1.12; }
+ .region { font-size:14px; line-height:1.5; margin-top:0; }
+ .bottom { display:grid; grid-template-columns:minmax(170px,1fr) auto; gap:0 24px; }
+ .legal { grid-column:1/-1; grid-row:1; column-gap:24px; }
+ .details { grid-column:1; grid-row:2; }
+ .copyright { grid-column:2; grid-row:2; }
+}
+@media(min-width:768px) and (max-width:1000px) {
+ .brand { gap:16px; }
+ .tagline { font-size:24px; }
+ .region { font-size:12px; }
+}
+@media(max-width:767px) {
+ .brandCopy { display:none; }
+ .phone { font-size:20px; }
+ .callback { margin-top:12px; }
+ .legal { order:-1; flex-direction:column; align-items:flex-start; }
+}

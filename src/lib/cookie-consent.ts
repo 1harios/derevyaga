@@ -6,6 +6,10 @@ export type CookieChoice = 'all' | 'necessary'
 
 export function readCookieChoice(): CookieChoice | null {
   if (typeof window === 'undefined') return null
-  const value = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY)
-  return value === 'all' || value === 'necessary' ? value : null
+  try {
+    const value = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY)
+    return value === 'all' || value === 'necessary' ? value : null
+  } catch {
+    return null
+  }
 }

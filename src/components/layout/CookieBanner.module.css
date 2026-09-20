@@ -1,0 +1,20 @@
+.banner { position: fixed; z-index: 60; left: 24px; bottom: 24px; width: min(460px, calc(100vw - 48px)); padding: 24px; border: 1px solid #dbe1da; border-radius: 24px; background: #faf9f5; box-shadow: 0 12px 48px #18271d26; color: var(--color-ink); animation: arrive 220ms ease-out; }
+.heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: #e8ede7; color: #4e6254; }
+.icon svg { width: 22px; height: 22px; }
+.heading h2 { font-size: 20px; line-height: 1.2; letter-spacing: -.02em; }
+.text { color: #5d675f; font-size: 14px; line-height: 1.55; }
+.policy { display: inline-block; margin-top: 10px; font-size: 13px; color: #4e6254; text-underline-offset: 3px; text-decoration: underline; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; }
+.actions button { min-height: 46px; padding: 10px 12px; font-size: 13px; white-space: normal; }
+.error { margin-top: 12px; color: #9e3030; font-size: 13px; }
+@keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 639px) {
+  .banner { left: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); width: calc(100vw - 24px); padding: 20px; border-radius: 20px; max-height: calc(85dvh - env(safe-area-inset-bottom)); overflow-y: auto; }
+  .heading { gap: 10px; }
+  .heading h2 { font-size: 18px; }
+  .text { font-size: 13px; line-height: 1.5; }
+  .actions { margin-top: 16px; }
+  :global(html:has([data-cookie-banner]) .mobile-lead-cta) { visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) { .banner { animation: none; } }

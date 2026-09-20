@@ -33,6 +33,7 @@ const contentSecurityPolicy = [
 ].join('; ')
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['127.0.0.1'],
   output: isStaticPreview ? 'export' : isVercel ? undefined : 'standalone',
   reactStrictMode: true,
   poweredByHeader: false,
@@ -45,6 +46,9 @@ const nextConfig: NextConfig = {
     // В статическом экспорте оптимизатор изображений недоступен:
     // отдаём заранее сжатые webp как есть.
     unoptimized: isStaticPreview,
+  },
+  async redirects() {
+    return [{ source: '/technology', destination: '/promotions', permanent: true }]
   },
   async headers() {
     return [

@@ -3,26 +3,17 @@
 import Link from 'next/link'
 import { useId } from 'react'
 
-/**
- * Два раздельных чекбокса, ни один не предустановлен.
- * Смешивать согласие на обработку данных и согласие на рекламу нельзя —
- * это прямое нарушение 152-ФЗ.
- */
+/** Required data consent only; marketing consent is not collected. */
 export function ConsentFields({
   dataConsent,
-  marketingConsent,
   onDataConsentChange,
-  onMarketingConsentChange,
   error,
 }: {
   dataConsent: boolean
-  marketingConsent: boolean
   onDataConsentChange: (value: boolean) => void
-  onMarketingConsentChange: (value: boolean) => void
   error?: string
 }) {
   const dataId = useId()
-  const marketingId = useId()
 
   return (
     <div className="space-y-3">
@@ -35,10 +26,6 @@ export function ConsentFields({
         <Link href="/legal/privacy" className="link-underline" target="_blank">
           политики
         </Link>
-      </Checkbox>
-
-      <Checkbox id={marketingId} checked={marketingConsent} onChange={onMarketingConsentChange}>
-        Хочу получать новые проекты и акции. Отписаться можно в один клик
       </Checkbox>
 
       {error ? (

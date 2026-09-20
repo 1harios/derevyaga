@@ -115,7 +115,7 @@ export function MobileNav({ className }: { className?: string }) {
             >
               <div className="flex items-center justify-between gap-4 py-2">
                 <span className="flex items-center">
-                  <Image src="/brand/logo-derevyaga.webp" alt="Деревяга" width={836} height={306} className="h-8 w-auto" />
+                  <Image src="/brand/derevyaga-horizontal-green.svg" alt="Деревяга" width={840} height={300} className="h-8 w-auto" />
                 </span>
                 <button
                   ref={closeRef}

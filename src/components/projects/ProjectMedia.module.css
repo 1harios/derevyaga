@@ -1,0 +1,11 @@
+.reveal { animation: appear 240ms ease-out both; }
+.viewer { position: relative; height: min(70dvh, 850px); overflow: hidden; touch-action: none; background: #161c19; border-radius: 12px; }
+.picture { position: absolute; inset: 0; user-select: none; transform-origin: center; }
+.picture img { pointer-events: none; }
+.controls { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 16px; }
+.control { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #ffffff30; border-radius: 50%; color: white; background: #ffffff0d; }
+.control:hover { background: #ffffff25; }
+.control:disabled { opacity: .3; }
+@keyframes appear { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } }
+@media (max-width: 639px) { .viewer { height: 62dvh; } .controls { gap: 8px; } }

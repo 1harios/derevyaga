@@ -2,9 +2,10 @@ import { FaqBlock } from '@/components/home/FaqBlock'
 import { FinalCta } from '@/components/home/FinalCta'
 import { FeaturedHomes } from '@/components/home/FeaturedHomes'
 import { Hero } from '@/components/home/Hero'
-import { MortgageBanner } from '@/components/home/MortgageBanner'
+import { ConstructorBanner } from '@/components/home/ConstructorBanner'
 import { WhyUsBlock } from '@/components/home/WhyUsBlock'
 import { ProjectsPreview } from '@/components/home/ProjectsPreview'
+import { PromotionsBlock } from '@/components/home/PromotionsBlock'
 import { TechnologyBlock } from '@/components/home/TechnologyBlock'
 import { company } from '@/content/company'
 import { faqItems } from '@/content/faq'
@@ -63,8 +64,9 @@ export default async function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <Hero />
-      <MortgageBanner />
+      <PromotionsBlock />
       <FeaturedHomes projects={homeProjects} />
+      <ConstructorBanner />
       <WhyUsBlock />
       <TechnologyBlock />
       <ProjectsPreview projects={projects} />

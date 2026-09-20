@@ -1,0 +1,350 @@
+[
+  {
+    "size": "6x8",
+    "kind": "foundation-concrete",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Replace ONLY black round foundation pile shafts beneath the floor and terrace with slim square light grey reinforced-concrete driven piles, subtle aggregate texture. Same centres and height, same floor level. Black drainpipes remain black. No slab, no masonry blocks, no perimeter wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-1dc0bab9-9d97-4736-9636-f08959942097.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/foundation-concrete.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "foundation-concrete",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Replace ONLY black round foundation pile shafts beneath the floor and terrace with slim square light grey reinforced-concrete driven piles, subtle aggregate texture. Same centres and height, same floor level. Black drainpipes remain black. No slab, no masonry blocks, no perimeter wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-bd1e3bdb-8ad6-43d7-a7fa-a5361f6fe652.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/foundation-concrete.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "foundation-concrete",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Replace ONLY black round foundation pile shafts beneath the floor and terrace with slim square light grey reinforced-concrete driven piles, subtle aggregate texture. Same centres and height, same floor level. Black drainpipes remain black. No slab, no masonry blocks, no perimeter wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-b3d1c81f-1bf9-4cbb-8375-7e3fa144ceae.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/foundation-concrete.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "foundation-concrete",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Replace ONLY black round foundation pile shafts beneath the floor and terrace with slim square light grey reinforced-concrete driven piles, subtle aggregate texture. Same centres and height, same floor level. Black drainpipes remain black. No slab, no masonry blocks, no perimeter wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-37ba6c40-3ffe-42ce-932c-1131cf7cda30.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/foundation-concrete.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-ondulin",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Replace ONLY the visible roof covering with dark brown matte corrugated bituminous Ondulin sheets: small regular rounded waves straight DOWN THE SLOPE from ridge to gutter, narrow uniform corrugations and clean unobtrusive sheet overlaps. Not wide standing-seam panels, not tiles. No buckling, no wavy ridge, no distorted geometry. Preserve the exact silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-31cea083-2b24-40f1-bad6-71fb17b9db8c.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/roof-ondulin.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-ondulin",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Replace ONLY the visible roof covering with dark brown matte corrugated bituminous Ondulin sheets: small regular rounded waves straight DOWN THE SLOPE from ridge to gutter, narrow uniform corrugations and clean unobtrusive sheet overlaps. Not wide standing-seam panels, not tiles. No buckling, no wavy ridge, no distorted geometry. Preserve the exact silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-2bf26b7f-c976-4a96-880d-64e43f58cef2.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/roof-ondulin.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-ondulin",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Replace ONLY the visible roof covering with dark brown matte corrugated bituminous Ondulin sheets: small regular rounded waves straight DOWN THE SLOPE from ridge to gutter, narrow uniform corrugations and clean unobtrusive sheet overlaps. Not wide standing-seam panels, not tiles. No buckling, no wavy ridge, no distorted geometry. Preserve the exact silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-9c480c6e-e837-45cd-b51d-34f5509818f5.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/roof-ondulin.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-ondulin",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Replace ONLY the visible roof covering with dark brown matte corrugated bituminous Ondulin sheets: small regular rounded waves straight DOWN THE SLOPE from ridge to gutter, narrow uniform corrugations and clean unobtrusive sheet overlaps. Not wide standing-seam panels, not tiles. No buckling, no wavy ridge, no distorted geometry. Preserve the exact silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-e8d14e9e-2357-49c8-9c12-92775dc6828e.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/roof-ondulin.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-ondulin",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Replace ONLY the visible roof covering with dark brown matte corrugated bituminous Ondulin sheets: small regular rounded waves straight DOWN THE SLOPE from ridge to gutter, narrow uniform corrugations and clean unobtrusive sheet overlaps. Not wide standing-seam panels, not tiles. No buckling, no wavy ridge, no distorted geometry. Preserve the exact silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-ea8b32bd-801b-44c3-8ba9-f02d1933673f.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/roof-ondulin.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-metal",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Replace ONLY the visible roof covering with graphite METAL TILE roofing: regular small pressed metal tile profile, even horizontal stepped courses and vertical shallow ribs down slope, crisp straight manufactured geometry. This is metal tile, NOT standing-seam sheet roofing. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters. No buckling or warped pattern.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-1729ffe4-4417-4787-8f96-8ffe53c79567.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/roof-metal.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-metal",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Replace ONLY the visible roof covering with graphite METAL TILE roofing: regular small pressed metal tile profile, even horizontal stepped courses and vertical shallow ribs down slope, crisp straight manufactured geometry. This is metal tile, NOT standing-seam sheet roofing. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters. No buckling or warped pattern.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-651ef5b9-2d1c-416c-84fb-a62b1a65b023.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/roof-metal.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-metal",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Replace ONLY the visible roof covering with graphite METAL TILE roofing: regular small pressed metal tile profile, even horizontal stepped courses and vertical shallow ribs down slope, crisp straight manufactured geometry. This is metal tile, NOT standing-seam sheet roofing. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters. No buckling or warped pattern.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-ca0c6e40-95b2-492f-b20d-4b6242b687c1.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/roof-metal.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-metal",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Replace ONLY the visible roof covering with graphite METAL TILE roofing: regular small pressed metal tile profile, even horizontal stepped courses and vertical shallow ribs down slope, crisp straight manufactured geometry. This is metal tile, NOT standing-seam sheet roofing. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters. No buckling or warped pattern.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-5184312d-6477-41e5-9d68-2f411f1a02cf.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/roof-metal.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-metal",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Replace ONLY the visible roof covering with graphite METAL TILE roofing: regular small pressed metal tile profile, even horizontal stepped courses and vertical shallow ribs down slope, crisp straight manufactured geometry. This is metal tile, NOT standing-seam sheet roofing. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters. No buckling or warped pattern.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-a3fa8890-eb31-4f00-9ff8-cf57f9030b9a.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/roof-metal.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "roof-shingles",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-a6b64f5e-e896-4d76-8549-8c95439fbd4b.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/roof-shingles.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "roof-shingles",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-a2bfb259-6726-42d5-9514-1b6822992d4e.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/roof-shingles.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "roof-shingles",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-2ff823c3-67b7-49d2-8572-332068f8e4e6.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/roof-shingles.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "roof-shingles",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-5e208ef8-71b5-4d98-bbaf-8388108ad9aa.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/roof-shingles.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "roof-shingles",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Replace ONLY the visible roof covering with graphite asphalt shingles: fine granular surface, uniform small rectangular staggered overlapping tabs, clean aligned courses in correct perspective. No giant tiles, no metal ribs or corrugations. Preserve exact roof silhouette, ridge position, slopes, fascia and gutters.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-f33179a8-ba33-4540-87ea-43a63982d1ff.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/roof-shingles.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "facade-painted",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Change ONLY the exterior wall cladding colour including the front triangular gable to muted moss green #4e6254, realistic painted timber with visible fine grain. Keep the same horizontal boards. Preserve natural wood terrace posts, railings, floor, door and trim. White windows remain white. Do not paint plants, roof, gutters or terrace.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-84b2a652-81b7-4396-bd1d-8cf7c7c6f487.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/facade-painted.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "facade-painted",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Change ONLY the exterior wall cladding colour including the front triangular gable to muted moss green #4e6254, realistic painted timber with visible fine grain. Keep the same horizontal boards. Preserve natural wood terrace posts, railings, floor, door and trim. White windows remain white. Do not paint plants, roof, gutters or terrace.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-81f260f2-6033-49f8-8675-8a4eb09ab9cd.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/facade-painted.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "facade-painted",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Change ONLY the exterior wall cladding colour including the front triangular gable to muted moss green #4e6254, realistic painted timber with visible fine grain. Keep the same horizontal boards. Preserve natural wood terrace posts, railings, floor, door and trim. White windows remain white. Do not paint plants, roof, gutters or terrace.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-71deeca6-4dd7-407e-b378-6461b701b01f.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/facade-painted.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "facade-painted",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Change ONLY the exterior wall cladding colour including the front triangular gable to muted moss green #4e6254, realistic painted timber with visible fine grain. Keep the same horizontal boards. Preserve natural wood terrace posts, railings, floor, door and trim. White windows remain white. Do not paint plants, roof, gutters or terrace.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-7e9e9c4d-4a8d-43d3-93d0-f02b2a27f1c2.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/facade-painted.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "facade-painted",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Change ONLY the exterior wall cladding colour including the front triangular gable to muted moss green #4e6254, realistic painted timber with visible fine grain. Keep the same horizontal boards. Preserve natural wood terrace posts, railings, floor, door and trim. White windows remain white. Do not paint plants, roof, gutters or terrace.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-f5e60e94-08d8-4cc8-921b-8ad5f337acbd.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/facade-painted.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "facade-planken",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Change ONLY exterior wall cladding including triangular front gable to warm natural larch VERTICAL planken boards with narrow even dark shadow gaps, realistic fine grain and perfectly straight vertical boards. Preserve all apertures and their original size, white window frames, timber doors, terrace posts, railings and floor. Do not change roof or plants.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-5d22d8e2-1637-4931-83c4-505539664398.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/facade-planken.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "facade-planken",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Change ONLY exterior wall cladding including triangular front gable to warm natural larch VERTICAL planken boards with narrow even dark shadow gaps, realistic fine grain and perfectly straight vertical boards. Preserve all apertures and their original size, white window frames, timber doors, terrace posts, railings and floor. Do not change roof or plants.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-3c248bef-239a-4c2c-a58b-922fab01ecec.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/facade-planken.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "facade-planken",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Change ONLY exterior wall cladding including triangular front gable to warm natural larch VERTICAL planken boards with narrow even dark shadow gaps, realistic fine grain and perfectly straight vertical boards. Preserve all apertures and their original size, white window frames, timber doors, terrace posts, railings and floor. Do not change roof or plants.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-74bc80f2-130b-4968-8455-e271bfef68dc.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/facade-planken.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "facade-planken",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Change ONLY exterior wall cladding including triangular front gable to warm natural larch VERTICAL planken boards with narrow even dark shadow gaps, realistic fine grain and perfectly straight vertical boards. Preserve all apertures and their original size, white window frames, timber doors, terrace posts, railings and floor. Do not change roof or plants.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-0aedc673-74fc-4c23-ad7d-80cf5268d4bf.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/facade-planken.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "facade-planken",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Change ONLY exterior wall cladding including triangular front gable to warm natural larch VERTICAL planken boards with narrow even dark shadow gaps, realistic fine grain and perfectly straight vertical boards. Preserve all apertures and their original size, white window frames, timber doors, terrace posts, railings and floor. Do not change roof or plants.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-a9829cb6-326b-4363-ade8-25b2ac89230e.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/facade-planken.png"
+  },
+  {
+    "size": "6x6",
+    "kind": "terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x6-front-gable.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x6: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-19b6962d-aa3d-4dd4-baf7-29803beff182.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x6/terrace-no.png"
+  },
+  {
+    "size": "6x8",
+    "kind": "terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-c6613df1-1757-4dba-97ba-71223703a3fa.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/terrace-no.png"
+  },
+  {
+    "size": "6x10",
+    "kind": "terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x10: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-0a210db9-bc0a-4082-9273-fceeb97fe9fc.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/terrace-no.png"
+  },
+  {
+    "size": "8x8",
+    "kind": "terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x8.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x8: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-0330a61f-1167-4b87-b3aa-db1d12020332.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x8/terrace-no.png"
+  },
+  {
+    "size": "8x10",
+    "kind": "terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approval-reference/house-8x10.png",
+    "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 8x10: first value front width, second depth. Remove ONLY the open terrace: remove terrace railings, all veranda columns, terrace furniture and pots and broad terrace deck. Bring the front enclosed timber wall forward to the existing front beam/column plane, under the same existing front gable, preserving overall OUTER footprint, width and depth. Retain the same front door and front windows in the new front wall. Provide a modest narrow entrance landing and central wooden access steps, not a full-width terrace. Preserve right wall, all side windows, roof silhouette and ridge, gutters and overall house dimensions. Natural horizontal timber siding matches original. Keep foundation steel piles, adding sensible support under entry. Do not shorten the whole house or expose a floating roof.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-24e81f53-2274-42b8-ab7d-9c026690e6ad.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/8x10/terrace-no.png"
+  },
+  {
+    "size": "details",
+    "kind": "insulation-100",
+    "prompt": "Photorealistic product photograph of ONE timber-frame wall cross-section sample for a house configurator, thickness 100 mm. Three upright dry pine timber studs and top/bottom rails, two visible cavities COMPLETELY tightly filled with golden mineral wool of full 100 mm depth, fine realistic fibers, no empty holes. Show side depth clearly from front-right three-quarter view, same restrained perspective and scale across the series. Narrow layers of membrane and natural horizontal exterior timber cladding along right cut edge; clean construction joints. Isolated on pale warm offwhite background with soft contact shadow, studio daylight, crisp material detail. No house, no sky, no people, NO text or numbers, no dimension arrows, no collage. Square 1024x1024.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-2ddcc510-7b95-4e3a-a0e7-817fa7158261.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/details/insulation-100.png"
+  },
+  {
+    "size": "details",
+    "kind": "insulation-150",
+    "prompt": "Photorealistic product photograph of ONE timber-frame wall cross-section sample for a house configurator, thickness 150 mm. Three upright dry pine timber studs and top/bottom rails, two visible cavities COMPLETELY tightly filled with golden mineral wool of full 150 mm depth, fine realistic fibers, no empty holes. Show side depth clearly from front-right three-quarter view, same restrained perspective and scale across the series. Narrow layers of membrane and natural horizontal exterior timber cladding along right cut edge; clean construction joints. Isolated on pale warm offwhite background with soft contact shadow, studio daylight, crisp material detail. No house, no sky, no people, NO text or numbers, no dimension arrows, no collage. Square 1024x1024.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-e7c2b508-417b-4886-a6ac-6003e0143814.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/details/insulation-150.png"
+  },
+  {
+    "size": "details",
+    "kind": "insulation-200",
+    "prompt": "Photorealistic product photograph of ONE timber-frame wall cross-section sample for a house configurator, thickness 200 mm. Three upright dry pine timber studs and top/bottom rails, two visible cavities COMPLETELY tightly filled with golden mineral wool of full 200 mm depth, fine realistic fibers, no empty holes. Show side depth clearly from front-right three-quarter view, same restrained perspective and scale across the series. Narrow layers of membrane and natural horizontal exterior timber cladding along right cut edge; clean construction joints. Isolated on pale warm offwhite background with soft contact shadow, studio daylight, crisp material detail. No house, no sky, no people, NO text or numbers, no dimension arrows, no collage. Square 1024x1024.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-cb14f584-572d-45fb-b2b2-15edafb4f67d.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/details/insulation-200.png"
+  },
+  {
+    "size": "revisions",
+    "kind": "6x8-terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/terrace-no.png",
+    "prompt": "Precise localized photo edit of attached 6x8 metre house WITHOUT terrace. Correct ONLY the extra FRONT WINDOW TO THE LEFT OF THE ENTRANCE DOOR: REMOVE that leftmost front window and its white trim and fill its location seamlessly with the same horizontal honey-coloured timber boards. Front wall must have exactly ONE entrance door and exactly ONE window to the RIGHT of that door. The wall LEFT of the door is solid timber, keep the small black lamp to the left of door. All RIGHT SIDE WALL windows must remain untouched (three windows). Preserve all remaining architecture, front right window, door, stairs, black piles, roof, gutters, lamps, trees, shrubs, pale ground, two size dimension lines/labels and lighting. Fixed 1536×1024 canvas. Do not move camera, house, roof, doors or other windows. Do not add veranda or railings. One image, change just the unwanted left FRONT window into a wooden wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-9c67c854-20df-4017-a5cb-1b947e6beb9f.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/revisions/6x8-terrace-no.png"
+  },
+  {
+    "size": "revisions",
+    "kind": "6x10-terrace-no",
+    "reference": "D:/derevyaga/public/constructor/approved-variants-v1/6x10/terrace-no.png",
+    "prompt": "Precise localized photo edit of attached 6x10 metre house WITHOUT terrace. Correct ONLY the extra FRONT WINDOW TO THE LEFT OF THE ENTRANCE DOOR: REMOVE that leftmost front window and its white trim and fill its location seamlessly with the same horizontal honey-coloured timber boards. Front wall must have exactly ONE entrance door and exactly ONE window to the RIGHT of that door. The wall LEFT of the door is solid timber, keep the small black lamp to the left of door. All RIGHT SIDE WALL windows must remain untouched (four windows). Preserve all remaining architecture, front right window, door, stairs, black piles, roof, gutters, lamps, trees, shrubs, pale ground, two size dimension lines/labels and lighting. Fixed 1536×1024 canvas. Do not move camera, house, roof, doors or other windows. Do not add veranda or railings. One image, change just the unwanted left FRONT window into a wooden wall.",
+    "mode": "built-in imagegen",
+    "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-91b903c5-e47c-4741-a179-f7eeace99f59.png",
+    "output": "D:/derevyaga/public/constructor/approved-variants-v1/revisions/6x10-terrace-no.png"
+  }
+]

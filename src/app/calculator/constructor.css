@@ -1,0 +1,429 @@
+.calculator-page { --constructor-accent: #354f42; --constructor-muted: #7b8278; color: #252c28; }
+.constructor-page-heading { margin-bottom: 16px; }
+.constructor-workspace { display: grid; grid-template-columns: 390px minmax(0, 1fr); gap: 34px; align-items: stretch; padding: 12px 0 28px; }
+.constructor-options { padding: 22px 22px 18px; background: #f2f3ef; border-radius: 22px; min-width: 0; }
+.constructor-options-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.constructor-options-heading h2 { font-size: 19px; letter-spacing: -.035em; }
+.constructor-options-heading > span { font-size: 10px; color: var(--constructor-muted); }
+.constructor-section { border-bottom: 1px solid #354f4214; }
+.constructor-section-toggle { width: 100%; display: flex; align-items: center; min-height: 38px; gap: 10px; cursor: pointer; text-align: left; font-size: 12px; }
+.constructor-section-toggle > span:first-child { font-weight: 500; }
+.constructor-section-value { font-size: 11px; color: #777f74; margin-left: auto; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.constructor-section-mark { width: 14px; flex-shrink: 0; font-size: 17px; color: #6c806e; }
+.constructor-section[data-open=true] .constructor-section-toggle { color: #354f42; }
+.constructor-section[data-open=true] .constructor-section-value { visibility: hidden; }
+.constructor-section-content { padding: 3px 0 12px; animation: constructor-options-in .2s ease-out; }
+.constructor-section-content[hidden] { display: none; }
+.constructor-inline-note { font-size: 10px; line-height: 1.5; color: #858b80; margin-top: 8px; }
+.constructor-choices { min-width: 0; }
+.constructor-choice-grid { display: grid; grid-auto-columns: minmax(0,1fr); grid-auto-flow: column; gap: 7px; }
+.constructor-choice { display: flex; flex-direction: column; width: 100%; min-width: 0; padding: 6px 6px 9px; border: 1px solid #e1e5dc; border-radius: 10px; background: #fafbf8; text-align: left; position: relative; cursor: pointer; transition: border-color .15s, background .15s; }
+.constructor-choice:hover { border-color: #a1b09c; }
+.constructor-choice[aria-pressed=true] { border-color: #6c856e; background: #e9eee5; box-shadow: inset 0 0 0 .5px #6c856e; }
+.constructor-choice-preview { display: block; width: 100%; height: 58px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+.constructor-choice-preview img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+.constructor-choice-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 0 2px; }
+.constructor-choice-title { font-size: 11px; font-weight: 500; line-height: 1.35; min-height: 29px; }
+.constructor-choice-note { font-size: 10px; color: #7b8375; }
+.constructor-choice-price { font-size: 10px; color: #51654e; font-variant-numeric: tabular-nums; }
+.constructor-choice-check { position: absolute; right: 5px; top: 5px; width: 13px; height: 13px; display: grid; place-items: center; border: 1px solid #cbd4c5; border-radius: 50%; background: #fbfcf8; font-size: 8px; color: white; }
+.constructor-choice[aria-pressed=true] .constructor-choice-check { background: #637d5e; border-color: #637d5e; }
+.constructor-choice-grid--sizes { grid-auto-flow: row; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+.constructor-choice-grid--sizes .constructor-choice { padding: 9px 10px; min-height: 52px; }
+.constructor-choice-grid--sizes .constructor-choice-title { min-height: 0; font-size: 12px; }
+.constructor-choice-grid--sizes .constructor-choice-check { display: none; }
+.constructor-delivery { padding: 4px 0; }
+.constructor-delivery p { margin-top: 8px; font-size: 11px; color: #7b8278; }
+.constructor-delivery .field-label { font-size: 11px; }
+.constructor-total { padding-top: 16px; }
+.constructor-total-figures { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.constructor-total-label, .constructor-total-note { display: block; color: #777f73; font-size: 10px; line-height: 1.5; }
+.constructor-total-figures strong { display: block; font-family: var(--font-heading); font-size: clamp(19px,1.5vw,24px); line-height: 1.25; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; margin: 4px 0; font-variant-numeric: tabular-nums; }
+.constructor-total-figures small { font-size: 10px; font-weight: 400; letter-spacing: 0; }
+.constructor-monthly { text-align: left; cursor: pointer; color: #456046; padding-left: 12px; border-left: 1px solid #ced6c8; }
+.constructor-total .btn { min-height: 42px; padding-block: 10px; font-size: 12px; }
+.constructor-scene-slot { min-width: 0; min-height: 0; position: relative; align-self: stretch; background: transparent; }
+.calculator-page .house-visual { border: 0; border-radius: 0; box-shadow: none; background: transparent; height: 100%; overflow: visible; }
+.calculator-page .house-visual-stage { background: transparent; aspect-ratio: auto; min-height: 450px; height: 100%; }
+.calculator-page .house-visual-canvas { inset: 0 0 48px; }
+.calculator-page .house-visual-topline { top: 8px; left: 12px; right: 6px; }
+.calculator-page .house-visual-badge { padding: 0; background: transparent; box-shadow: none; color: #7a8476; font-size: 11px; letter-spacing: .03em; }
+.calculator-page .house-visual-controls { left: 12px; right: 6px; bottom: 2px; }
+.calculator-page .house-view-button { width: 34px; height: 34px; border: 1px solid #d9e0d2; background: #ffffffb3; color: #596c53; }
+.calculator-page .house-visual-orbit { background: transparent; }
+.calculator-page .house-visual-orbit > span { font-size: 11px; color: #83907d; }
+.calculator-page .house-visual-caption { background: transparent; border: 0; min-height: 0; padding: 10px 12px 0; }
+.calculator-page .house-visual-caption p { font-size: 11px; color: #83907d; }
+.calculator-page .house-visual-counter { display: none; }
+.calculator-page .house-visual:fullscreen { background: #f8f9f5; padding: 24px; }
+.constructor-details { margin-top: 36px; }
+.constructor-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+.constructor-eyebrow { display: block; font-size: 10px; letter-spacing: .15em; color: #7f8c77; margin-bottom: 10px; }
+.constructor-section-heading h2 { font-size: clamp(25px,2.3vw,36px); letter-spacing: -.045em; }
+.constructor-section-heading > p { font-size: 13px; color: #7d8676; padding-bottom: 4px; }
+.constructor-mortgage { border-top: 1px solid #dfe4d9; padding-top: 34px; }
+.constructor-mortgage-layout { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 26px; }
+.constructor-mortgage-programs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.constructor-mortgage-program { position: relative; display: flex; align-items: center; min-height: 170px; overflow: hidden; border: 1px solid #e0e6d9; border-radius: 18px; background: #f6f7f2; text-align: left; cursor: pointer; transition: background .2s, border-color .2s; }
+.constructor-mortgage-program[aria-pressed=true] { border-color: #78926b; background: #eef2e8; }
+.constructor-mortgage-art { width: 46%; height: 145px; object-fit: contain; }
+.constructor-mortgage-program-copy { display: flex; flex-direction: column; gap: 6px; padding: 18px 12px 18px 0; }
+.constructor-mortgage-program-copy > span:first-child { font-size: 13px; font-weight: 500; }
+.constructor-mortgage-program-copy strong { font-size: 36px; font-weight: 400; line-height: 1; letter-spacing: -.04em; font-family: var(--font-heading); color: #455c3b; }
+.constructor-mortgage-program-copy strong small { font-size: 21px; }
+.constructor-mortgage-program-note { font-size: 11px; color: #858e7c; }
+.constructor-program-check { position: absolute; top: 13px; right: 13px; width: 17px; height: 17px; border-radius: 50%; border: 1px solid #cad6bf; display: grid; place-items: center; font-size: 10px; color: white; }
+.constructor-mortgage-program[aria-pressed=true] .constructor-program-check { background: #71885e; border-color: #71885e; }
+.constructor-mortgage-ranges { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 26px 2px 0; }
+.constructor-mortgage-ranges label { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: #7a8472; }
+.constructor-mortgage-ranges label strong { color: #334a2e; font-weight: 500; font-size: 15px; }
+.constructor-mortgage-ranges input[type=range] { width: 100%; margin: 17px 0 9px; height: 4px; accent-color: #60794e; cursor: pointer; }
+.constructor-range-limits { display: flex; justify-content: space-between; gap: 10px; font-size: 10px; color: #88927f; }
+.constructor-mortgage-result { background: #354f42; color: #fff; border-radius: 20px; padding: 27px; display: flex; flex-direction: column; }
+.constructor-mortgage-result .constructor-eyebrow { color: #c2cfbc; font-size: 10px; }
+.constructor-mortgage-payment { font-family: var(--font-heading); font-size: 37px; line-height: 1.15; letter-spacing: -.04em; font-variant-numeric: tabular-nums; margin-bottom: 18px; }
+.constructor-mortgage-payment small { display: block; color: #c2cfbc; font-size: 12px; letter-spacing: 0; margin-top: 6px; }
+.constructor-mortgage-result dl { padding: 16px 0; margin-bottom: 14px; border-top: 1px solid #ffffff20; display: grid; gap: 10px; }
+.constructor-mortgage-result dl > div { display: flex; justify-content: space-between; font-size: 11px; gap: 12px; }
+.constructor-mortgage-result dt { color: #b9c9b3; }
+.constructor-mortgage-result .btn { margin-top: auto; font-size: 12px; min-height: 42px; }
+.constructor-mortgage-disclaimer { font-size: 10px; line-height: 1.5; margin-top: 11px; color: #b9c9b3; }
+.constructor-catalog { padding-block: 62px 60px; }
+.constructor-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 28px; margin-top: 32px; border-radius: 20px; background: #f2f4ed; }
+.constructor-lead h2 { font-size: 26px; }
+.constructor-lead p { margin-top: 15px; font-size: 13px; line-height: 1.6; color: #7c8574; }
+.calculator-page :focus-visible { outline: 2px solid #6b8659; outline-offset: 3px; }
+@keyframes constructor-options-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (min-width: 1400px) { .constructor-workspace { grid-template-columns: 420px minmax(0,1fr); gap: 48px; } .constructor-options { padding: 24px; } .constructor-section-toggle { min-height: 40px; } }
+@media (max-width: 1100px) { .constructor-workspace { grid-template-columns: 350px minmax(0,1fr); gap: 15px; } .constructor-options { padding: 18px; } .constructor-mortgage-layout { grid-template-columns: minmax(0,1fr) 300px; } .constructor-mortgage-program { flex-direction: column; align-items: stretch; } .constructor-mortgage-art { width: 100%; height: 115px; } .constructor-mortgage-program-copy { padding: 0 18px 18px; } }
+@media (max-width: 760px) {
+  .constructor-workspace { display: flex; flex-direction: column; gap: 8px; padding-top: 0; }
+  .constructor-options { order: 2; border-radius: 18px; padding: 18px; }
+  .constructor-scene-slot { order: 1; position: relative; top: auto; z-index: 0; align-self: stretch; }
+  .calculator-page .constructor-scene-slot .house-visual-stage { height: clamp(280px,68vw,390px); min-height: 280px; }
+  .calculator-page .house-visual-caption { display: none; }
+  .constructor-options-heading { margin-bottom: 8px; }
+  .constructor-section-toggle { min-height: 42px; font-size: 13px; }
+  .constructor-total-figures strong { font-size: 24px; }
+  .constructor-choice-title { font-size: 12px; }
+  .constructor-total-label, .constructor-total-note { font-size: 10px; }
+  .constructor-section-heading { display: block; margin-bottom: 20px; }
+  .constructor-section-heading > p { margin-top: 10px; }
+  .constructor-details { margin-top: 16px; }
+  .constructor-mortgage { padding-top: 28px; }
+  .constructor-mortgage-layout { grid-template-columns: 1fr; gap: 22px; }
+  .constructor-mortgage-programs { gap: 9px; }
+  .constructor-mortgage-ranges { gap: 18px; }
+  .constructor-mortgage-result { padding: 23px; }
+  .constructor-catalog { padding-block: 42px; }
+  .constructor-lead { grid-template-columns: 1fr; padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .constructor-section-content { animation: none; } }
+@media (min-width: 761px) and (max-height: 850px) {
+  .constructor-workspace { padding: 4px 0 16px; }
+  .constructor-options { padding: 15px 20px; }
+  .constructor-options-heading { margin-bottom: 6px; }
+  .constructor-options-heading h2 { font-size: 17px; }
+  .constructor-section-toggle { min-height: 31px; }
+  .constructor-section-content { padding-bottom: 8px; }
+  .constructor-choice-grid--sizes .constructor-choice { padding: 5px 9px; min-height: 43px; }
+  .constructor-choice-copy { gap: 2px; }
+  .constructor-choice-preview { height: 48px; margin-bottom: 3px; }
+  .constructor-choice-note { line-height: 1.3; }
+  .constructor-inline-note { font-size: 9px; margin-top: 5px; }
+  .constructor-total { padding-top: 10px; }
+  .constructor-total-figures { margin-bottom: 10px; }
+  .constructor-total-figures strong { font-size: 21px; }
+  .constructor-total-note { font-size: 9px; line-height: 1.3; }
+  .constructor-total .btn { min-height: 38px; padding-block: 6px; }
+  .constructor-total .btn__arrow { width: 23px; height: 23px; }
+  .calculator-page .house-visual-stage { min-height: 410px; }
+}
+
+/* Sequential configuration: generous material photography and one active step. */
+.constructor-workspace { grid-template-columns: minmax(0,1fr) 430px; gap: 28px; }
+.constructor-options { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; padding: 22px; }
+.constructor-scene-slot { grid-column: 1; grid-row: 1; }
+.constructor-wizard-heading { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; color: #7c8576; }
+.constructor-wizard-heading > span:first-child { color: #42553b; }
+.constructor-wizard-progress { height: 3px; background: #dde5d7; border-radius: 3px; margin-top: 12px; overflow: hidden; }
+.constructor-wizard-progress > span { display: block; height: 100%; background: #6d885d; transition: width .3s; }
+.constructor-wizard-body { flex: 1; min-height: 228px; padding-top: 18px; animation: constructor-options-in .2s; }
+.constructor-wizard-body h2 { font-size: 24px; letter-spacing: -.035em; margin-bottom: 17px; }
+.constructor-wizard-body .constructor-choice-preview { height: 110px; margin-bottom: 8px; }
+.constructor-wizard-body .constructor-choice-preview img { object-fit: contain; }
+.constructor-wizard-body .constructor-choice-title { font-size: 12px; min-height: 32px; }
+.constructor-wizard-body .constructor-choice-price { font-size: 11px; }
+.constructor-wizard-body .constructor-choice-grid--sizes .constructor-choice { min-height: 66px; padding: 12px; }
+.constructor-wizard-body .constructor-choice-grid--sizes .constructor-choice-title { min-height: 0; font-size: 15px; }
+.constructor-wizard-body .constructor-choice-note { font-size: 12px; }
+.constructor-wizard-nav { display: flex; gap: 8px; align-items: center; margin-top: 13px; }
+.constructor-wizard-nav .btn { min-height: 36px; padding: 7px 15px; font-size: 11px; }
+.constructor-wizard-nav .btn--dark { flex: 1; justify-content: space-between; }
+.constructor-wizard-nav button:disabled { opacity: .35; cursor: default; }
+.constructor-ready { margin-left: auto; font-size: 11px; color: #617e50; }
+.constructor-total { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbe3d4; }
+.constructor-mortgage-classic { border: 1px solid #e0e5da; border-radius: 24px; padding: 28px; background: #fff; }
+.constructor-mortgage-classic h2 { font-size: clamp(24px,2.1vw,30px); line-height: 1.2; letter-spacing: -.03em; }
+.constructor-mortgage-intro { margin-top: 10px; font-size: 13px; color: #7e8776; }
+.constructor-mortgage-classic .constructor-mortgage-programs { margin-top: 22px; }
+.constructor-mortgage-classic .constructor-mortgage-program { align-items: stretch; flex-direction: row; min-height: 162px; border-radius: 14px; background: #f6f7f2; }
+.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] { background: #354f42; border-color: #354f42; color: white; }
+.constructor-mortgage-classic .constructor-mortgage-art { position: absolute; width: 64px; height: 64px; right: 12px; top: 38px; opacity: .95; }
+.constructor-mortgage-classic .constructor-mortgage-program-copy { padding: 18px; gap: 9px; width: 100%; }
+.constructor-mortgage-classic .constructor-mortgage-program-copy > span:first-child { padding-right: 8px; font-size: 14px; }
+.constructor-mortgage-classic .constructor-mortgage-program-copy strong { font-size: 29px; }
+.constructor-mortgage-classic .constructor-mortgage-program-note { margin-top: auto; font-size: 11px; line-height: 1.4; }
+.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] strong { color: white; }
+.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] .constructor-mortgage-program-note { color: #c4d1bc; }
+.constructor-mortgage-classic .constructor-mortgage-program .constructor-program-check { display: none; }
+.constructor-mortgage-terms { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.constructor-mortgage-terms button { border-radius: 30px; padding: 9px 13px; background: #f1f4eb; font-size: 12px; cursor: pointer; }
+.constructor-mortgage-terms button[aria-pressed=true] { background: #354f42; color: white; }
+.constructor-mortgage-downnote { font-size: 11px; color: #7c8674; margin-top: 10px; }
+@media (min-width:761px) and (max-width:1100px) { .constructor-workspace { grid-template-columns: minmax(0,1fr) 390px; gap: 16px; } .constructor-options { padding: 18px; } }
+@media (max-width:760px) {
+  .constructor-options { padding: 18px; }
+  .constructor-wizard-body { min-height: 218px; }
+  .constructor-wizard-body .constructor-choice-preview { height: 100px; }
+  .constructor-wizard-body h2 { font-size: 23px; }
+  .constructor-mortgage-classic { padding: 20px; border-radius: 20px; }
+  .constructor-mortgage-classic .constructor-mortgage-program-copy { padding: 13px; }
+  .constructor-mortgage-classic .constructor-mortgage-art { width: 47px; height: 47px; right: 9px; top: 48px; }
+  .constructor-mortgage-classic .constructor-mortgage-program-copy > span:first-child { font-size: 12px; }
+  .constructor-mortgage-classic .constructor-mortgage-ranges { grid-template-columns: 1fr; }
+}
+
+
+/* Larger, uncluttered model and the branded loading state. */
+.calculator-page .house-visual-stage { min-height: 490px; }
+.calculator-page .house-visual-canvas { inset: 42px 0 38px; }
+.calculator-page .house-visual-title { font-size: clamp(23px,2.2vw,32px); line-height: 1.2; font-weight: 600; letter-spacing: -.035em; color: #171d19; }
+.calculator-page .house-visual-controls { justify-content: flex-end; }
+.calculator-page .house-visual-fallback { background: white; }
+.calculator-page .house-visual-load { inset: 0; display: grid; place-content: center; }
+.house-brand-loader { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.house-brand-loader img { width: 200px; height: auto; }
+.house-brand-loader-track { display: block; width: 140px; height: 3px; border-radius: 3px; background: #e9ede7; overflow: hidden; }
+.house-brand-loader-track > span { display: block; width: 45%; height: 100%; background: #354f42; animation: house-brand-loading 1.4s ease-in-out infinite; }
+@keyframes house-brand-loading { from { transform: translateX(-110%); } to { transform: translateX(330%); } }
+.constructor-mortgage-classic .constructor-mortgage-program { background: #303631; border-color: #303631; color: white; }
+.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] { background: #1d2520; border-color: #1d2520; box-shadow: 0 0 0 2px white,0 0 0 4px #8b9c82; }
+.constructor-mortgage-classic .constructor-mortgage-program-copy strong { color: white; }
+.constructor-mortgage-classic .constructor-mortgage-program-note { color: #c4cdc0; }
+.constructor-mortgage-classic .constructor-mortgage-program .constructor-program-check { display: grid; top: 14px; right: 12px; }
+.constructor-mortgage-classic .constructor-mortgage-program-copy > span:first-child { padding-right: 20px; }
+@media (max-width:760px) {
+  .calculator-page .constructor-scene-slot .house-visual-stage { height: clamp(335px,94vw,480px); min-height: 335px; }
+  .calculator-page .house-visual-canvas { inset: 40px -8px 38px; }
+  .calculator-page .house-visual-topline { left: 4px; }
+  .calculator-page .house-view-button { width: 42px; height: 42px; }
+  .constructor-workspace { gap: 14px; }
+  .constructor-wizard-nav .btn { min-height: 44px; font-size: 12px; }
+  .constructor-choice-grid { gap: 6px; }
+  .constructor-wizard-body .constructor-choice-title { overflow-wrap: anywhere; }
+  .constructor-mortgage-classic { padding: 18px; }
+  .constructor-mortgage-classic .constructor-mortgage-programs { grid-template-columns: 1fr; gap: 12px; }
+  .constructor-mortgage-classic .constructor-mortgage-program { min-height: 140px; }
+  .constructor-mortgage-classic .constructor-mortgage-program-copy { padding: 16px; }
+  .constructor-mortgage-classic .constructor-mortgage-program-copy > span:first-child { font-size: 15px; }
+  .constructor-mortgage-classic .constructor-mortgage-art { width: 70px; height: 70px; right: 15px; top: 38px; }
+  .constructor-mortgage-classic .constructor-mortgage-program-note { max-width: calc(100% - 70px); }
+  .constructor-mortgage-terms { display: grid; grid-template-columns: repeat(3,1fr); }
+  .constructor-mortgage-terms button { min-height: 44px; }
+}
+@media (prefers-reduced-motion:reduce) { .house-brand-loader-track > span { animation: none; width: 100%; } }
+
+/* Six-section studio: direct navigation, material cards and a full house view. */
+.constructor-studio { --studio-line:#e4e8df; }
+.constructor-tabs { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; padding:8px; background:#f0f2ee; border:1px solid var(--studio-line); border-radius:20px; margin-bottom:12px; }
+.constructor-tabs button { display:flex; align-items:center; justify-content:center; gap:9px; min-height:58px; padding:10px; border-radius:13px; color:#69796f; font-size:13px; line-height:1.3; cursor:pointer; transition:background .22s,color .22s; }
+.constructor-tabs svg { width:21px; height:21px; flex:none; }
+.constructor-tabs button:hover { background:#e5eae2; }
+.constructor-tabs button[aria-pressed=true] { color:white; background:#4e6254; box-shadow:0 5px 12px #34483818; }
+.constructor-studio .constructor-workspace { grid-template-columns:360px minmax(0,1fr); gap:12px; padding:0; align-items:stretch; }
+.constructor-studio .constructor-options { grid-column:1; grid-row:1; background:#fff; border:1px solid var(--studio-line); border-radius:22px; padding:24px; box-shadow:0 10px 30px #354f4206; }
+.constructor-studio .constructor-wizard-heading { font-size:11px; padding-bottom:16px; border-bottom:1px solid var(--studio-line); }
+.constructor-studio .constructor-wizard-body { padding-top:20px; min-height:310px; }
+.constructor-studio .constructor-wizard-body h2 { font-size:25px; line-height:1.15; margin-bottom:12px; }
+.constructor-selection-note { color:#788279; font-size:12px; line-height:1.65; margin-bottom:20px; }
+.constructor-studio .constructor-choice-grid { grid-auto-flow:row; grid-auto-columns:unset; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+.constructor-studio .constructor-choice { background:#f7f8f5; padding:9px 9px 12px; border-radius:13px; border-color:#e5e8e0; transition:background .22s,border-color .22s; }
+.constructor-studio .constructor-choice:hover { border-color:#8b9e8e; background:#f0f3ec; }
+.constructor-studio .constructor-choice[aria-pressed=true] { background:#eef2e9; border-color:#4e6254; box-shadow:inset 0 0 0 .5px #4e6254; }
+.constructor-studio .constructor-choice-preview { height:100px; margin:0 0 8px; }
+.constructor-studio .constructor-choice-preview img { mix-blend-mode:multiply; object-fit:contain; }
+.constructor-studio .constructor-choice-title { min-height:0; font-size:13px; line-height:1.4; }
+.constructor-studio .constructor-choice-price { font-size:12px; margin-top:4px; color:#4e6254; }
+.constructor-studio .constructor-choice-check { width:18px; height:18px; font-size:10px; top:7px; right:7px; }
+.constructor-studio .constructor-choice-grid--sizes .constructor-choice { padding:15px 12px; min-height:72px; }
+.constructor-studio .constructor-choice-grid--sizes .constructor-choice-title { font-size:17px; }
+.constructor-studio .constructor-choice-note { font-size:11px; }
+.constructor-studio .constructor-wizard-nav { margin-top:20px; }
+.constructor-studio .constructor-wizard-nav .btn { min-height:42px; font-size:12px; }
+.constructor-delivery-extra { border-top:1px solid var(--studio-line); border-bottom:1px solid var(--studio-line); margin-top:22px; padding:14px 0; }
+.constructor-delivery-extra summary { cursor:pointer; font-size:12px; color:#52675a; }
+.constructor-delivery-extra .constructor-delivery { padding-top:18px; }
+.constructor-studio .constructor-total { margin-top:0; padding-top:20px; }
+.constructor-studio .constructor-total-figures { grid-template-columns:1fr; gap:14px; }
+.constructor-studio .constructor-total-figures strong { font-size:30px; margin:5px 0; }
+.constructor-studio .constructor-total-label { font-size:11px; }
+.constructor-studio .constructor-monthly { border-left:0; border-top:1px solid var(--studio-line); padding:12px 0 0; }
+.constructor-studio .constructor-monthly strong { font-size:22px; }
+.constructor-studio .constructor-total .btn { min-height:48px; font-size:13px; }
+.constructor-studio .constructor-scene-slot { grid-column:2; grid-row:1; align-self:start; position:sticky; top:96px; height:clamp(510px,calc(100dvh - 140px),780px); overflow:hidden; border-radius:24px; background:radial-gradient(ellipse at 52% 38%,#fcfcfa 0%,#eef0eb 70%,#e5e9e1 100%); border:1px solid #e8ece3; }
+.constructor-studio .house-visual-stage { min-height:0; height:100%; }
+.constructor-studio .house-visual-canvas { inset:65px 12px 62px; }
+.constructor-studio .house-visual-topline { left:24px; top:25px; right:auto; }
+.constructor-studio .house-visual-title { font-size:24px; }
+.constructor-view-mode { position:absolute; top:20px; right:20px; z-index:4; display:flex; gap:3px; padding:4px; border-radius:30px; background:white; box-shadow:0 5px 18px #1d342a08; }
+.constructor-view-mode button { padding:9px 12px; border-radius:24px; font-size:11px; color:#647469; cursor:pointer; }
+.constructor-view-mode button[aria-pressed=true] { color:white; background:#4e6254; }
+.constructor-studio .house-visual-controls { bottom:19px; right:20px; left:auto; }
+.constructor-studio .house-view-button { width:40px; height:40px; border:0; background:white; color:#4e6254; box-shadow:0 4px 16px #243a2510; }
+.constructor-scene-hint { position:absolute; bottom:29px; left:24px; max-width:50%; color:#7c887e; font-size:11px; }
+@media(min-width:1450px) { .constructor-studio .constructor-workspace { grid-template-columns:390px minmax(0,1fr); } .constructor-studio .constructor-choice-preview { height:120px; } }
+@media(min-width:901px) and (max-width:1100px) { .constructor-studio .constructor-workspace { grid-template-columns:320px minmax(0,1fr); } .constructor-studio .constructor-options { padding:20px; } .constructor-tabs button { font-size:11px; gap:6px; } .constructor-studio .house-visual-topline { top:75px; } .constructor-studio .house-visual-canvas { inset:110px 8px 60px; } }
+@media(max-width:900px) { .constructor-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); } .constructor-tabs button { min-height:48px; font-size:12px; } .constructor-studio .constructor-workspace { display:flex; flex-direction:column; gap:12px; } .constructor-studio .constructor-scene-slot { position:relative; top:auto; order:0; height:460px; width:100%; align-self:stretch; } .constructor-studio .constructor-options { order:1; padding:24px; } .constructor-studio .constructor-wizard-body { min-height:0; } .constructor-studio .constructor-choice-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .constructor-studio .constructor-total-figures { grid-template-columns:1fr 1fr; } .constructor-studio .constructor-monthly { border-top:0; border-left:1px solid var(--studio-line); padding:0 0 0 18px; } .constructor-studio .constructor-scene-slot .house-visual-stage { height:100%; min-height:0; } }
+@media(max-width:480px) { .constructor-tabs { gap:4px; padding:6px; border-radius:16px; } .constructor-tabs button { flex-direction:column; gap:5px; min-height:62px; font-size:10px; padding:8px 4px; } .constructor-tabs svg { width:19px; height:19px; } .constructor-studio .constructor-scene-slot { height:340px; border-radius:18px; } .constructor-studio .house-visual-topline { top:20px; left:16px; } .constructor-studio .house-visual-title { font-size:20px; } .constructor-view-mode { top:55px; left:12px; right:auto; } .constructor-view-mode button { font-size:10px; padding:7px 11px; } .constructor-studio .house-visual-canvas { inset:87px 0 47px; } .constructor-studio .house-visual-controls { bottom:10px; right:12px; } .constructor-studio .house-view-button { width:33px; height:33px; } .constructor-scene-hint { bottom:20px; left:16px; font-size:9px; max-width:40%; } .constructor-studio .constructor-options { padding:20px; border-radius:18px; } .constructor-studio .constructor-choice-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .constructor-studio .constructor-total-figures strong { font-size:23px; } .constructor-studio .constructor-monthly strong { font-size:20px; } .constructor-studio .constructor-wizard-body h2 { font-size:24px; } }
+@media(prefers-reduced-motion:reduce) { .constructor-tabs button,.constructor-studio .constructor-choice { transition:none; } .constructor-studio .constructor-wizard-body { animation:none; } }
+.constructor-page-heading { padding-top:22px; }
+.constructor-intro { display:flex; align-items:center; justify-content:space-between; gap:32px; padding:28px 0 12px; }
+.constructor-intro h1 { font-size:clamp(28px,3vw,42px); letter-spacing:-.04em; line-height:1.12; }
+.constructor-intro p { max-width:410px; color:#7b857d; font-size:13px; line-height:1.65; }
+.constructor-intro strong { color:#4e6254; font-weight:550; }
+@media(max-width:760px) { .constructor-page-heading { padding-top:14px; } .constructor-intro { display:block; padding-top:24px; } .constructor-intro p { margin-top:12px; font-size:12px; } }
+
+/* Branded hero, a single structural mode and compact mortgage typography. */
+.constructor-page-heading { padding-top:0; }
+.constructor-studio .house-visual-canvas { inset:65px 12px 62px; }
+.constructor-studio .constructor-monthly strong { font-family:var(--font-sans); font-variant-numeric:proportional-nums; font-weight:500; letter-spacing:0; word-spacing:0; text-align:left; white-space:nowrap; width:max-content; max-width:100%; }
+.constructor-studio .constructor-monthly strong small { display:inline; margin-left:5px; font-size:12px; }
+.mortgage-redesign.constructor-mortgage-classic { padding:32px; background:#f3f4f0; border:0; border-radius:26px; }
+.mortgage-redesign .constructor-mortgage-layout { grid-template-columns:minmax(0,1fr) 360px; gap:32px; }
+.mortgage-redesign.constructor-mortgage-classic h2 { font-size:clamp(27px,2.8vw,38px); line-height:1.12; }
+.mortgage-redesign .constructor-mortgage-programs { gap:12px; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program { background:white; color:#233029; border:1px solid #e0e5dc; min-height:190px; border-radius:18px; box-shadow:none; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] { background:#4e6254; color:white; border-color:#4e6254; box-shadow:0 6px 18px #4e625418; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy { padding:22px; gap:16px; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy>span:first-child { padding-right:25px; font-size:15px; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy strong { font-family:var(--font-sans); font-variant-numeric:proportional-nums; font-size:34px; letter-spacing:0; word-spacing:0; color:#4e6254; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] strong { color:white; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-note { color:#738075; font-size:12px; line-height:1.5; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program[aria-pressed=true] .constructor-mortgage-program-note { color:#e2e9e1; }
+.mortgage-redesign.constructor-mortgage-classic .constructor-program-check { display:grid; place-items:center; width:22px; height:22px; right:16px; top:20px; background:transparent; border:1px solid #ccd7c8; }
+.mortgage-redesign .constructor-program-check svg { width:14px; height:14px; }
+.mortgage-redesign .constructor-mortgage-ranges { grid-template-columns:1fr; gap:24px; padding-top:26px; }
+.mortgage-redesign .constructor-mortgage-terms { gap:8px; }
+.mortgage-redesign .constructor-mortgage-terms button { min-height:44px; min-width:58px; background:white; border:1px solid #e1e6dc; }
+.mortgage-redesign .constructor-mortgage-terms button[aria-pressed=true] { background:#4e6254; color:white; border-color:#4e6254; }
+.mortgage-redesign .constructor-mortgage-result { background:#4e6254; padding:30px; border-radius:22px; }
+.mortgage-result-program { align-self:flex-start; font-size:12px; line-height:1.4; padding:7px 12px; border:1px solid #ffffff40; border-radius:24px; margin-bottom:26px; }
+.mortgage-redesign .constructor-eyebrow { font-size:12px; letter-spacing:0; text-transform:none; color:#e0e7df; margin-bottom:10px; }
+.mortgage-redesign .constructor-mortgage-payment { margin:0 0 24px; font-family:var(--font-sans); font-variant-numeric:proportional-nums; font-weight:500; font-size:40px; letter-spacing:0; word-spacing:0; text-align:left; line-height:1.1; }
+.mortgage-amount { display:block; white-space:nowrap; width:max-content; max-width:100%; }
+.mortgage-redesign .constructor-mortgage-payment small { display:block; color:#e0e7df; font-size:13px; font-weight:400; margin-top:8px; }
+.mortgage-redesign .constructor-mortgage-result dl { gap:16px; padding:22px 0; border-color:#ffffff30; }
+.mortgage-redesign .constructor-mortgage-result dl>div { font-size:13px; align-items:baseline; }
+.mortgage-redesign .constructor-mortgage-result dt { color:#e0e7df; }
+.mortgage-redesign .constructor-mortgage-result dd { white-space:nowrap; font-family:var(--font-sans); font-variant-numeric:proportional-nums; letter-spacing:0; word-spacing:0; }
+.mortgage-redesign .constructor-mortgage-result .btn { min-height:50px; color:#253b2e; background:white; font-size:13px; }
+.mortgage-redesign .constructor-mortgage-disclaimer { color:#d9e3d8; font-size:11px; line-height:1.65; margin-top:16px; }
+@media(max-width:1000px) { .mortgage-redesign .constructor-mortgage-layout { grid-template-columns:1fr; gap:24px; } .mortgage-redesign .constructor-mortgage-payment { font-size:38px; } }
+@media(max-width:480px) { .constructor-studio .house-visual-canvas { inset:52px 4px 50px; } .mortgage-redesign.constructor-mortgage-classic { padding:20px; border-radius:20px; } .mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy { padding:16px; gap:14px; } .mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy>span:first-child { font-size:13px; padding-right:14px; } .mortgage-redesign.constructor-mortgage-classic .constructor-program-check { width:16px; height:16px; top:14px; right:10px; } .mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-copy strong { font-size:28px; } .mortgage-redesign.constructor-mortgage-classic .constructor-mortgage-program-note { font-size:11px; } .mortgage-redesign .constructor-mortgage-result { padding:24px 20px; } .mortgage-redesign .constructor-mortgage-result dl>div { font-size:12px; } .mortgage-redesign .constructor-mortgage-payment { font-size:34px; } }
+
+/* Full-bleed scene: controls float above the model. */
+.calculator-page .constructor-studio .house-visual-canvas { inset:0; }
+.calculator-page .constructor-studio .house-visual-topline { top:24px; z-index:3; pointer-events:none; }
+
+
+/* Photo reference: a seamless garden scene with floating controls. */
+.calculator-page .photo-studio { background:#f1f2ed; border-radius:24px; padding:12px; }
+.photo-studio .constructor-tabs { background:transparent; border:0; margin:0 0 8px; }
+.photo-studio .constructor-tabs button { min-height:48px; border-radius:12px; color:#27392e; }
+.photo-studio .constructor-tabs button[aria-pressed=true] { color:white; }
+.calculator-page .photo-studio .constructor-workspace { display:grid; grid-template-columns:310px minmax(0,1fr); position:relative; min-height:610px; gap:0; }
+.photo-studio .constructor-options { position:relative; z-index:2; grid-column:1; margin:6px; padding:20px; align-self:start; background:#fffffff5; border-radius:18px; box-shadow:0 12px 40px #283d3010; }
+.photo-studio .constructor-wizard-heading { display:none; }
+.photo-studio .constructor-wizard-body { min-height:0; padding-top:0; }
+.photo-studio .constructor-wizard-body h2 { font-size:25px; }
+.photo-studio .constructor-selection-note { font-size:12px; margin-bottom:16px; }
+.photo-studio .constructor-choice-grid--sizes { grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+.photo-studio .constructor-choice-grid--sizes .constructor-choice { padding:12px 5px; min-height:68px; border-radius:9px; }
+.photo-studio .constructor-choice-grid--sizes .constructor-choice-title { font-size:13px; }
+.photo-studio .constructor-choice-grid--sizes .constructor-choice-note { font-size:11px; }
+.photo-studio .constructor-wizard-nav { margin-top:12px; }
+.photo-studio .constructor-delivery-extra { margin-top:12px; padding:10px 0; }
+.photo-studio .constructor-total { padding-top:12px; }
+.photo-studio .constructor-total-figures { gap:8px; }
+.photo-studio .constructor-monthly { padding:8px 10px; border:0; border-radius:10px; background:#f2f3ef; }
+.photo-studio .constructor-monthly .constructor-total-label { display:none; }
+.photo-studio .constructor-monthly strong { font-size:20px; margin:0; }
+.photo-studio .constructor-monthly .constructor-total-note { font-size:10px; }
+.photo-studio .constructor-total .btn { margin-top:12px; }
+.calculator-page .photo-studio .constructor-scene-slot { position:absolute; inset:0; width:100%; height:100%; border:0; border-radius:18px; background:#f1f2ed; overflow:hidden; }
+.photo-house { position:absolute; inset:0 0 0 295px; overflow:hidden; margin:0; }
+.photo-house-picture { position:absolute; inset:0; transform-origin:60% 55%; transition:transform .35s ease; }
+.photo-house-image { object-fit:contain; object-position:center; animation:photo-arrive .35s ease both; }
+.photo-house-title { position:absolute; top:18px; right:26px; color:#354e3d; font-size:16px; text-align:right; }
+.photo-house-title span { display:block; font-size:11px; margin-top:5px; }
+.photo-house-tools { position:absolute; bottom:22px; right:22px; display:flex; flex-direction:column; gap:8px; }
+.photo-house-tools button { width:42px; height:42px; border-radius:50%; background:white; display:grid; place-items:center; cursor:pointer; box-shadow:0 4px 18px #263c3010; }
+.photo-house-tools button:disabled { opacity:.45; cursor:default; }
+.photo-house-tools button:focus-visible { outline:2px solid #4e6254; outline-offset:3px; }
+.photo-house-detail { position:absolute; bottom:18px; left:20px; width:190px; background:#fffffff2; padding:12px; border:1px solid #dce2d8; border-radius:16px; }
+.photo-house-detail img { height:120px; width:100%; object-fit:contain; }
+.photo-house-detail span { display:block; font-size:12px; text-align:center; }
+.photo-mortgage { display:grid; grid-template-columns:minmax(150px,.8fr) minmax(380px,1.6fr) minmax(220px,1fr); gap:22px; align-items:center; padding:24px; border:1px solid #e6e9e1; border-radius:22px; background:#fafbf8; }
+.photo-mortgage-heading h2 { font-size:25px; line-height:1.1; letter-spacing:-.035em; }
+.photo-mortgage-heading h2 span { display:block; color:#4e6254; }
+.photo-mortgage-fields { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:12px; }
+.photo-mortgage-fields label { display:flex; flex-direction:column; gap:10px; font-size:11px; }
+.photo-mortgage-fields select { width:100%; min-height:44px; border:1px solid #d9e0d5; border-radius:10px; padding:8px; background:white; font-size:12px; }
+.photo-mortgage-payment { border-radius:16px; padding:18px; background:#4e6254; color:white; }
+.photo-mortgage-payment>span { font-size:11px; }
+.photo-mortgage-payment strong { display:block; font-size:30px; letter-spacing:-.025em; line-height:1.2; margin:8px 0 12px; }
+.photo-mortgage-payment .btn { min-height:36px; font-size:11px; }
+.photo-mortgage-details { grid-column:1/-1; font-size:11px; color:#637468; }
+.photo-mortgage-details summary { cursor:pointer; }
+.photo-mortgage-details dl { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:16px 0; }
+.photo-mortgage-details dd { color:#1c2620; margin-top:5px; font-size:15px; }
+@keyframes photo-arrive { from { opacity:.45; } to { opacity:1; } }
+@media(min-width:1500px) { .photo-house { left:240px; } .calculator-page .photo-studio .constructor-workspace { min-height:700px; } }
+@media(max-width:1000px) { .photo-mortgage { grid-template-columns:1fr 1fr; } .photo-mortgage-fields { grid-column:1/-1; grid-row:2; } }
+@media(max-width:900px) { .calculator-page .photo-studio .constructor-workspace { display:flex; flex-direction:column; } .calculator-page .photo-studio .constructor-scene-slot { position:relative; inset:auto; order:0; height:430px; } .photo-house { inset:0; } .photo-studio .constructor-options { margin:0; order:1; width:100%; } .photo-studio .constructor-choice-grid--sizes { grid-template-columns:repeat(3,minmax(0,1fr)); } .photo-studio .constructor-monthly { border:0; } }
+@media(max-width:480px) { .calculator-page .photo-studio .constructor-scene-slot { height:300px; } .photo-house-title { right:14px; top:8px; font-size:14px; } .photo-house-title span { font-size:10px; } .photo-house-tools { right:10px; bottom:10px; flex-direction:row; gap:5px; } .photo-house-tools button { width:32px; height:32px; } .photo-house-detail { width:130px; left:8px; bottom:8px; padding:7px; } .photo-house-detail img { height:65px; } .photo-house-detail span { font-size:10px; } .photo-mortgage { padding:18px; gap:16px; grid-template-columns:1fr; } .photo-mortgage-fields { grid-template-columns:1fr 1fr; } .photo-mortgage-fields label:first-child { grid-column:1/-1; } .photo-mortgage-payment { grid-row:3; } .photo-mortgage-details dl { grid-template-columns:1fr 1fr; } }
+@media(prefers-reduced-motion:reduce) { .photo-house-picture { transition:none; } .photo-house-image { animation:none; } }
+.calculator-page .photo-studio .constructor-scene-slot { grid-column:1 / -1; grid-row:1; }
+.photo-house-picture { mask-image:linear-gradient(to right,transparent,#000 7%,#000 98%,transparent); }
+.photo-house-image { mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 94%,transparent); }
+.constructor-page-heading h1 span { color:#4e6254; }
+@media(max-width:900px) { .photo-house-picture { mask-image:none; } }
+.photo-house-composite { width:100%; height:100%; display:block; }
+.house-dimension { color:#4e6254; }
+.house-dimension path { stroke:currentColor; stroke-width:1.5; }
+.house-dimension text { fill:currentColor; font-family:var(--font-sans); font-size:30px; font-weight:500; letter-spacing:0; }
+.photo-house-title { z-index:1; pointer-events:none; }
+.photo-house-title .photo-house-materials { font-size:10px; max-width:350px; color:#6b786e; }
+.photo-house-loading { position:absolute; top:80px; right:26px; padding:8px 12px; border-radius:10px; background:#ffffffeb; color:#4e6254; font-size:12px; }
+.photo-house-loading button { text-decoration:underline; cursor:pointer; }
+.photo-insulation-detail { position:absolute; left:20px; bottom:22px; width:200px; display:flex; gap:10px; align-items:center; padding:10px; background:#ffffffed; border:1px solid #dce2d8; border-radius:12px; box-shadow:0 4px 24px #263c3010; }
+.photo-insulation-detail img { width:85px; height:95px; object-fit:contain; border-radius:5px; }
+.photo-insulation-detail span { font-size:10px; color:#667569; }
+.photo-insulation-detail strong { display:block; margin-top:5px; font-size:19px; color:#354e3d; white-space:nowrap; }
+.photo-insulation-gauge { margin-top:10px; height:5px; background:#e6eae2; border-radius:4px; overflow:hidden; }
+.photo-insulation-gauge i { display:block; height:100%; background:#ad995b; transition:width .22s ease; }
+@media(max-width:480px) { .photo-house-title .photo-house-materials { max-width:240px; font-size:9px; } .photo-house-loading { top:63px; right:12px; font-size:10px; } .photo-insulation-detail { width:163px; left:8px; bottom:8px; padding:6px; gap:7px; } .photo-insulation-detail img { width:58px; height:64px; } .photo-insulation-detail strong { font-size:16px; } }
+@media(prefers-reduced-motion:reduce) { .photo-insulation-gauge i { transition:none; } }
+
+/* Keep the approved image and its dimension labels clear of the mobile controls. */
+.photo-studio .constructor-choice-title { overflow-wrap:anywhere; hyphens:auto; }
+@media(max-width:480px) {
+  .calculator-page .photo-studio .constructor-scene-slot { height:360px; }
+  .photo-house-picture { inset:68px 0 42px; }
+  .photo-house-title { top:12px; left:12px; right:12px; text-align:left; font-size:16px; }
+  .photo-house-title span, .photo-house-title .photo-house-materials { font-size:11px; max-width:none; }
+  .calculator-page .photo-studio .constructor-scene-slot:has(.photo-insulation-detail) { height:414px; }
+  .photo-house:has(.photo-insulation-detail) .photo-house-picture { bottom:96px; }
+  .photo-insulation-detail span { font-size:11px; }
+}

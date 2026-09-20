@@ -1,0 +1,24 @@
+[
+  {
+    "size": "6x6",
+    "material": "painted",
+    "mode": "built-in image_gen",
+    "prompt": "Use case: precise-object-edit. Asset: house configurator 1536x1024 PNG. Image 1 is the edit target 6x6 house WITHOUT terrace. Image 2 is solely a wall-material reference. Edit image 1 only: replace all exterior wall and triangular gable cladding with muted moss-green painted horizontal imitation timber, matching image 2 color and grain. Keep image 1 EXACT house silhouette, perspective, framing, roof, gutters, downpipes, eaves and fascia natural wood, door and windows and white trim, lights, piles, small entry steps, landscape, light background, shadows, dimension arrows and labels. Keep front wall flush with no veranda; do NOT add terrace, posts, railings, furniture or new openings from image 2. Keep natural wood door and stairs. Return one full landscape image, identical composition, only cladding changes.",
+    "references": [
+      "D:/derevyaga/public/constructor/approved-variants-v1/6x6/terrace-no.png",
+      "D:/derevyaga/public/constructor/approved-variants-v1/6x6/facade-painted.png"
+    ],
+    "output": "C:/Users/kkkar/.codex/generated_images/01a0a5c6-563e-7721-8387-dabdf4a8ff3b/exec-9f88a4ae-b90f-49e9-b674-b1113ac339a2.png"
+  },
+  {
+    "size": "6x6",
+    "material": "planken",
+    "mode": "built-in image_gen",
+    "prompt": "Use case: precise-object-edit. Asset: house configurator 1536x1024 PNG. Image 1 is the edit target 6x6 house WITHOUT terrace. Image 2 is solely a wall-material reference. Edit image 1 only: replace all exterior wall and triangular gable cladding with natural honey timber VERTICAL planken boards, matching image 2 texture and narrow seams. Keep image 1 EXACT house silhouette, perspective, framing, roof, gutters, downpipes, eaves and fascia natural wood, door and windows and white trim, lights, piles, small entry steps, landscape, light background, shadows, dimension arrows and labels. Keep front wall flush with no veranda; do NOT add terrace, posts, railings, furniture or new openings from image 2. Keep natural wood door and stairs. Return one full landscape image, identical composition, only cladding changes.",
+    "references": [
+      "D:/derevyaga/public/constructor/approved-variants-v1/6x6/terrace-no.png",
+      "D:/derevyaga/public/constructor/approved-variants-v1/6x6/facade-planken.png"
+    ],
+    "output": "C:/Users/kkkar/.codex/generated_images/01a0a5c6-563e-7721-8387-dabdf4a8ff3b/exec-c0d8b5e7-17e5-4050-bdb1-59a58aaae4b8.png"
+  }
+]

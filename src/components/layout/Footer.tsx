@@ -1,106 +1,55 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { CookieSettingsButton } from '@/components/layout/CookieSettingsButton'
+import { LuMail, LuMapPin, LuPhone, LuPlus } from 'react-icons/lu'
+import { FooterCallback } from './FooterCallback'
 import { company, legalLinks } from '@/content/company'
 import { footerColumns } from '@/content/nav'
 import { telHref } from '@/lib/utils'
+import { SocialLinks } from './SocialLinks'
+import styles from './Footer.module.css'
 
 export function Footer() {
-  const year = new Date().getFullYear()
-
   return (
-    <footer className="pb-3 pt-8 md:pb-4">
+    <footer className={styles.footer}>
       <div className="shell">
-        <div className="panel panel--dark on-dark">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,320px)_1fr]">
-            <div>
-              <Image
-                src="/brand/logo-full-linen.webp"
-                alt="Деревяга, каркасные дома"
-                width={560}
-                height={816}
-                className="h-[104px] w-auto"
-              />
-              <p className="mt-6 max-w-xs text-[15px] leading-[1.6] muted">
-                Каркасные дома под ключ в {company.cityPrepositional} и Ленинградской области.
-                Своя бригада, фиксированная цена в договоре.
-              </p>
-
-              <div className="mt-6 space-y-1">
-                <a href={telHref(company.phone)} className="font-heading text-[22px] font-medium tabular-nums">
-                  {company.phone}
-                </a>
-                <p className="text-[14px] muted">{company.workHours}</p>
-                <a href={`mailto:${company.email}`} className="link-underline block text-[15px]">
-                  {company.email}
-                </a>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                <a href={company.telegram} className="btn btn--outline-light btn--sm">
-                  Telegram
-                </a>
-                <a href={company.whatsapp} className="btn btn--outline-light btn--sm">
-                  WhatsApp
-                </a>
-              </div>
+        <div className={styles.panel}>
+          <div className={styles.top}>
+            <div className={styles.brand}>
+              <Link href="/" aria-label="Деревяга — на главную" className={styles.logo}>
+                <Image src="/brand/derevyaga-full-linen.svg" alt="Деревяга, каркасные дома" width={827} height={992} className={styles.logoImage}/>
+              </Link>
+              <div className={styles.brandCopy}><p className={styles.tagline}>Дом начинается<br/>с хорошей команды.</p><p className={styles.region}>Каркасные дома в Санкт-Петербурге<br className={styles.desktopBreak}/> и Ленинградской области.</p></div>
             </div>
-
-            <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-              {footerColumns.map((column) => (
-                <nav key={column.title} aria-label={column.title}>
-                  {/* font-sans: единственное место, где заголовку нужен был Onest 400 — теперь Inter, и начертание не грузится */}
-                  <h3 className="mb-4 font-sans text-[14px] font-normal muted">{column.title}</h3>
-                  <ul className="space-y-2.5">
-                    {column.items.map((item) => (
-                      <li key={item.href}>
-                        <Link href={item.href} className="text-[15px] text-white/90 hover:text-white">
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              ))}
+            <div className={styles.contact}>
+              <a href={telHref(company.phone)} className={styles.phone}><LuPhone aria-hidden/>{company.phone}</a>
+              <span className={styles.hours}>{company.workHours}</span>
+              <FooterCallback className={styles.callback}/>
             </div>
           </div>
-
-          <hr className="divider my-10" />
-
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto]">
-            <div className="space-y-1.5 text-[14px] leading-[1.6] muted">
-              <p>{company.legal.fullName}</p>
-              <p>
-                ИНН {company.legal.inn} · КПП {company.legal.kpp}
-              </p>
-              <p>{company.legal.legalAddress}</p>
-              <p>Офис: {company.address}</p>
-            </div>
-
-            <div className="flex flex-col items-start gap-3 lg:items-end">
-              <span className="chip bg-white/10 text-white/80">
-                <span aria-hidden className="size-1.5 rounded-full bg-white/70" />
-                Настройки cookie под вашим контролем
-              </span>
-              <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[14px] muted lg:justify-end">
-                {legalLinks.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href} className="link-underline">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <CookieSettingsButton />
-                </li>
-              </ul>
-            </div>
+          <div className={styles.navigation}>
+            <Image src="/brand/derevyaga-mark-linen.svg" alt="" aria-hidden width={605} height={684} className={styles.watermark}/>
+            {footerColumns.map(column => (
+              <nav key={column.title} aria-label={column.title}>
+                <h3>{column.title}</h3>
+                <ul>{column.items.map(item => <li key={item.href}><Link href={item.href}>{item.label}</Link></li>)}</ul>
+              </nav>
+            ))}
           </div>
-
-          <p className="mt-8 text-[13px] muted">
-            © {year} {company.name}. Цены на сайте не являются публичной офертой: точная стоимость
-            фиксируется в договоре после выезда замерщика.
-          </p>
+          <div className={styles.connections}>
+            <div className={styles.addresses}>
+              <a href={`mailto:${company.email}`}><LuMail aria-hidden/><span>{company.email}</span></a>
+              <a href={company.mapUrl} target="_blank" rel="noopener noreferrer"><LuMapPin aria-hidden/><span>Санкт-Петербург, ул. Разъезжая, 44</span></a>
+            </div>
+            <div className={styles.social}><SocialLinks/></div>
+          </div>
+          <div className={styles.bottom}>
+            <details className={styles.details}>
+              <summary>Реквизиты компании <LuPlus aria-hidden/></summary>
+              <div><p>{company.legal.fullName}</p><p>ИНН {company.legal.inn} · КПП {company.legal.kpp}</p><p>{company.legal.legalAddress}</p><p className={styles.disclaimer}>Цены на сайте не являются публичной офертой. Точная стоимость фиксируется в договоре после выезда замерщика.</p></div>
+            </details>
+            <ul className={styles.legal}><li><Link href="/legal/privacy">Политика конфиденциальности</Link></li>{legalLinks.slice(1).map(item=><li key={item.href}><Link href={item.href}>{item.label}</Link></li>)}</ul>
+            <span className={styles.copyright}>© {new Date().getFullYear()} {company.name}</span>
+          </div>
         </div>
       </div>
     </footer>

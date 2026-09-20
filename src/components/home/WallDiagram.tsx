@@ -34,7 +34,7 @@ export function WallDiagram() {
               textAnchor="middle"
               fontSize={3.2}
               fill="#6c736d"
-              fontFamily="Onest, sans-serif"
+              fontFamily="Manrope, sans-serif"
             >
               {band.index + 1}
             </text>

@@ -48,10 +48,9 @@ const reasons = [
 export function WhyUsBlock() {
   return (
     <Section id="why-us">
-      <div className="mb-7 max-w-2xl md:mb-9">
+      <div className="mb-6 max-w-2xl md:mb-9">
         <h2 className="text-pretty" data-reveal>
-          Быстрые сроки, честная смета{' '}
-          <span className="block text-ink-soft">и высокое качество работы</span>
+          Строим надёжно{' '}<span className="block text-ink-soft">и в срок</span>
         </h2>
       </div>
 

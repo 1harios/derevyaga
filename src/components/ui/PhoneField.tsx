@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useState } from 'react'
+import { LuPhone } from 'react-icons/lu'
 import { formatPhoneMask, isValidPhone } from '@/lib/utils'
 
 export function PhoneField({
@@ -29,6 +30,8 @@ export function PhoneField({
       <label className="field-label" htmlFor={id}>
         Телефон
       </label>
+      <div className="relative">
+      <LuPhone aria-hidden className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-brand" />
       <input
         id={id}
         name="phone"
@@ -55,7 +58,9 @@ export function PhoneField({
         aria-invalid={shownError ? 'true' : undefined}
         aria-describedby={shownError ? errorId : hintId}
         className="field-input"
+        style={{ paddingLeft: 48 }}
       />
+      </div>
       {shownError ? (
         <p id={errorId} role="alert" className="field-error">
           {shownError}

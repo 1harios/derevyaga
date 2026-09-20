@@ -1,0 +1,9 @@
+{
+  "size": "6x8",
+  "kind": "foundation-concrete",
+  "reference": "D:/derevyaga/public/constructor/approval-reference/house-6x8.png",
+  "prompt": "Use case: precise-object-edit. One photoreal architectural image, source is the approved house of this exact size. Fixed canvas 1536×1024. Keep source camera, house location, scale, perspective, light, backdrop, lush plants and pale ground EXACTLY aligned; never reframe, zoom, crop, move or rotate the house. Preserve front gable above entrance with ridge front-to-back and right side under eave. All areas outside the requested component remain unchanged. Preserve crisp timber grain, door and window details. Keep existing two green size dimension lines and labels unchanged at the same positions. NO other text, no UI, no collage, one house. House size 6x8: first value front width, second depth. Replace ONLY black round foundation pile shafts beneath the floor and terrace with slim square light grey reinforced-concrete driven piles, subtle aggregate texture. Same centres and height, same floor level. Black drainpipes remain black. No slab, no masonry blocks, no perimeter wall.",
+  "mode": "built-in imagegen",
+  "source": "C:\\Users\\kkkar\\.codex\\generated_images\\01a07bf9-6f28-7533-9d96-2e1e57d2b17d\\exec-1dc0bab9-9d97-4736-9636-f08959942097.png",
+  "output": "D:/derevyaga/public/constructor/approved-variants-v1/6x8/foundation-concrete.png"
+}

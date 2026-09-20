@@ -37,7 +37,6 @@ export function LeadForm({
   const [comment, setComment] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [dataConsent, setDataConsent] = useState(false)
-  const [marketingConsent, setMarketingConsent] = useState(false)
   const [phoneError, setPhoneError] = useState<string>()
   const [consentError, setConsentError] = useState<string>()
   const [failMessage, setFailMessage] = useState<string>()
@@ -91,7 +90,7 @@ export function LeadForm({
       area,
       projectSlug,
       calculationId,
-      marketingConsent,
+      marketingConsent: false,
       companyWebsite: honeypot,
       fillMs: startedAt.current ? Date.now() - startedAt.current : 0,
       meta: collectLeadMeta(),
@@ -174,9 +173,7 @@ export function LeadForm({
       <div className="mt-5">
         <ConsentFields
           dataConsent={dataConsent}
-          marketingConsent={marketingConsent}
           onDataConsentChange={setDataConsent}
-          onMarketingConsentChange={setMarketingConsent}
           error={consentError}
         />
       </div>

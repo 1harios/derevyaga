@@ -6,6 +6,7 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Button } from '@/components/ui/Button'
 import { ObjectCard } from '@/components/ui/ObjectCard'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import cardStyles from '@/components/home/FeaturedHomeCard.module.css'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import { cities } from '@/content/cities'
 import { company, promises } from '@/content/company'
@@ -123,8 +124,8 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
             title="Сданные дома в этом направлении"
             description="План-факт сроков и слова владельцев — как есть, включая задержки."
             action={
-              <Button href="/objects" variant="outline" size="sm" arrow>
-                Все объекты
+              <Button href="/projects" variant="outline" size="sm" arrow>
+                Каталог проектов
               </Button>
             }
           />
@@ -149,7 +150,7 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
             </Button>
           }
         />
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className={cardStyles.grid}>
           {projects.slice(0, 6).map((project) => (
             <li key={project.slug}>
               <ProjectCard project={project} />

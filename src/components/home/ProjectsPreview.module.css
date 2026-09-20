@@ -1,0 +1,28 @@
+.panel { background: #e4e5e1; }
+.track {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 0 16px;
+  overflow-x: auto;
+  padding: 4px 4px 8px;
+  margin: -4px -4px -8px;
+  scroll-padding-inline: 4px;
+  scrollbar-width: none;
+}
+.track::-webkit-scrollbar { display: none; }
+.track > li {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  min-width: 0;
+  scroll-snap-stop: always;
+}
+.navButton:disabled { opacity: .35; cursor: default; pointer-events: none; }
+@media (min-width: 640px) {
+  .track { grid-auto-columns: calc((100% - 16px) / 2); }
+}
+@media (min-width: 1200px) {
+  .track { grid-auto-columns: calc((100% - 32px) / 3); }
+}

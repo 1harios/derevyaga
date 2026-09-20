@@ -1,0 +1,145 @@
+{
+  "method": "Grayscale matching of unchanged wall region; shifts -8..8 pixels. Not a pixel-perfect compositing guarantee.",
+  "results": [
+    {
+      "size": "6x6",
+      "kind": "foundation-concrete",
+      "meanAbsoluteDifference": 5.095823798627002,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x6",
+      "kind": "roof-metal",
+      "meanAbsoluteDifference": 5.3125,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x6",
+      "kind": "roof-ondulin",
+      "meanAbsoluteDifference": 7.524313501144165,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x6",
+      "kind": "roof-shingles",
+      "meanAbsoluteDifference": 8.041189931350115,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x8",
+      "kind": "foundation-concrete",
+      "meanAbsoluteDifference": 8.013586956521738,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x8",
+      "kind": "roof-metal",
+      "meanAbsoluteDifference": 5.218821510297483,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x8",
+      "kind": "roof-ondulin",
+      "meanAbsoluteDifference": 7.969107551487414,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x8",
+      "kind": "roof-shingles",
+      "meanAbsoluteDifference": 8.78074942791762,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x10",
+      "kind": "foundation-concrete",
+      "meanAbsoluteDifference": 5.573226544622425,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x10",
+      "kind": "roof-metal",
+      "meanAbsoluteDifference": 6.257723112128146,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x10",
+      "kind": "roof-ondulin",
+      "meanAbsoluteDifference": 8.38887299771167,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "6x10",
+      "kind": "roof-shingles",
+      "meanAbsoluteDifference": 6.559639588100686,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x8",
+      "kind": "foundation-concrete",
+      "meanAbsoluteDifference": 7.9733981693363845,
+      "dx": -1,
+      "dy": 0
+    },
+    {
+      "size": "8x8",
+      "kind": "roof-metal",
+      "meanAbsoluteDifference": 5.824799771167048,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x8",
+      "kind": "roof-ondulin",
+      "meanAbsoluteDifference": 8.45566361556064,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x8",
+      "kind": "roof-shingles",
+      "meanAbsoluteDifference": 7.707379862700229,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x10",
+      "kind": "foundation-concrete",
+      "meanAbsoluteDifference": 7.279319221967963,
+      "dx": -1,
+      "dy": 1
+    },
+    {
+      "size": "8x10",
+      "kind": "roof-metal",
+      "meanAbsoluteDifference": 6.10183066361556,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x10",
+      "kind": "roof-ondulin",
+      "meanAbsoluteDifference": 5.420337528604119,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "size": "8x10",
+      "kind": "roof-shingles",
+      "meanAbsoluteDifference": 4.619565217391305,
+      "dx": 0,
+      "dy": 0
+    }
+  ]
+}

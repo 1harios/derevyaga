@@ -1,105 +1,126 @@
 'use client'
 
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Image from 'next/image'
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import type { ConstructorInput } from '@/lib/constructor/engine'
+import type { HouseViewer } from './house-renderer'
+import { houseDimensions, stageForStep } from './house-model'
+import type { StepId } from './visuals'
 
-const SIZES = '(min-width: 1024px) 50vw, 100vw'
-// Кадры лежат в 1600×1200; выше стандартных 75, чтобы фактура досок и травы не замыливалась.
-// Значение должно быть разрешено в images.qualities (next.config.ts)
-const QUALITY = 90
-
-/**
- * Дом, который «собирается» по мере выбора: текущий кадр стадии с подписью.
- * На телефоне кадр держит пропорцию 4:3, на десктопе растягивается на всю
- * высоту левой колонки (кадр обрезается по краям, дом в центре остаётся целым).
- * Новый кадр грузится поверх предыдущего и проявляется, когда готов, — дом
- * перестраивается, а не моргает белым. Кадры следующего шага подгружаются
- * скрытыми после того, как загрузился текущий, чтобы не спорить с ним за сеть.
- */
-export function HouseVisual({
-  src,
-  alt,
-  caption,
-  stepIndex,
-  stepsTotal,
-  prefetch,
-  className,
-}: {
-  src: string
-  alt: string
-  caption: string
-  stepIndex: number
-  stepsTotal: number
-  prefetch: string[]
-  className?: string
+function ViewButton({ label, onClick, children, disabled = false }: {
+  label: string; onClick: () => void; children: ReactNode; disabled?: boolean
 }) {
-  // loaded — последний загрузившийся кадр, under — тот, что был на экране до него
-  const [frames, setFrames] = useState<{ loaded: string | null; under: string | null }>({
-    loaded: null,
-    under: null,
-  })
-  const ready = frames.loaded === src
-  // Пока новый кадр грузится, снизу остаётся предыдущий; когда загрузился — тот, поверх которого он проявляется
-  const under = frames.loaded !== null && !ready ? frames.loaded : frames.under
+  return (
+    <button type="button" onClick={onClick} aria-label={label} title={label} disabled={disabled} className="house-view-button">
+      {children}
+    </button>
+  )
+}
+
+/** An explicit schematic fallback keeps the calculator usable when WebGL is unavailable. */
+function HouseSketch({ input, step }: { input: ConstructorInput; step: StepId }) {
+  const stage = stageForStep(step)
+  const { width, depth } = houseDimensions(input.size)
+  const long = 108 * depth / 10
+  const front = 112 * width / 8
+  const ox = 154
+  const oy = 175
+  const a = `${ox},${oy}`
+  const b = `${ox + front},${oy - front * 0.4}`
+  const c = `${ox + front - long},${oy - front * 0.4 - long * 0.42}`
+  const d = `${ox - long},${oy - long * 0.42}`
+  return (
+    <svg viewBox="0 0 350 240" className="h-full w-full" aria-hidden>
+      <ellipse cx="170" cy="178" rx="130" ry="35" fill="#d3d8c6" />
+      <g fill="none" stroke="#7b8874" strokeWidth="2" strokeLinejoin="round">
+        <polygon points={`${a} ${b} ${c} ${d}`} fill="#e8ebdf" />
+        {stage >= 1 ? [0, 0.33, 0.66, 1].map((t) => (
+          <path key={t} d={`M${ox + front * t},${oy - front * t * 0.4}v13 M${ox - long + front * t},${oy - long * 0.42 - front * t * 0.4}v13`} strokeWidth="4" />
+        )) : null}
+        {stage >= 2 ? (
+          <g stroke="#b98c59">
+            <polygon points={`${a} ${b} ${ox + front},${oy - front * 0.4 - 65} ${ox},${oy - 65}`} fill={stage >= 4 ? input.facade === 'painted' ? '#687e67' : '#ceac80' : 'none'} />
+            <polygon points={`${a} ${d} ${ox - long},${oy - long * 0.42 - 65} ${ox},${oy - 65}`} fill={stage >= 4 ? '#b69d7a' : 'none'} />
+            {[0, 0.2, 0.4, 0.6, 0.8, 1].map((t) => <path key={t} d={`M${ox + front * t},${oy - front * t * 0.4}v-65 M${ox - long * t},${oy - long * t * 0.42}v-65`} />)}
+            <polygon points={`${ox},${oy - 65} ${ox + front / 2},${oy - front * 0.2 - 104} ${ox + front / 2 - long},${oy - front * 0.2 - long * 0.42 - 104} ${ox - long},${oy - long * 0.42 - 65}`} fill={stage >= 3 ? input.roof === 'ondulin' ? '#795246' : '#586263' : 'none'} />
+            <path d={`M${ox + front / 2},${oy - front * 0.2 - 104}L${ox + front},${oy - front * 0.4 - 65}`} />
+          </g>
+        ) : null}
+      </g>
+    </svg>
+  )
+}
+
+export function HouseVisual({ input, step, alt, className }: {
+  input: ConstructorInput; step: StepId; alt: string; className?: string
+}) {
+  const hostRef = useRef<HTMLDivElement>(null)
+  const viewerRef = useRef<HouseViewer | null>(null)
+  const latest = useRef({ input, step })
+  const [status, setStatus] = useState<'loading' | 'ready' | 'unsupported'>('loading')
+  const [attempt, setAttempt] = useState(0)
+
+  useEffect(() => {
+    latest.current = { input, step }
+    viewerRef.current?.update(input, step)
+  }, [input, step])
+
+  useEffect(() => {
+    let cancelled = false
+    let viewer: HouseViewer | undefined
+    const fail = () => {
+      if (cancelled) return
+      viewer?.dispose()
+      viewerRef.current = null
+      setStatus('unsupported')
+    }
+    import('./house-renderer').then(({ createHouseViewer }) => {
+      if (cancelled || !hostRef.current) return
+      try {
+        viewer = createHouseViewer(hostRef.current, fail)
+        viewer.update(latest.current.input, latest.current.step)
+        viewerRef.current = viewer
+        setStatus('ready')
+      } catch { fail() }
+    }).catch(fail)
+    return () => { cancelled = true; viewer?.dispose(); viewerRef.current = null }
+  }, [attempt])
+
+  const isReady = status === 'ready'
+  const dimensions = houseDimensions(input.size)
 
   return (
-    <figure className={cn('relative overflow-hidden rounded-xl bg-white shadow-card', className)}>
-      <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:h-full">
-        {under && under !== src ? (
-          <Image
-            src={under}
-            alt=""
-            aria-hidden
-            width={1600}
-            height={1200}
-            quality={QUALITY}
-            sizes={SIZES}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+    <figure className={cn('house-visual', className)} aria-label="Визуализация вашего дома">
+      <div className="house-visual-stage">
+        <div ref={hostRef} className="house-visual-canvas" role="img" aria-label={alt} />
+        {status !== 'ready' ? (
+          <div className="house-visual-fallback">
+            {status === 'unsupported' ? <HouseSketch input={input} step={step} /> : null}
+            <div className="house-visual-load" role="status">
+              {status === 'loading' ? <div className="house-brand-loader" aria-label="Загрузка модели"><Image src="/brand/logo-full-moss.png" alt="Деревяга" width={220} height={90} priority /><span className="house-brand-loader-track"><span /></span></div> : (
+                <>
+                  <span>3D недоступно в этом браузере. Расчёт работает.</span>
+                  <button type="button" className="link-underline" onClick={() => { setStatus('loading'); setAttempt((n) => n + 1) }}>Попробовать снова</button>
+                </>
+              )}
+            </div>
+          </div>
         ) : null}
-        <Image
-          key={src}
-          src={src}
-          alt={alt}
-          width={1600}
-          height={1200}
-          priority
-          quality={QUALITY}
-          sizes={SIZES}
-          onLoad={() => setFrames((prev) => ({ loaded: src, under: prev.loaded }))}
-          className={cn(
-            'absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-out',
-            frames.loaded !== null && !ready && 'opacity-0',
-          )}
-        />
+        <div className="house-visual-topline">
+          <span className="house-visual-title">Дом {dimensions.width}×{dimensions.depth}{input.size === 'custom' ? ' · пример' : ''}</span>
+        </div>
+        <div className="house-visual-controls">
+          <div className="house-visual-tools">
+            <ViewButton label="Повторить сборку" onClick={() => viewerRef.current?.replay()} disabled={!isReady || stageForStep(step) === 0}>↻</ViewButton>
+            <ViewButton label="Отдалить дом" onClick={() => viewerRef.current?.zoom(-1)} disabled={!isReady}>−</ViewButton>
+            <ViewButton label="Приблизить дом" onClick={() => viewerRef.current?.zoom(1)} disabled={!isReady}>+</ViewButton>
+            <ViewButton label="Вернуть исходный ракурс" onClick={() => viewerRef.current?.reset()} disabled={!isReady}>
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden><path d="M4 8a6 6 0 1 1 0 5M4 3v5h5" /></svg>
+            </ViewButton>
+          </div>
+        </div>
       </div>
-
-      <figcaption className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-full bg-white/92 px-4 py-2.5 text-[13px] leading-snug shadow-card backdrop-blur md:inset-x-4 md:bottom-4 md:text-[13.5px]">
-        <span className="min-w-0 text-ink">{caption}</span>
-        <span className="num shrink-0 text-[12px] text-ink-soft">
-          {stepIndex + 1}/{stepsTotal}
-        </span>
-      </figcaption>
-
-      {/* Предзагрузка кадров следующего шага — после загрузки текущего */}
-      {frames.loaded
-        ? prefetch
-            .filter((item) => item !== src)
-            .map((item) => (
-              <Image
-                key={item}
-                src={item}
-                alt=""
-                width={1600}
-                height={1200}
-                loading="eager"
-                quality={QUALITY}
-                sizes={SIZES}
-                className="hidden"
-              />
-            ))
-        : null}
     </figure>
   )
 }
