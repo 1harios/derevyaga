@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { FaTelegram, FaWhatsapp } from 'react-icons/fa6'
+import { FaTelegram, FaVk, FaWhatsapp } from 'react-icons/fa6'
 import { LuArrowUp, LuMessageCircleMore, LuPhone, LuX } from 'react-icons/lu'
 import Image from 'next/image'
 import { telHref } from '@/lib/utils'
@@ -29,10 +29,58 @@ export function AmoChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
+  const [showHelp, setShowHelp] = useState(false)
+  const audioRef = useRef<AudioContext | null>(null)
+  const lastSoundRef = useRef(0)
   // При прокрутке освобождаем место под кнопку возврата наверх.
   const [showTop, setShowTop] = useState(false)
   const launcherRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    // Browsers allow notification audio only after a visitor interaction.
+    const unlock = () => {
+      try {
+        audioRef.current ??= new AudioContext()
+        if (audioRef.current.state === 'suspended') void audioRef.current.resume().catch(() => {})
+      } catch { /* Audio is optional; visual notifications remain available. */ }
+    }
+    document.addEventListener('pointerdown', unlock)
+    document.addEventListener('keydown', unlock)
+    return () => {
+      document.removeEventListener('pointerdown', unlock)
+      document.removeEventListener('keydown', unlock)
+      void audioRef.current?.close().catch(() => {})
+      audioRef.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('contact-menu-open', isOpen)
+    return () => document.documentElement.classList.remove('contact-menu-open')
+  }, [isOpen])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('contact-has-unread', unreadCount > 0)
+    return () => document.documentElement.classList.remove('contact-has-unread')
+  }, [unreadCount])
+
+  useEffect(() => {
+    if (!isReady) return
+    let elapsed = 0
+    const timer = window.setInterval(() => {
+      let seen = false
+      try { seen = sessionStorage.getItem('derevyaga.chat-help-seen') === '1' } catch {}
+      if (seen) { window.clearInterval(timer); return }
+      if (document.hidden || isChatOpen || isOpen || unreadCount > 0 || !launcherRef.current?.getClientRects().length) return
+      elapsed += 1
+      if (elapsed < 40) return
+      setShowHelp(true)
+      try { sessionStorage.setItem('derevyaga.chat-help-seen', '1') } catch {}
+      window.clearInterval(timer)
+    }, 1000)
+    return () => window.clearInterval(timer)
+  }, [isReady, isChatOpen, isOpen, unreadCount])
 
   useEffect(() => {
     const onScroll = () => {
@@ -100,6 +148,8 @@ export function AmoChatWidget() {
       window.amoSocialButton?.('onChatShow', () => {
         setIsOpen(false)
         setIsChatOpen(true)
+        setShowHelp(false)
+        try { sessionStorage.setItem('derevyaga.chat-help-seen', '1') } catch {}
       })
       window.amoSocialButton?.('onChatHide', () => setIsChatOpen(false))
     }
@@ -141,7 +191,32 @@ export function AmoChatWidget() {
     if (!isReady) return
     const badge = document.querySelector('.amo-button-greeting-badge')
     if (!badge) return
-    const syncUnread = () => setUnreadCount(Number.parseInt(badge.textContent || '0', 10) || 0)
+    let previous = Number.parseInt(badge.textContent || '0', 10) || 0
+    const syncUnread = () => {
+      const next = Number.parseInt(badge.textContent || '0', 10) || 0
+      setUnreadCount(next)
+      if (next > previous) {
+        setShowHelp(false)
+        const audio = audioRef.current
+        if (!document.querySelector('.amo-livechat_chat') && audio?.state === 'running' && Date.now() - lastSoundRef.current > 3000) {
+          lastSoundRef.current = Date.now()
+          const tone = audio.createOscillator()
+          const volume = audio.createGain()
+          tone.type = 'sine'
+          tone.frequency.setValueAtTime(660, audio.currentTime)
+          tone.frequency.setValueAtTime(880, audio.currentTime + .12)
+          volume.gain.setValueAtTime(0, audio.currentTime)
+          volume.gain.linearRampToValueAtTime(.075, audio.currentTime + .025)
+          volume.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .35)
+          tone.connect(volume)
+          volume.connect(audio.destination)
+          tone.start()
+          tone.stop(audio.currentTime + .36)
+          tone.onended = () => { tone.disconnect(); volume.disconnect() }
+        }
+      }
+      previous = next
+    }
     syncUnread()
     const observer = new MutationObserver(syncUnread)
     observer.observe(badge, { childList: true, characterData: true, subtree: true })
@@ -177,14 +252,21 @@ export function AmoChatWidget() {
   return (
     <div ref={launcherRef} className={`${styles.launcher} ${showTop ? styles.scrolled : ''} ${isChatOpen ? styles.chatOpen : ''}`} data-contact-launcher>
       <div className={styles.controls}>
+        {showHelp && !isChatOpen && !isOpen && unreadCount === 0 && <aside className={styles.help} aria-label="Помощь с выбором дома">
+          <button className={styles.helpClose} type="button" aria-label="Скрыть предложение помощи" onClick={() => setShowHelp(false)}><LuX aria-hidden /></button>
+          <p>Помочь с выбором дома?</p>
+          <span>Напишите в чат — обсудим проект, планировку и стоимость.</span>
+          <button type="button" className={styles.helpAction} onClick={openOnlineChat}>Задать вопрос</button>
+        </aside>}
         <div id="contact-launcher-menu" className={`${styles.menu} ${isOpen ? styles.open : ''}`} inert={!isOpen} aria-hidden={!isOpen}>
-          {isReady && <button type="button" className={styles.circle} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden /></button>}
-          <a className={styles.circle} href={company.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" title="MAX" onClick={() => track('messenger_click', { service: 'max' })}><Image src="/brand/max-white.svg" alt="" width={26} height={26} /></a>
-          <a className={styles.circle} href={company.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp" title="WhatsApp" onClick={() => track('messenger_click', { service: 'whatsapp' })}><FaWhatsapp aria-hidden /></a>
-          <a className={styles.circle} href={company.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" title="Telegram" onClick={() => track('messenger_click', { service: 'telegram' })}><FaTelegram aria-hidden /></a>
+          {isReady && <button type="button" className={`${styles.circle} ${unreadCount > 0 ? styles.unread : ''}`} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden />{unreadCount > 0 && <span className={styles.chatDot} aria-label="Есть новые сообщения" />}</button>}
           <a className={styles.circle} href={telHref(company.phone)} aria-label="Позвонить в Деревягу" title="Позвонить" onClick={() => track('phone_click', { place: 'contact-launcher' })}><LuPhone aria-hidden /></a>
+          <a className={styles.circle} href={company.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" title="Telegram" onClick={() => track('messenger_click', { service: 'telegram' })}><FaTelegram aria-hidden /></a>
+          <a className={styles.circle} href={company.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" title="MAX" onClick={() => track('messenger_click', { service: 'max' })}><Image src="/brand/max-white.svg" alt="" width={26} height={26} /></a>
+          <a className={styles.circle} href={company.vk} target="_blank" rel="noopener noreferrer" aria-label="Написать в ВК" title="ВКонтакте" onClick={() => track('messenger_click', { service: 'vk' })}><FaVk aria-hidden /></a>
+          <a className={styles.circle} href={company.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp" title="WhatsApp" onClick={() => track('messenger_click', { service: 'whatsapp' })}><FaWhatsapp aria-hidden /></a>
         </div>
-        <button ref={triggerRef} type="button" className={`${styles.circle} ${isOpen || isChatOpen ? styles.light : ''}`} aria-label={isChatOpen ? 'Закрыть онлайн-чат' : isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'} aria-expanded={isOpen} aria-controls="contact-launcher-menu" onClick={() => {
+        <button ref={triggerRef} type="button" className={`${styles.circle} ${isOpen || isChatOpen ? styles.light : ''} ${!isChatOpen && unreadCount > 0 ? styles.unread : ''}`} aria-label={isChatOpen ? 'Закрыть онлайн-чат' : isOpen ? 'Закрыть способы связи' : 'Открыть способы связи'} aria-expanded={isOpen} aria-controls="contact-launcher-menu" onClick={() => {
           if (isChatOpen) { closeOnlineChat(); return }
           setIsOpen(open => !open)
         }}>

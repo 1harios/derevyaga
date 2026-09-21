@@ -1348,11 +1348,27 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
   animation: none !important;
 }
 
-/* The iframe owns its header. Unread counts live on our launcher, so the
- * vendor's floating greeting and badge must not cover the site controls. */
-.contact-launcher-ready .amo-livechat_bubble,
+/* Keep the vendor message preview beside our controls, never over them. */
+.contact-launcher-ready #amo-livechat.amo-livechat_bubble {
+  right: 100px !important;
+  bottom: 94px !important;
+  top: auto !important;
+  left: auto !important;
+  max-width: min(320px, calc(100vw - 124px)) !important;
+  pointer-events: auto !important;
+}
+.contact-menu-open #amo-livechat.amo-livechat_bubble,
+.contact-launcher-ready:not(.contact-has-unread) #amo-livechat.amo-livechat_bubble,
 .contact-launcher-ready .amo-button-greeting-badge {
   display: none !important;
+}
+@media (max-width: 1023px) {
+  .contact-launcher-ready #amo-livechat.amo-livechat_bubble {
+    right: 12px !important;
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+  html:not(.sticky-cta-visible) #amo-livechat.amo-livechat_bubble { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
