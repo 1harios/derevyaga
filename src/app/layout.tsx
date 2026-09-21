@@ -17,11 +17,11 @@ const isPreviewDomain = new URL(siteUrl).hostname.endsWith('.vercel.app')
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Деревяга — каркасные дома под ключ в Санкт-Петербурге и Ленобласти',
+    default: 'Деревяга — каркасные дома для жизни',
     template: '%s — Деревяга',
   },
   description:
-    'Строим каркасные дома под ключ за 94 дня. Фиксированная цена в договоре, гарантия 5 лет, личный кабинет с фотоотчётами. Расчёт сметы за 2 дня.',
+    'Строим в Санкт-Петербурге и Ленинградской области. Поможем выбрать проект под ваш участок, согласуем комплектацию, стоимость и сроки.',
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
