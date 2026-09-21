@@ -29,6 +29,8 @@ export function AmoChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
+  const [previewVisible, setPreviewVisible] = useState(false)
+  const [previewText, setPreviewText] = useState('')
   const readCountRef = useRef(0)
   const chatOpenRef = useRef(false)
   const [showHelp, setShowHelp] = useState(false)
@@ -38,6 +40,24 @@ export function AmoChatWidget() {
   const [showTop, setShowTop] = useState(false)
   const launcherRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    // The SDK exposes conversation summaries without accessing iframe DOM.
+    const receive = (event: MessageEvent) => {
+      const frame = document.querySelector<HTMLIFrameElement>('#amo-livechat iframe')
+      if (!frame || event.source !== frame.contentWindow || event.origin !== new URL(frame.src).origin) return
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
+        if (!['conversations:received', 'conversations:update'].includes(data?.method) || !Array.isArray(data.payload)) return
+        const latest = data.payload.map((item: { last_message?: { text?: unknown; created_at?: number } }) => item.last_message)
+          .filter((message: { text?: unknown } | undefined) => typeof message?.text === 'string')
+          .sort((a: { created_at?: number }, b: { created_at?: number }) => (b.created_at || 0) - (a.created_at || 0))[0]
+        if (latest) setPreviewText(latest.text.slice(0, 500))
+      } catch { /* Unsupported widget payloads keep the neutral notification. */ }
+    }
+    window.addEventListener('message', receive)
+    return () => window.removeEventListener('message', receive)
+  }, [])
 
   useEffect(() => {
     // Browsers allow notification audio only after a visitor interaction.
@@ -64,10 +84,11 @@ export function AmoChatWidget() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('contact-has-unread', unreadCount > 0)
-    document.documentElement.classList.toggle('contact-preview-visible', unreadCount > 0)
-    const timer = window.setTimeout(() => document.documentElement.classList.remove('contact-preview-visible'), 8000)
+    const showTimer = window.setTimeout(() => setPreviewVisible(unreadCount > 0), 0)
+    const timer = window.setTimeout(() => setPreviewVisible(false), 8000)
     return () => {
       window.clearTimeout(timer)
+      window.clearTimeout(showTimer)
       document.documentElement.classList.remove('contact-has-unread', 'contact-preview-visible')
     }
   }, [unreadCount])
@@ -273,6 +294,12 @@ export function AmoChatWidget() {
   return (
     <div ref={launcherRef} className={`${styles.launcher} ${showTop ? styles.scrolled : ''} ${isChatOpen ? styles.chatOpen : ''}`} data-contact-launcher>
       <div className={styles.controls}>
+        <aside className={`${styles.notification} ${previewVisible && unreadCount > 0 && !isOpen && !isChatOpen ? styles.notificationVisible : ''}`} inert={!previewVisible || unreadCount === 0 || isOpen || isChatOpen} aria-hidden={!previewVisible || unreadCount === 0 || isOpen || isChatOpen} aria-label="Новое сообщение в чате">
+          <button type="button" className={styles.helpClose} aria-label="Скрыть уведомление" onClick={() => setPreviewVisible(false)}><LuX aria-hidden /></button>
+          <div className={styles.notificationTitle}><LuMessageCircleMore aria-hidden /><strong>Вам ответили в чате</strong></div>
+          <p>{previewText || 'Новое сообщение от команды Деревяги. Откройте чат, чтобы прочитать ответ.'}</p>
+          <button type="button" className={styles.notificationAction} onClick={openOnlineChat}>Открыть чат <span aria-hidden>↗</span></button>
+        </aside>
         {showHelp && !isChatOpen && !isOpen && unreadCount === 0 && <aside className={styles.help} aria-label="Помощь с выбором дома">
           <button className={styles.helpClose} type="button" aria-label="Скрыть предложение помощи" onClick={() => setShowHelp(false)}><LuX aria-hidden /></button>
           <p>Помочь с выбором дома?</p>

@@ -9,6 +9,14 @@
   height: var(--size);
 }
 .controls { position: relative; transition: transform .28s ease; }
+.notification { position: absolute; right: 0; bottom: calc(var(--size) + 14px); width: min(312px, calc(100vw - 48px)); padding: 20px; border: 1px solid #dee4dc; border-radius: 20px; background: #fafbf8; color: #1e2521; box-shadow: 0 8px 28px #1e25211a; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease, visibility .35s; pointer-events: none; }
+.notificationVisible { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+.notificationTitle { display: flex; align-items: center; gap: 9px; padding-right: 20px; font-size: 14px; line-height: 1.4; }
+.notificationTitle svg { width: 20px; height: 20px; flex-shrink: 0; color: #4e6254; }
+.notificationTitle strong { font-weight: 600; }
+.notification p { margin-top: 10px; color: #607066; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.notificationAction { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 16px; padding: 11px 16px; border-radius: 999px; background: #4e6254; color: #fff; font-size: 13px; font-weight: 500; }
+.notificationAction:focus-visible { outline: 2px solid #4e6254; outline-offset: 3px; }
 .scrolled .controls { transform: translateY(calc(-1 * var(--step))); }
 .circle {
   position: relative;
@@ -73,6 +81,7 @@
   .top { display: none; }
   .circle svg { width: 23px; height: 23px; }
   .help { right: 0; bottom: calc(var(--size) + 12px); width: min(300px, calc(100vw - 24px)); }
+  .notification { width: min(312px, calc(100vw - 24px)); padding: 18px; }
 }
 @media (max-width: 639px) {
   :global(html:has([data-cookie-banner])) .launcher { display: none; }
@@ -95,4 +104,5 @@
 @media (prefers-reduced-motion: reduce) {
   :global(html.sticky-cta-visible) .launcher { animation: none; }
   .controls, .circle, .menu { transition: none; }
+  .notification { transition: none; }
 }

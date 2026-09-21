@@ -1348,55 +1348,10 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
   animation: none !important;
 }
 
-/* Keep the vendor message preview beside our controls, never over them. */
-.contact-launcher-ready #amo-livechat.amo-livechat_bubble {
-  right: 24px !important;
-  bottom: calc(96px + env(safe-area-inset-bottom)) !important;
-  top: auto !important;
-  left: auto !important;
-  max-width: min(320px, calc(100vw - 48px)) !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transition: opacity .4s ease, visibility .4s ease !important;
-}
-.contact-scrolled #amo-livechat.amo-livechat_bubble {
-  bottom: calc(166px + env(safe-area-inset-bottom)) !important;
-}
-.contact-preview-visible.contact-has-unread:not(.contact-menu-open) #amo-livechat.amo-livechat_bubble {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-}
-.contact-menu-open #amo-livechat.amo-livechat_bubble,
-.contact-launcher-ready .amo-button-greeting-badge {
-  display: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  .contact-launcher-ready #amo-livechat.amo-livechat_bubble { transition: none !important; }
-}
-@media (max-width: 1023px) {
-  .contact-launcher-ready #amo-livechat.amo-livechat_bubble {
-    right: 12px !important;
-    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
-    max-width: calc(100vw - 24px) !important;
-  }
-  html:not(.sticky-cta-visible) #amo-livechat.amo-livechat_bubble { display: none !important; }
-}
+/* Notifications are rendered by our accessible site card. */
+.contact-launcher-ready #amo-livechat.amo-livechat_bubble,
+.contact-launcher-ready .amo-button-greeting-badge { display: none !important; }
 
-@media (prefers-reduced-motion: reduce) {
-  .contact-launcher,
-  .contact-launcher__trigger,
-  .contact-launcher__menu,
-  .contact-launcher__option {
-    transition: none;
-  }
-
-  .contact-launcher__trigger::before {
-    animation: none;
-    opacity: 0;
-  }
-}
 
 
 /* ── Кастомный скроллбар в духе дизайн-системы ─────────────────────
