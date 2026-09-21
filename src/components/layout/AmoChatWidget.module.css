@@ -48,7 +48,8 @@
 .open { opacity: 1; visibility: visible; transform: translateY(0); }
 .top { position: absolute; bottom: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px); }
 .scrolled .top { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
-.chatOpen { z-index: 10001; }
+/* amoCRM hides body siblings on phones; keep our close control available. */
+.launcher.chatOpen { display: block !important; z-index: 10001; }
 .chatOpen .top { visibility: hidden; pointer-events: none; }
 @media (max-width: 1023px) {
   .launcher { --size: 52px; --step: 62px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
