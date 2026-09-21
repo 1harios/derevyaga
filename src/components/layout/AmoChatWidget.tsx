@@ -163,7 +163,7 @@ export function AmoChatWidget() {
   }
 
   return (
-    <div ref={launcherRef} className={`${styles.launcher} ${showTop ? styles.scrolled : ''}`} data-contact-launcher>
+    <div ref={launcherRef} className={`${styles.launcher} ${showTop ? styles.scrolled : ''} ${isChatOpen ? styles.chatOpen : ''}`} data-contact-launcher>
       <div className={styles.controls}>
         <div id="contact-launcher-menu" className={`${styles.menu} ${isOpen ? styles.open : ''}`} inert={!isOpen} aria-hidden={!isOpen}>
           {isReady && <button type="button" className={styles.circle} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden /></button>}

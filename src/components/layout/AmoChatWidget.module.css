@@ -48,17 +48,31 @@
 .open { opacity: 1; visibility: visible; transform: translateY(0); }
 .top { position: absolute; bottom: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px); }
 .scrolled .top { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+.chatOpen { z-index: 10001; }
+.chatOpen .top { visibility: hidden; pointer-events: none; }
 @media (max-width: 1023px) {
   .launcher { --size: 52px; --step: 62px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
   .launcher { display: none; }
   :global(html.sticky-cta-visible) .launcher { display: block; animation: mobile-launcher-in .2s ease-out; }
   :global(body:has(#constructor)) .launcher { display: none; }
+  .launcher.chatOpen { display: block; animation: none; }
   .scrolled .controls { transform: none; }
   .top { display: none; }
   .circle svg { width: 23px; height: 23px; }
 }
 @media (max-width: 639px) {
   :global(html:has([data-cookie-banner])) .launcher { display: none; }
+}
+@media (max-width: 640px) {
+  .launcher.chatOpen {
+    display: block;
+    top: calc(4px + env(safe-area-inset-top));
+    right: 8px;
+    bottom: auto;
+    --size: 44px;
+  }
+  .chatOpen .controls { transform: none; }
+  .chatOpen .circle { background: #1e2521; color: #fff; box-shadow: none; }
 }
 @keyframes mobile-launcher-in {
   from { transform: translateY(140%); }

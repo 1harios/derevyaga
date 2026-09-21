@@ -960,6 +960,7 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
  * из кода вырезает AmoChatWidget.
  */
 .amo-button-holder {
+  pointer-events: none !important;
   position: fixed !important;
   top: auto !important;
   left: auto !important;
@@ -974,6 +975,8 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
 }
 
 .amo-button-holder > .amo-button.amo-button {
+  opacity: 0 !important;
+  visibility: hidden !important;
   border-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
