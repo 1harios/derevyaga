@@ -974,9 +974,7 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
   pointer-events: none !important;
 }
 
-.amo-button-holder > .amo-button.amo-button {
-  opacity: 0 !important;
-  visibility: hidden !important;
+.amo-button-holder > #amobutton.amo-button {
   border-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
