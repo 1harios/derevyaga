@@ -11,6 +11,7 @@
 .controls { position: relative; transition: transform .28s ease; }
 .scrolled .controls { transform: translateY(calc(-1 * var(--step))); }
 .circle {
+  position: relative;
   width: var(--size);
   height: var(--size);
   display: flex;
@@ -26,6 +27,7 @@
   transition: background .2s, transform .2s, opacity .25s;
 }
 .circle svg { width: 25px; height: 25px; }
+.badge { position: absolute; top: -3px; right: -3px; min-width: 22px; height: 22px; padding-inline: 4px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 999px; background: #cf4949; color: #fff; font-size: 11px; font-weight: 600; line-height: 1; pointer-events: none; }
 .circle:hover { background: var(--color-brand-deep); transform: translateY(-2px); }
 .circle:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
 .light { background: #edf0eb; color: var(--color-brand); }
@@ -50,6 +52,7 @@
 .scrolled .top { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
 /* amoCRM hides body siblings on phones; keep our close control available. */
 .launcher.chatOpen { display: block !important; z-index: 10001; }
+.chatOpen .controls { transform: none; }
 .chatOpen .top { visibility: hidden; pointer-events: none; }
 @media (max-width: 1023px) {
   .launcher { --size: 52px; --step: 62px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }

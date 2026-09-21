@@ -28,6 +28,7 @@ export function AmoChatWidget() {
   const [isReady, setIsReady] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [unreadCount, setUnreadCount] = useState(0)
   // При прокрутке освобождаем место под кнопку возврата наверх.
   const [showTop, setShowTop] = useState(false)
   const launcherRef = useRef<HTMLDivElement>(null)
@@ -136,6 +137,17 @@ export function AmoChatWidget() {
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isReady) return
+    const badge = document.querySelector('.amo-button-greeting-badge')
+    if (!badge) return
+    const syncUnread = () => setUnreadCount(Number.parseInt(badge.textContent || '0', 10) || 0)
+    syncUnread()
+    const observer = new MutationObserver(syncUnread)
+    observer.observe(badge, { childList: true, characterData: true, subtree: true })
+    return () => observer.disconnect()
+  }, [isReady])
+
   const openOnlineChat = () => {
     setIsOpen(false)
     track('chat_open')
@@ -177,6 +189,7 @@ export function AmoChatWidget() {
           setIsOpen(open => !open)
         }}>
           {isOpen || isChatOpen ? <LuX aria-hidden /> : <LuMessageCircleMore aria-hidden />}
+          {!isChatOpen && unreadCount > 0 && <span className={styles.badge} role="status" aria-label={`Непрочитанных сообщений: ${unreadCount}`}>{unreadCount > 99 ? '99+' : unreadCount}</span>}
         </button>
       </div>
       <button type="button" className={`${styles.circle} ${styles.light} ${styles.top}`} aria-label="Наверх страницы" aria-hidden={!showTop} tabIndex={showTop ? 0 : -1} onClick={() => {

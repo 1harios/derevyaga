@@ -1348,26 +1348,11 @@ body:has(#constructor) .mobile-lead-cta { display: none; }
   animation: none !important;
 }
 
-/* Заголовок окна чата. Шапку рисует amo внутри iframe и текст в неё
- * не передаётся — накладываем свой поверх (клики сквозь него проходят).
- * Показывается только при открытом окне (класс _chat). */
-.amo-livechat.amo-livechat_chat::before {
-  content: 'Онлайн-чат Деревяги';
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  padding: 0 56px 0 20px;
-  pointer-events: none;
-  color: #fff;
-  font-family: 'Manrope', 'Inter', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+/* The iframe owns its header. Unread counts live on our launcher, so the
+ * vendor's floating greeting and badge must not cover the site controls. */
+.contact-launcher-ready .amo-livechat_bubble,
+.contact-launcher-ready .amo-button-greeting-badge {
+  display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
