@@ -29,6 +29,8 @@ export function AmoChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
+  const readCountRef = useRef(0)
+  const chatOpenRef = useRef(false)
   const [showHelp, setShowHelp] = useState(false)
   const audioRef = useRef<AudioContext | null>(null)
   const lastSoundRef = useRef(0)
@@ -62,8 +64,18 @@ export function AmoChatWidget() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('contact-has-unread', unreadCount > 0)
-    return () => document.documentElement.classList.remove('contact-has-unread')
+    document.documentElement.classList.toggle('contact-preview-visible', unreadCount > 0)
+    const timer = window.setTimeout(() => document.documentElement.classList.remove('contact-preview-visible'), 8000)
+    return () => {
+      window.clearTimeout(timer)
+      document.documentElement.classList.remove('contact-has-unread', 'contact-preview-visible')
+    }
   }, [unreadCount])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('contact-scrolled', showTop)
+    return () => document.documentElement.classList.remove('contact-scrolled')
+  }, [showTop])
 
   useEffect(() => {
     if (!isReady) return
@@ -146,12 +158,18 @@ export function AmoChatWidget() {
 
       window.amoSocialButton?.('onChatReady', () => setIsReady(true))
       window.amoSocialButton?.('onChatShow', () => {
+        chatOpenRef.current = true
+        readCountRef.current = Number.parseInt(document.querySelector('.amo-button-greeting-badge')?.textContent || '0', 10) || 0
+        setUnreadCount(0)
         setIsOpen(false)
         setIsChatOpen(true)
         setShowHelp(false)
         try { sessionStorage.setItem('derevyaga.chat-help-seen', '1') } catch {}
       })
-      window.amoSocialButton?.('onChatHide', () => setIsChatOpen(false))
+      window.amoSocialButton?.('onChatHide', () => {
+        chatOpenRef.current = false
+        setIsChatOpen(false)
+      })
     }
 
     const onConsent = (event: Event) => {
@@ -194,8 +212,11 @@ export function AmoChatWidget() {
     let previous = Number.parseInt(badge.textContent || '0', 10) || 0
     const syncUnread = () => {
       const next = Number.parseInt(badge.textContent || '0', 10) || 0
-      setUnreadCount(next)
-      if (next > previous) {
+      // amoCRM can retain its old badge count after a conversation is read.
+      // Acknowledge that count locally, but allow later increments to notify.
+      readCountRef.current = chatOpenRef.current ? next : Math.min(readCountRef.current, next)
+      setUnreadCount(chatOpenRef.current ? 0 : Math.max(0, next - readCountRef.current))
+      if (next > previous && !chatOpenRef.current) {
         setShowHelp(false)
         const audio = audioRef.current
         if (!document.querySelector('.amo-livechat_chat') && audio?.state === 'running' && Date.now() - lastSoundRef.current > 3000) {
