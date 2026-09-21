@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
+import { LuMenu } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 import { company, cta } from '@/content/company'
 import { mainNav, secondaryNav } from '@/content/nav'
@@ -18,7 +19,7 @@ const getServerSnapshot = () => false
  * внутри первого экрана и в плавающей шапке при прокрутке — у каждой свой
  * экземпляр со своим состоянием, поэтому лишних связей между ними нет.
  */
-export function MobileNav({ className }: { className?: string }) {
+export function MobileNav({ className, plain = false }: { className?: string; plain?: boolean }) {
   const [open, setOpen] = useState(false)
   const canUsePortal = useSyncExternalStore(
     subscribeToHydration,
@@ -83,13 +84,9 @@ export function MobileNav({ className }: { className?: string }) {
         aria-label="Открыть меню"
         aria-expanded={open}
         aria-controls={dialogId}
-        className={cn('icon-btn icon-btn--dark size-11', className)}
+        className={cn(plain ? 'inline-flex size-11 shrink-0 items-center justify-center bg-transparent transition-opacity hover:opacity-70' : 'icon-btn icon-btn--dark size-11', className)}
       >
-        <span aria-hidden className="relative block h-2.5 w-4">
-          <span className="absolute inset-x-0 top-0 h-px bg-current" />
-          <span className="absolute inset-x-0 top-1/2 h-px bg-current" />
-          <span className="absolute inset-x-0 bottom-0 h-px bg-current" />
-        </span>
+        <LuMenu className="size-5" aria-hidden />
       </button>
 
       {canUsePortal

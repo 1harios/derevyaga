@@ -1,7 +1,8 @@
 .card { position:relative; isolation:isolate; display:grid; grid-template-columns:minmax(0,1fr) minmax(350px,420px); gap:32px 48px; padding:44px 44px 0; border-radius:28px; background:#202d25; overflow:hidden; }
-.backdrop { position:absolute; z-index:-2; inset:0; pointer-events:none; background:#26372c url('/video/callback-construction-v1.webp') center/cover no-repeat; }
+.backdrop { position:absolute; z-index:0; isolation:isolate; contain:paint; transform:translateZ(0); overflow:hidden; border-radius:inherit; inset:0; pointer-events:none; background:#26372c url('/video/callback-construction-v2.webp') center/cover no-repeat; }
 .video { width:100%; height:100%; object-fit:cover; object-position:center; }
-.backdrop::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(15,28,20,.83),rgba(15,28,20,.25) 65%,rgba(15,28,20,.3)),linear-gradient(0deg,rgba(15,28,20,.85),transparent 48%); }
+.backdrop::after { content:''; position:absolute; z-index:1; inset:0; background:linear-gradient(90deg,rgba(15,28,20,.83),rgba(15,28,20,.25) 65%,rgba(15,28,20,.3)),linear-gradient(0deg,rgba(15,28,20,.85),transparent 48%); }
+.story,.content,.social { position:relative; z-index:1; }
 .story { display:flex; flex-direction:column; justify-content:center; min-width:0; padding:32px 0; min-height:560px; color:#fff; }
 .intro { max-width:520px; }
 .intro h2 { max-width:520px; text-wrap:balance; font-size:clamp(36px,3.8vw,56px); line-height:1.09; letter-spacing:-.045em; color:#fff; }
@@ -31,8 +32,18 @@
 .social nav { margin-top:0; flex-shrink:0; }
 .social nav a { width:42px; height:42px; background:#20352880; }
 @media(max-width:1199px) and (min-width:901px) { .card { gap:24px; padding:30px 28px 0; grid-template-columns:minmax(0,1fr) minmax(310px,360px); } .content { padding:24px; } .intro h2 { font-size:38px; } .social nav a { width:36px; height:36px; } .social p { max-width:250px; } }
-@media(max-width:900px) { .card { grid-template-columns:1fr; padding:0 24px; gap:0; } .backdrop { bottom:auto; height:520px; } .backdrop::after { background:linear-gradient(0deg,#202d25 0%,#16271ba6 50%,#16271b80); } .story { padding:44px 8px 40px; min-height:0; justify-content:flex-start; } .intro h2 { font-size:44px; max-width:550px; } .intro p { max-width:450px; font-size:14px; margin-top:20px; } .content { width:100%; max-width:560px; justify-self:center; margin:0 0 28px; } .social { flex-direction:column; align-items:flex-start; gap:18px; } }
-@media(max-width:480px) { .card { border-radius:22px; padding-inline:16px; } .story { min-height:0; padding:36px 8px; } .intro h2 { font-size:36px; } .intro p { font-size:14px; line-height:1.65; } .content { padding:26px 20px; border-radius:18px; } .content h3 { font-size:28px; } .hint br { display:none; } .contact a { font-size:18px; } .social { padding:24px 0; } .social nav ul { gap:7px; } .social nav a { width:38px; height:38px; } }
+@media(max-width:900px) {
+  .card { --mobile-inset:24px; grid-template-columns:minmax(0,1fr); padding:0 var(--mobile-inset); gap:0; }
+  .backdrop { position:absolute; inset:0 0 auto; width:100%; margin:0; height:520px; }
+  .backdrop::after { display:block; background:linear-gradient(0deg,#202d25 0%,rgba(22,39,27,.65) 50%,rgba(22,39,27,.4)); }
+  .video { display:block; object-fit:cover; }
+  .story { padding:32px 8px; min-height:0; justify-content:flex-start; }
+  .intro h2 { font-size:44px; max-width:550px; }
+  .intro p { max-width:450px; font-size:14px; margin-top:20px; }
+  .content { width:100%; max-width:560px; justify-self:center; margin:0 0 28px; }
+  .social { flex-direction:column; align-items:flex-start; gap:18px; }
+}
+@media(max-width:480px) { .card { --mobile-inset:16px; border-radius:22px; } .story { min-height:0; padding:28px 8px; } .intro h2 { font-size:36px; } .intro p { font-size:14px; line-height:1.65; } .content { padding:26px 20px; border-radius:18px; } .content h3 { font-size:28px; } .hint br { display:none; } .contact a { font-size:18px; } .social { padding:24px 0; } .social nav ul { gap:7px; } .social nav a { width:38px; height:38px; } }
 
 
 @media(max-width:360px) { .content h3 { font-size:24px; } }

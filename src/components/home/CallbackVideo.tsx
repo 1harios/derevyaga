@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import styles from './FinalCta.module.css'
 
-export function CallbackVideo() {
+export function BackgroundVideo({ className }: { className: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -16,7 +16,9 @@ export function CallbackVideo() {
         video.pause()
       } else {
         if (!video.getAttribute('src')) {
-          video.src = '/video/callback-construction-v1.mp4'
+          video.src = window.matchMedia('(max-width: 900px)').matches
+            ? '/video/callback-construction-v2-mobile.mp4'
+            : '/video/callback-construction-v2.mp4'
           video.load()
         }
         void video.play().catch(() => {})
@@ -37,10 +39,10 @@ export function CallbackVideo() {
     }
   }, [])
 
-  return (
-    <div className={styles.backdrop} aria-hidden="true">
-      <video ref={videoRef} className={styles.video} poster="/video/callback-construction-v1.webp"
-        muted loop playsInline preload="none" tabIndex={-1} />
-    </div>
-  )
+  return <video ref={videoRef} className={className} poster="/video/callback-construction-v2.webp"
+    aria-hidden="true" muted loop playsInline preload="none" tabIndex={-1} />
+}
+
+export function CallbackVideo() {
+  return <div className={styles.backdrop} aria-hidden="true"><BackgroundVideo className={styles.video} /></div>
 }

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { LuUserRound } from 'react-icons/lu'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { company, cta } from '@/content/company'
@@ -41,7 +42,7 @@ export function StickyHeader() {
         }`}
       >
         <div className="shell">
-          <div className="flex items-center justify-between gap-5 rounded-full border border-line bg-white/92 py-2 pl-4 pr-2 shadow-float backdrop-blur-xl md:pl-5">
+          <div className="flex items-center justify-between gap-5 rounded-full border border-line bg-white/92 py-2 pl-4 pr-5 shadow-float backdrop-blur-xl md:pl-5 md:pr-2">
             <Link
               href="/"
               aria-label="Деревяга — на главную"
@@ -77,7 +78,7 @@ export function StickyHeader() {
               </ul>
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 md:gap-3">
               <a
                 href={telHref(company.phone)}
                 onClick={() => track('phone_click', { place: 'sticky-header' })}
@@ -114,7 +115,9 @@ export function StickyHeader() {
               <Button href="/#final-form" size="sm" arrow className="hidden sm:inline-flex">
                 {cta.primary}
               </Button>
-              <MobileNav className="lg:hidden" />
+              <a href="/lk" aria-label="Личный кабинет" className="inline-flex size-11 items-center justify-center text-[#1e2521] md:hidden"><LuUserRound className="size-5" aria-hidden /></a>
+              <MobileNav plain className="text-[#1e2521] md:hidden" />
+              <MobileNav className="hidden md:inline-flex lg:hidden" />
             </div>
           </div>
         </div>
