@@ -37,13 +37,9 @@
 .circle svg { width: 25px; height: 25px; }
 .unread { box-shadow: inset 0 0 0 3px #a7c29d, inset 0 0 14px #a7c29d55; }
 .chatDot { position: absolute; right: 5px; top: 5px; width: 11px; height: 11px; background: #f05b5b; border: 2px solid #fff; border-radius: 50%; }
-.help { position: absolute; right: calc(var(--size) + 16px); bottom: 0; width: min(290px, calc(100vw - var(--size) - 52px)); padding: 20px; border: 1px solid #e2e5df; border-radius: 20px; background: #fff; color: #1e2521; box-shadow: 0 8px 28px #1e25211a; }
-.help p { padding-right: 18px; font-size: 16px; font-weight: 600; }
-.help span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; color: #607066; }
 .helpClose { position: absolute; top: 7px; right: 7px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; }
 .helpClose svg { width: 18px; height: 18px; }
-.helpAction { margin-top: 14px; padding: 10px 16px; border-radius: 999px; background: #4e6254; color: #fff; font-size: 13px; }
-.helpClose:focus-visible, .helpAction:focus-visible { outline: 2px solid #4e6254; outline-offset: 2px; }
+.helpClose:focus-visible { outline: 2px solid #4e6254; outline-offset: 2px; }
 .badge { position: absolute; top: -3px; right: -3px; min-width: 22px; height: 22px; padding-inline: 4px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 999px; background: #cf4949; color: #fff; font-size: 11px; font-weight: 600; line-height: 1; pointer-events: none; }
 .circle:hover { background: var(--color-brand-deep); transform: translateY(-2px); }
 .circle:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
@@ -80,7 +76,6 @@
   .scrolled .controls { transform: none; }
   .top { display: none; }
   .circle svg { width: 23px; height: 23px; }
-  .help { right: 0; bottom: calc(var(--size) + 12px); width: min(300px, calc(100vw - 24px)); }
   .notification { width: min(312px, calc(100vw - 24px)); padding: 18px; }
 }
 @media (max-width: 639px) {

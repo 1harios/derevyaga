@@ -300,11 +300,11 @@ export function AmoChatWidget() {
           <p>{previewText || 'Новое сообщение от команды Деревяги. Откройте чат, чтобы прочитать ответ.'}</p>
           <button type="button" className={styles.notificationAction} onClick={openOnlineChat}>Открыть чат <span aria-hidden>↗</span></button>
         </aside>
-        {showHelp && !isChatOpen && !isOpen && unreadCount === 0 && <aside className={styles.help} aria-label="Помощь с выбором дома">
+        {showHelp && !isChatOpen && !isOpen && unreadCount === 0 && <aside className={`${styles.notification} ${styles.notificationVisible}`} aria-label="Помощь с выбором дома">
           <button className={styles.helpClose} type="button" aria-label="Скрыть предложение помощи" onClick={() => setShowHelp(false)}><LuX aria-hidden /></button>
-          <p>Помочь с выбором дома?</p>
-          <span>Напишите в чат — обсудим проект, планировку и стоимость.</span>
-          <button type="button" className={styles.helpAction} onClick={openOnlineChat}>Задать вопрос</button>
+          <div className={styles.notificationTitle}><LuMessageCircleMore aria-hidden /><strong>Помочь с выбором дома?</strong></div>
+          <p>Напишите в чат — обсудим проект, планировку и стоимость.</p>
+          <button type="button" className={styles.notificationAction} onClick={openOnlineChat}>Задать вопрос <span aria-hidden>↗</span></button>
         </aside>}
         <div id="contact-launcher-menu" className={`${styles.menu} ${isOpen ? styles.open : ''}`} inert={!isOpen} aria-hidden={!isOpen}>
           {isReady && <button type="button" className={`${styles.circle} ${unreadCount > 0 ? styles.unread : ''}`} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden />{unreadCount > 0 && <span className={styles.chatDot} aria-label="Есть новые сообщения" />}</button>}
