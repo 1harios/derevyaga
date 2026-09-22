@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaTelegram, FaVk, FaWhatsapp } from 'react-icons/fa6'
 import { LuArrowUp, LuMessageCircleMore, LuPhone, LuX } from 'react-icons/lu'
 import Image from 'next/image'
+import { Button } from '@/components/ui/Button'
 import { telHref } from '@/lib/utils'
 import styles from './AmoChatWidget.module.css'
 import { company } from '@/content/company'
@@ -298,13 +299,13 @@ export function AmoChatWidget() {
           <button type="button" className={styles.helpClose} aria-label="Скрыть уведомление" onClick={() => setPreviewVisible(false)}><LuX aria-hidden /></button>
           <div className={styles.notificationTitle}><LuMessageCircleMore aria-hidden /><strong>Вам ответили в чате</strong></div>
           <p>{previewText || 'Новое сообщение от команды Деревяги. Откройте чат, чтобы прочитать ответ.'}</p>
-          <button type="button" className={styles.notificationAction} onClick={openOnlineChat}>Открыть чат <span aria-hidden>↗</span></button>
+          <Button size="sm" wide arrow className={styles.notificationAction} onClick={openOnlineChat}>Открыть чат</Button>
         </aside>
         {showHelp && !isChatOpen && !isOpen && unreadCount === 0 && <aside className={`${styles.notification} ${styles.notificationVisible}`} aria-label="Помощь с выбором дома">
           <button className={styles.helpClose} type="button" aria-label="Скрыть предложение помощи" onClick={() => setShowHelp(false)}><LuX aria-hidden /></button>
           <div className={styles.notificationTitle}><LuMessageCircleMore aria-hidden /><strong>Помочь с выбором дома?</strong></div>
           <p>Напишите в чат — обсудим проект, планировку и стоимость.</p>
-          <button type="button" className={styles.notificationAction} onClick={openOnlineChat}>Задать вопрос <span aria-hidden>↗</span></button>
+          <Button size="sm" wide arrow className={styles.notificationAction} onClick={openOnlineChat}>Задать вопрос</Button>
         </aside>}
         <div id="contact-launcher-menu" className={`${styles.menu} ${isOpen ? styles.open : ''}`} inert={!isOpen} aria-hidden={!isOpen}>
           {isReady && <button type="button" className={`${styles.circle} ${unreadCount > 0 ? styles.unread : ''}`} aria-label="Онлайн-чат" title="Онлайн-чат" onClick={openOnlineChat}><LuMessageCircleMore aria-hidden />{unreadCount > 0 && <span className={styles.chatDot} aria-label="Есть новые сообщения" />}</button>}

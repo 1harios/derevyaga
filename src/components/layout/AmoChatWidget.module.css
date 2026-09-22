@@ -15,8 +15,7 @@
 .notificationTitle svg { width: 20px; height: 20px; flex-shrink: 0; color: #4e6254; }
 .notificationTitle strong { font-weight: 600; }
 .notification p { margin-top: 10px; color: #607066; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.notificationAction { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 16px; padding: 11px 16px; border-radius: 999px; background: #4e6254; color: #fff; font-size: 13px; font-weight: 500; }
-.notificationAction:focus-visible { outline: 2px solid #4e6254; outline-offset: 3px; }
+.notificationAction { justify-content: space-between; margin-top: 16px; }
 .scrolled .controls { transform: translateY(calc(-1 * var(--step))); }
 .circle {
   position: relative;
