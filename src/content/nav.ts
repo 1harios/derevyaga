@@ -22,6 +22,7 @@ export const mainNav: NavItem[] = [
 
 /** Остальные разделы — в бургер-меню и футер */
 export const secondaryNav: NavItem[] = [
+  { href: '/construction-map', label: 'Наши стройки на карте' },
   { href: '/mortgage', label: 'Ипотека и рассрочка' },
   { href: '/guarantee', label: 'Гарантия и договор' },
   { href: '/reviews', label: 'Отзывы' },
@@ -45,6 +46,7 @@ export const footerColumns: { title: string; items: NavItem[] }[] = [
     items: [
       { href: '/about', label: 'О компании' },
       { href: '/reviews', label: 'Отзывы' },
+      { href: '/construction-map', label: 'Наши стройки на карте' },
     ],
   },
   {

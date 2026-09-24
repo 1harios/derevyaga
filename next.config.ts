@@ -21,11 +21,11 @@ const isProduction = process.env.NODE_ENV === 'production'
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://gso.amocrm.ru https://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com",
+  "script-src 'self' 'unsafe-inline' https://gso.amocrm.ru https://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com https://api-maps.yandex.ru https://*.maps.yandex.net",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com",
+  "img-src 'self' data: blob: https://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com https://*.maps.yandex.net https://*.maps.yandex.ru https://api-maps.yandex.ru",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.amocrm.ru wss://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com",
+  "connect-src 'self' https://*.amocrm.ru wss://*.amocrm.ru https://mc.yandex.ru https://mc.yandex.com https://api-maps.yandex.ru https://*.maps.yandex.net",
   "frame-src https://*.amocrm.ru https://mc.yandex.ru https://yandex.ru https://*.yandex.ru",
   "frame-ancestors 'self'",
   "base-uri 'self'",

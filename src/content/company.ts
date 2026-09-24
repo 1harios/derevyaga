@@ -17,7 +17,7 @@ export const company = {
   email: 'ooombk88@mail.ru',
   // Подтверждённые ссылки на мессенджеры и площадки компании.
   telegram: 'https://t.me/derevyaga',
-  vk: 'https://vk.ru/skrusi',
+  vk: 'https://vk.ru/skderevyaga',
   max: 'https://max.ru/join/4Fr75hQgcYNks7rPrwEPtl6BL8SEbaHj6CJdb-SpsHo',
   avito: 'https://www.avito.ru/brands/4da0042cc3569967f507966354df2602/all/predlozheniya_uslug?gdlkerfdnwq=101&page_from=from_item_card&iid=8237957822&sellerId=023842933550c54cfa820e68b43abbaf',
   whatsapp: 'https://wa.me/79930777808',

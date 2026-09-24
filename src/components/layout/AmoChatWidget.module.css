@@ -45,13 +45,15 @@
 .light { background: #edf0eb; color: var(--color-brand); }
 .light:hover { background: #dfe6dc; }
 .menu {
+  --menu-padding: 10px;
   position: absolute;
-  bottom: calc(var(--size) + 10px);
-  right: 0;
+  bottom: calc(var(--size) + 10px - var(--menu-padding));
+  right: calc(-1 * var(--menu-padding));
+  padding: var(--menu-padding);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: calc(100dvh - 2 * var(--step) - 48px);
+  max-height: calc(100dvh - 2 * var(--step) - 48px + var(--menu-padding));
   overflow-y: auto;
   scrollbar-width: none;
   opacity: 0;

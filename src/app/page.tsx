@@ -12,6 +12,7 @@ import { faqItems } from '@/content/faq'
 import { mapsRating } from '@/content/reviews'
 import { getProjects } from '@/lib/amocrm-projects'
 import { siteUrl } from '@/lib/site-url'
+import { ConstructionMapBanner } from '@/components/home/ConstructionMapBanner'
 
 export const revalidate = 300
 
@@ -70,6 +71,7 @@ export default async function HomePage() {
       <WhyUsBlock />
       <TechnologyBlock />
       <ProjectsPreview projects={projects} />
+      <ConstructionMapBanner />
       <FaqBlock />
       <FinalCta />
     </>
