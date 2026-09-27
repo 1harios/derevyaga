@@ -16,7 +16,12 @@ import styles from './ConstructionMap.module.css'
 type Filter = 'all' | ConstructionObject['status']
 const filters: { value: Filter; label: string }[] = [{ value: 'all', label: 'Все' }, { value: 'completed', label: 'Построены' }, { value: 'building', label: 'Строятся' }]
 // Пока в CRM нет объектов, карта показывает направления, где строим, со ссылками на страницы городов.
-const cityPoints: MapPoint[] = cities.map((city, i) => ({ id: 100_000 + i, lat: city.coordinates[0], lng: city.coordinates[1], kind: 'city', label: city.name }))
+const cityPoints: MapPoint[] = cities.map((city, i) => {
+  const [lat, lng] = city.coordinates
+  // Подпись уходит влево, если вплотную справа стоит другой город (Сертолово рядом с Токсово).
+  const crowded = cities.some(other => other.coordinates[1] > lng && other.coordinates[1] - lng < 0.6 && Math.abs(other.coordinates[0] - lat) < 0.1)
+  return { id: 100_000 + i, lat, lng, kind: 'city', label: city.name, side: crowded ? 'left' : 'right' }
+})
 const pointOf = (o: ConstructionObject): MapPoint => ({ id: o.id, lat: o.lat, lng: o.lng, kind: o.status })
 const noSubscription = () => () => {}
 

@@ -42,6 +42,7 @@
 
 /* Города на пустой карте: подписи из кода сайта */
 .root :global(.cm-city) { position:absolute; left:-10px; top:-10px; display:flex; align-items:center; gap:8px; white-space:nowrap; cursor:pointer; }
+.root :global(.cm-city[data-side='left']) { flex-direction:row-reverse; transform:translateX(calc(-100% + 20px)); }
 .root :global(.cm-city__dot) { width:20px; height:20px; flex-shrink:0; border:3.5px solid #fff; border-radius:50%; background:var(--color-brand); box-shadow:0 6px 14px -6px rgb(27 33 29 / .7); }
 .root :global(.cm-city__label) { padding:6px 12px; border-radius:999px; background:rgb(255 255 255 / .95); box-shadow:0 8px 20px -12px rgb(27 33 29 / .55); color:var(--color-ink); font-family:var(--font-heading); font-size:13px; font-weight:600; letter-spacing:-.01em; transition:background .2s, color .2s; }
 .root :global(.cm-city.is-hover .cm-city__label) { background:var(--color-dark); color:#fff; }

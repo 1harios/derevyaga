@@ -8,6 +8,8 @@ export type MapPoint = {
   kind: 'building' | 'completed' | 'city'
   /** Подпись отметки — только для городов: текст из кода сайта, не из CRM. */
   label?: string
+  /** С какой стороны от точки стоит подпись города. */
+  side?: 'left' | 'right'
 }
 
 /** Сколько места [сверху, справа, снизу, слева] занимают панели поверх карты. */
@@ -29,7 +31,7 @@ type Store = {
 // HTML-шаблоны меток получают только числа и значения из кода сайта:
 // названия объектов из CRM в разметку карты не попадают.
 const pinTemplate = '<div class="cm-pin" data-pin="{{ properties.id }}" data-kind="{{ properties.kind }}"><span class="cm-pin__coin"><span class="cm-pin__icon"></span></span></div>'
-const cityTemplate = '<div class="cm-city" data-pin="{{ properties.id }}"><span class="cm-city__dot"></span><span class="cm-city__label">{{ properties.label }}</span></div>'
+const cityTemplate = '<div class="cm-city" data-pin="{{ properties.id }}" data-side="{{ properties.side }}"><span class="cm-city__dot"></span><span class="cm-city__label">{{ properties.label }}</span></div>'
 const clusterTemplate = '<div class="cm-cluster" data-size="{{ properties.size }}"><span>{{ properties.geoObjects.length }}</span></div>'
 
 /** Анимации карты возвращают промис; ошибка (например, карту уже закрыли) не важна. */
@@ -131,9 +133,10 @@ export function useConstructionMap({ apiKey, enabled, container, points, active,
       map.geoObjects.add(clusterer)
       const create = (point: MapPoint) => {
         const isCity = point.kind === 'city'
-        const mark = new api.Placemark([point.lat, point.lng], { id: point.id, kind: point.kind, label: point.label ?? '' }, {
+        const labelWidth = Array.from(point.label ?? '').length * 8 + 30
+        const mark = new api.Placemark([point.lat, point.lng], { id: point.id, kind: point.kind, label: point.label ?? '', side: point.side ?? 'right' }, {
           iconLayout: isCity ? cityLayout : pinLayout,
-          iconShape: isCity ? { type: 'Rectangle', coordinates: [[-12, -14], [Array.from(point.label ?? '').length * 8 + 30, 14]] } : { type: 'Circle', coordinates: [0, 0], radius: 23 },
+          iconShape: isCity ? { type: 'Rectangle', coordinates: point.side === 'left' ? [[-labelWidth, -14], [12, 14]] : [[-12, -14], [labelWidth, 14]] } : { type: 'Circle', coordinates: [0, 0], radius: 23 },
           hasBalloon: false, hasHint: false, openBalloonOnClick: false,
         })
         mark.events.add('click', () => select(point))
