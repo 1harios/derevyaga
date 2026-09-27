@@ -71,7 +71,7 @@ export default async function HomePage() {
       <WhyUsBlock />
       <TechnologyBlock />
       <ProjectsPreview projects={projects} />
-      <ConstructionMapBanner />
+      <ConstructionMapBanner projects={projects} />
       <FaqBlock />
       <FinalCta />
     </>

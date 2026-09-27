@@ -22,6 +22,8 @@ export type AnalyticsEvent =
   | 'project_view'
   | 'pdf_download'
   | 'lk_login'
+  | 'map_object_view'
+  | 'map_share'
 
 type EventParams = Record<string, string | number | boolean | undefined>
 
